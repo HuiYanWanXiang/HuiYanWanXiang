@@ -1,0 +1,13 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# --- Manim 产物 (绝对不可上传) ---
+media/
+output/
+images/
+
+# --- 系统文件 ---
+.DS_Store
