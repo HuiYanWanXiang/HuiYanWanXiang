@@ -4,10 +4,13 @@ __pycache__/
 venv/
 .env
 
-# --- Manim 产物 (绝对不可上传) ---
-media/
-output/
-images/
-
-# --- 系统文件 ---
+# --- 系统垃圾 ---
 .DS_Store
+
+# --- 项目私有数据 (软著申请时不需要上传这些) ---
+logs/
+saved_projects/
+
+# --- IDE 配置 ---
+.vscode/
+.idea/

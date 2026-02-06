@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>绘演万象 | 核心控制台</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .settings-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+            margin-bottom: 20px;
+        }
+        .settings-row { margin-bottom: 10px; }
+        .settings-row label { display: block; color: #888; font-size: 11px; margin-bottom: 4px; }
+        .settings-row select, .settings-row input {
+            width: 100%;
+            background: #222;
+            border: 1px solid #444;
+            color: var(--accent-color);
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            outline: none;
+        }
+        /* 隐藏掉 BaseURL 和 ModelName 输入框，除非选择自定义，这里简化处理只让用户选厂商 */
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>绘演万象 <span style="font-size:12px; opacity:0.6;">PRO</span></h2>
+        
+        <span class="label">⚙️ 引擎配置 (ENGINE CONFIG)</span>
+        <div class="settings-box">
+            <div class="settings-row">
+                <label>选择模型厂商 (Provider)</label>
+                <select id="providerSelect" onchange="updateModelConfig()">
+                    <option value="deepseek">DeepSeek (深度求索)</option>
+                    <option value="moonshot">Kimi (月之暗面)</option>
+                    <option value="aliyun">通义千问 (阿里云)</option>
+                    <option value="custom">自定义 (Custom)</option>
+                </select>
+            </div>
+            
+            <div class="settings-row">
+                <label>API Key (密钥)</label>
+                <input type="password" id="apiKeyInput" placeholder="sk-xxxxxxxx..." value="">
+            </div>
+
+            <div class="settings-row" id="customUrlRow" style="display:none;">
+                <label>Base URL</label>
+                <input type="text" id="baseUrlInput" value="https://api.deepseek.com">
+            </div>
+             <div class="settings-row" id="customModelRow" style="display:none;">
+                <label>Model Name</label>
+                <input type="text" id="modelNameInput" value="deepseek-coder">
+            </div>
+        </div>
+
+        <span class="label">指令输入 (PROMPT)</span>
+        <textarea id="userPrompt" placeholder="> 例如：生成一个受迫振动演示..."></textarea>
+        
+        <div class="btn-group">
+            <button class="primary" id="generateBtn" onclick="generatePage()">🚀 启动生成</button>
+            <button onclick="applyCode()">⚡ 手动运行</button>
+        </div>
+
+        <div class="code-panel">
+            <span class="label">源码编辑器</span>
+            <textarea id="codeEditor" placeholder="// 等待生成..." spellcheck="false"></textarea>
+        </div>
+    </div>
+
+    <div class="preview-area">
+        <div class="status-bar" id="statusText"><span class="blink"></span>WAITING FOR CONFIG...</div>
+        <div class="iframe-container">
+            <iframe id="previewFrame"></iframe>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        // 简单的配置切换逻辑
+        function updateModelConfig() {
+            const provider = document.getElementById('providerSelect').value;
+            const urlRow = document.getElementById('customUrlRow');
+            const modelRow = document.getElementById('customModelRow');
+            const urlInput = document.getElementById('baseUrlInput');
+            const modelInput = document.getElementById('modelNameInput');
+
+            if (provider === 'custom') {
+                urlRow.style.display = 'block';
+                modelRow.style.display = 'block';
+            } else {
+                urlRow.style.display = 'none';
+                modelRow.style.display = 'none';
+                // 预设参数
+                if (provider === 'deepseek') {
+                    urlInput.value = "https://api.deepseek.com";
+                    modelInput.value = "deepseek-coder";
+                } else if (provider === 'moonshot') {
+                    urlInput.value = "https://api.moonshot.cn/v1";
+                    modelInput.value = "moonshot-v1-8k";
+                } else if (provider === 'aliyun') {
+                    urlInput.value = "https://dashscope.aliyuncs.com/compatible-mode/v1";
+                    modelInput.value = "qwen-plus";
+                }
+            }
+        }
+        // 初始化一次
+        updateModelConfig();
+    </script>
+</body>
+</html>
