@@ -41,6 +41,8 @@ from prompts.physics_knowledge import get_physics_prompt # 引入刚才写的知
 from utils.logger import setup_logger
 from utils.exceptions import LLMConnectionError
 
+from manim_engine.router import router as manim_router, mount_runs
+
 # ==============================================================================
 # 1. 系统初始化与配置 (Initialization & Configuration)
 # ==============================================================================
@@ -57,6 +59,12 @@ app = FastAPI(
 
 # 挂载静态资源目录 (CSS, JS, Images)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Manim 渲染结果静态挂载（/video/runs/...）
+mount_runs(app)
+
+# Manim API 路由（/api/generate-video, /api/video-status/{job_id}）
+app.include_router(manim_router)
 
 # 定义数据存档目录
 SAVE_DIR = "saved_projects"

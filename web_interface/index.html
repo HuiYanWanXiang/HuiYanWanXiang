@@ -24,13 +24,14 @@
             font-size: 12px;
             outline: none;
         }
-        /* 隐藏掉 BaseURL 和 ModelName 输入框，除非选择自定义，这里简化处理只让用户选厂商 */
     </style>
 </head>
+
+<!-- 帮助弹窗 -->
 <div id="helpModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999;">
     <div style="width:70%; max-width:800px; margin:50px auto; background:#1e1e1e; border:1px solid #00f3ff; border-radius:10px; padding:30px; color:#ddd; font-family:'Microsoft YaHei'; overflow-y:auto; max-height:80vh;">
         <h2 style="color:#00f3ff; border-bottom:1px solid #333; padding-bottom:10px;">绘演万象用户操作手册 V1.0</h2>
-        
+
         <h3 style="color:#fff; margin-top:20px;">1. 系统简介</h3>
         <p style="line-height:1.6; font-size:14px; color:#aaa;">
             本系统是一款基于大语言模型（LLM）的Web端交互式物理仿真实验平台。旨在通过自然语言指令，快速生成具备专业级UI、实时物理引擎渲染及数学公式推导的教学课件。
@@ -38,41 +39,37 @@
 
         <h3 style="color:#fff; margin-top:20px;">2. 快速入门</h3>
         <ul style="line-height:1.8; font-size:14px; color:#aaa; padding-left:20px;">
-            <li><strong>步骤一：配置引擎</strong> - 在左上角配置面板中选择模型厂商（DeepSeek/Kimi等），并填入有效的 API Key。</li>
-            <li><strong>步骤二：输入指令</strong> - 在 Prompt 输入框中描述您想要的物理场景。例如：“生成一个带电粒子在磁场中做螺旋运动的演示”。</li>
-            <li><strong>步骤三：启动生成</strong> - 点击“🚀 启动生成”按钮，系统将自动连接云端神经网络进行代码构建。</li>
-            <li><strong>步骤四：实时交互</strong> - 生成完成后，在右侧视窗中操作滑块，观察物理现象的变化。</li>
+            <li><strong>步骤一：配置引擎</strong> - 选择模型厂商（DeepSeek/Kimi等），并填入有效的 API Key。</li>
+            <li><strong>步骤二：输入指令</strong> - 在 Prompt 输入框中描述您想要的物理场景。</li>
+            <li><strong>步骤三：启动生成</strong> - 点击“🚀 启动生成”生成交互网页。</li>
+            <li><strong>步骤四：生成视频</strong> - 点击“🎬 生成视频”生成 Manim 讲解视频。</li>
             <li><strong>步骤五：源码调试</strong> - 点击“⚡ 手动运行”进入开发者模式，可直接修改 HTML/JS 代码并热更新。</li>
         </ul>
 
         <h3 style="color:#fff; margin-top:20px;">3. 常见问题 (FAQ)</h3>
         <div style="background:#222; padding:10px; border-radius:4px; margin-top:10px;">
             <p style="color:#00f3ff; font-size:13px; font-weight:bold;">Q: 为什么点击生成后没有反应？</p>
-            <p style="color:#888; font-size:13px;">A: 请检查 API Key 是否正确填写，以及网络连接是否正常。如果使用 VPN，请尝试切换节点。</p>
-        </div>
-        <div style="background:#222; padding:10px; border-radius:4px; margin-top:10px;">
-            <p style="color:#00f3ff; font-size:13px; font-weight:bold;">Q: 生成的物理公式不准确怎么办？</p>
-            <p style="color:#888; font-size:13px;">A: 建议在指令中明确具体的物理公式，或者在“手动运行”模式下修正 JS 逻辑。</p>
+            <p style="color:#888; font-size:13px;">A: 请检查 API Key 是否正确填写，以及网络连接是否正常。</p>
         </div>
 
-        <h3 style="color:#fff; margin-top:20px;">4. 法律声明</h3>
-        <p style="line-height:1.6; font-size:12px; color:#666; border-top:1px dashed #444; padding-top:10px; margin-top:20px;">
-            本软件由大连理工大学团队独立开发，拥有全部知识产权。
-            <br>Copyright © 2026 Huiyan Team. All Rights Reserved.
-            <br>严禁将本软件生成的源代码用于非法用途。
-        </p>
-
-        <button onclick="document.getElementById('helpModal').style.display='none'" style="margin-top:20px; width:100%; background:#333; border:none; padding:15px; color:#fff; cursor:pointer;">关闭窗口 [CLOSE]</button>
+        <button onclick="document.getElementById('helpModal').style.display='none'"
+                style="margin-top:20px; width:100%; background:#333; border:none; padding:15px; color:#fff; cursor:pointer;">
+            关闭窗口 [CLOSE]
+        </button>
     </div>
 </div>
 
-<div style="position:fixed; bottom:20px; right:20px; width:40px; height:40px; background:#333; border-radius:50%; text-align:center; line-height:40px; cursor:pointer; border:1px solid #555; z-index:1000;" onclick="document.getElementById('helpModal').style.display='block'">
+<!-- 右下角 ? -->
+<div style="position:fixed; bottom:20px; right:20px; width:40px; height:40px; background:#333; border-radius:50%;
+            text-align:center; line-height:40px; cursor:pointer; border:1px solid #555; z-index:1000;"
+     onclick="document.getElementById('helpModal').style.display='block'">
     <span style="color:#fff; font-weight:bold;">?</span>
 </div>
+
 <body>
     <div class="sidebar">
         <h2>绘演万象 <span style="font-size:12px; opacity:0.6;">PRO</span></h2>
-        
+
         <span class="label">⚙️ 引擎配置 (ENGINE CONFIG)</span>
         <div class="settings-box">
             <div class="settings-row">
@@ -84,7 +81,7 @@
                     <option value="custom">自定义 (Custom)</option>
                 </select>
             </div>
-            
+
             <div class="settings-row">
                 <label>API Key (密钥)</label>
                 <input type="password" id="apiKeyInput" placeholder="sk-xxxxxxxx..." value="">
@@ -94,7 +91,8 @@
                 <label>Base URL</label>
                 <input type="text" id="baseUrlInput" value="https://api.deepseek.com">
             </div>
-             <div class="settings-row" id="customModelRow" style="display:none;">
+
+            <div class="settings-row" id="customModelRow" style="display:none;">
                 <label>Model Name</label>
                 <input type="text" id="modelNameInput" value="deepseek-coder">
             </div>
@@ -102,9 +100,10 @@
 
         <span class="label">指令输入 (PROMPT)</span>
         <textarea id="userPrompt" placeholder="> 例如：生成一个受迫振动演示..."></textarea>
-        
+
         <div class="btn-group">
             <button class="primary" id="generateBtn" onclick="generatePage()">🚀 启动生成</button>
+            <button class="secondary" id="generateVideoBtn" onclick="generateVideo()">🎬 生成视频</button>
             <button onclick="applyCode()">⚡ 手动运行</button>
         </div>
 
@@ -116,8 +115,106 @@
 
     <div class="preview-area">
         <div class="status-bar" id="statusText"><span class="blink"></span>WAITING FOR CONFIG...</div>
+
         <div class="iframe-container">
-            <iframe id="previewFrame"></iframe>
+            <!-- ✅ 关键：默认暗色 srcdoc 占位页，彻底消灭白屏 -->
+            <iframe id="previewFrame"
+                    srcdoc='<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  :root{
+    --bg:#0b0f14;
+    --panel: rgba(0,0,0,0.45);
+    --border: rgba(0,243,255,0.18);
+    --accent:#00f3ff;
+    --text: rgba(127,231,255,0.92);
+    --muted: rgba(160,220,235,0.55);
+  }
+  html,body{
+    margin:0; height:100%;
+    background: radial-gradient(900px 420px at 50% 35%, rgba(0,243,255,0.10), rgba(0,0,0,0.85)),
+                linear-gradient(180deg, rgba(10,12,18,0.98), rgba(0,0,0,0.98));
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Microsoft YaHei, Arial, sans-serif;
+    color: var(--text);
+  }
+  .wrap{ height:100%; display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box; }
+  .card{
+    width:min(760px, 92vw);
+    border:1px solid var(--border);
+    border-radius:14px;
+    background: var(--panel);
+    box-shadow: 0 0 0 1px rgba(0,243,255,0.06) inset, 0 18px 50px rgba(0,0,0,0.55);
+    padding:22px 22px 18px;
+  }
+  .title{ display:flex; align-items:center; gap:10px; letter-spacing:1px; font-weight:700; color: var(--accent); }
+  .dot{
+    width:10px; height:10px; border-radius:50%;
+    background: var(--accent);
+    box-shadow: 0 0 16px rgba(0,243,255,0.65);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(0.55); opacity:0.2; } }
+  .hint{ margin-top:10px; line-height:1.7; color: var(--muted); font-size: 13px; }
+  .steps{
+    margin-top:14px;
+    border-top:1px dashed rgba(0,243,255,0.18);
+    padding-top:12px;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:10px;
+    font-size:12px;
+    color: rgba(160,220,235,0.68);
+  }
+  .pill{ border:1px solid rgba(0,243,255,0.14); border-radius:999px; padding:8px 10px; background: rgba(0,0,0,0.25); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="title"><span class="dot"></span><span>WAITING FOR CONFIG…</span></div>
+      <div class="hint">
+        右侧预览区已就绪。请在左侧完成引擎配置（Provider + API Key），输入 Prompt，
+        点击 <b>🚀 启动生成</b> 生成交互网页；或点击 <b>🎬 生成视频</b> 生成 Manim 讲解视频。
+      </div>
+      <div class="steps">
+        <div class="pill">① 配置 Provider / Key</div>
+        <div class="pill">② 输入 Prompt</div>
+        <div class="pill">③ 点击生成按钮</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>'>
+            </iframe>
+        </div>
+
+        <!-- ✅ Manim 视频面板 -->
+        <div id="videoPanel" style="padding: 12px 14px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+                <span style="color:#00f3ff; font-weight:600; letter-spacing:0.5px;">MANIM VIDEO</span>
+                <a id="videoOpenLink"
+                   href="#"
+                   target="_blank"
+                   style="display:none; color:#7fe7ff; text-decoration:none; font-size:12px;">
+                   打开视频文件
+                </a>
+            </div>
+
+            <video id="videoPlayer"
+                   controls
+                   style="width:100%; max-height:360px; background:#000; border-radius:10px;
+                          border:1px solid rgba(0,243,255,0.25);">
+            </video>
+
+            <pre id="videoStatus"
+                 style="margin-top:10px; padding:10px; background:rgba(0,0,0,0.35); color:#7fe7ff;
+                        border-radius:10px; border:1px dashed rgba(0,243,255,0.25);
+                        white-space:pre-wrap; font-size:12px; line-height:1.35;">
+等待生成视频...
+            </pre>
         </div>
     </div>
 
@@ -150,7 +247,6 @@
                 }
             }
         }
-        // 初始化一次
         updateModelConfig();
     </script>
 </body>

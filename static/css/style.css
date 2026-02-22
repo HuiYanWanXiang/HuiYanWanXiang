@@ -20,7 +20,7 @@
     --success-color: #00ff9d;
     --warning-color: #ffbd2e;
     --error-color: #ff5f56;
-    
+
     /* 布局尺寸变量 */
     --sidebar-width: 450px;
     --header-height: 60px;
@@ -42,14 +42,13 @@ body {
     height: 100vh;
     margin: 0;
     background-color: var(--bg-color);
-    /* 复杂的背景网格绘制 */
-    background-image: 
+    background-image:
         linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
     background-size: 30px 30px;
     background-position: center center;
     color: var(--text-primary);
-    overflow: hidden; /* 防止主页面出现双滚动条 */
+    overflow: hidden;
 }
 
 /* 滚动条美化 */
@@ -76,7 +75,7 @@ body {
     width: var(--sidebar-width);
     padding: 20px;
     background: var(--panel-bg);
-    backdrop-filter: blur(20px); /* 毛玻璃特效 */
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--border-color);
     display: flex;
@@ -91,7 +90,7 @@ h2 {
     margin-top: 0;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 15px;
-    text-shadow: 0 0 10px rgba(0, 243, 255, 0.3); /* 荧光发光文字 */
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
     font-size: 22px;
     letter-spacing: 1px;
     font-weight: 600;
@@ -121,7 +120,6 @@ h2 {
     overflow: hidden;
 }
 
-/* 装饰性扫描线 */
 .settings-box::before {
     content: '';
     position: absolute;
@@ -233,40 +231,55 @@ textarea#codeEditor {
     overflow: auto;
 }
 
+/* ✅ 右侧预览区整体背景更统一 */
 .preview-area {
     flex: 1;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    background: #000;
+    background:
+        radial-gradient(1200px 600px at 30% 10%, rgba(0,243,255,0.10), rgba(0,0,0,0.92) 60%),
+        linear-gradient(180deg, rgba(10,12,18,0.98), rgba(0,0,0,0.98));
 }
 
+/* ✅ iframe 容器暗色 + 赛博边框 */
 .iframe-container {
     flex: 1;
-    background: #fff; /* 默认白底，防止某些透明网页看不清 */
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(0,243,255,0.18);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(0,243,255,0.06) inset, 0 16px 40px rgba(0,0,0,0.45);
+    position: relative;
     overflow: hidden;
 }
 
-iframe { width: 100%; height: 100%; border: none; }
+/* iframe 默认背景暗色 */
+#previewFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #0b0f14;
+}
 
+/* 状态条更融入整体 */
 .status-bar {
     margin-bottom: 10px;
     font-size: 12px;
-    color: var(--accent-color);
+    color: rgba(127,231,255,0.95);
     font-family: 'Consolas', monospace;
     display: flex;
     align-items: center;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(0,243,255,0.18);
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: 0 0 0 1px rgba(0,243,255,0.06) inset;
 }
 
 /* --------------------------------------------------------------------------------
 6. 高级动画定义 (Animations)
 --------------------------------------------------------------------------------
 */
-
-/* 闪烁光标动画 */
 .blink {
     display: inline-block;
     width: 8px;
@@ -275,6 +288,7 @@ iframe { width: 100%; height: 100%; border: none; }
     margin-right: 10px;
     border-radius: 50%;
     animation: blinker 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    box-shadow: 0 0 14px rgba(0,243,255,0.55);
 }
 
 @keyframes blinker {
@@ -282,13 +296,11 @@ iframe { width: 100%; height: 100%; border: none; }
     50% { opacity: 0; transform: scale(0.5); }
 }
 
-/* 扫描线特效 */
 @keyframes scanline {
     0% { transform: translateY(-100%); }
     100% { transform: translateY(200%); }
 }
 
-/* 故障文字特效 (Glitch) - 用于 LOGO 或标题 */
 @keyframes glitch-skew {
     0% { transform: skew(0deg); }
     20% { transform: skew(-2deg); }
@@ -298,7 +310,7 @@ iframe { width: 100%; height: 100%; border: none; }
     100% { transform: skew(0deg); }
 }
 
-/* 响应式媒体查询 (Responsive Design) */
+/* 响应式媒体查询 */
 @media screen and (max-width: 1200px) {
     .sidebar { width: 350px; }
 }
