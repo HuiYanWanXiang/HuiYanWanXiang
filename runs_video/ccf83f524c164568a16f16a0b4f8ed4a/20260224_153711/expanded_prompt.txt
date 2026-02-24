@@ -1,0 +1,41 @@
+Animation Plan for Pythagorean Theorem
+
+**Concept Breakdown:**
+- Introduce the Pythagorean Theorem, stating that in a right triangle, the square of the hypotenuse (c) is equal to the sum of the squares of the other two sides (a and b).
+- Visualize the theorem using a right triangle, highlighting each side and the respective squares.
+
+**Scene Steps:**
+1. **Scene Introduction (0.0 - 2.0 seconds):**
+   - Fade in the title "Pythagorean Theorem" at the center of the screen.
+   - Use a soothing background music track to set the tone.
+
+2. **Triangle Creation (2.0 - 4.0 seconds):**
+   - Draw a right triangle with vertices labeled A, B, and C, where C is the right angle.
+   - Animate the triangle's sides being drawn sequentially, highlighting side lengths a, b, and hypotenuse c.
+
+3. **Squares on Each Side (4.0 - 8.0 seconds):**
+   - Animate squares being constructed on each side of the triangle:
+     - Square on side a: Animate it growing from side a.
+     - Square on side b: Animate it growing from side b.
+     - Square on side c: Animate it growing from side c.
+   - Use different colors for each square to distinguish them (e.g., red for a², blue for b², green for c²).
+
+4. **Equation Display (8.0 - 10.0 seconds):**
+   - Fade in the equation "a² + b² = c²" below the triangle.
+   - Highlight each term in the equation one by one, emphasizing their relation to the respective squares.
+
+5. **Conclusion (10.0 - 12.0 seconds):**
+   - Briefly summarize the theorem with a text box stating "In a right triangle, the square of the hypotenuse equals the sum of the squares of the other two sides."
+   - Fade out the triangle and equation while keeping the summary text visible for a moment before fading out.
+
+**Key Objects:**
+- Right triangle (labeled A, B, C)
+- Squares on each side (a², b², c²)
+- Text boxes for the theorem and equation
+
+**Equations:**
+- a² + b² = c²
+
+**Timing Notes:**
+- Ensure smooth transitions between scenes with a slight pause after significant animations (like the squares).
+- Maintain a consistent pace to fit the 12-second target without rushing the visuals or text.

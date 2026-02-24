@@ -1,0 +1,48 @@
+Animation Plan for Pythagorean Theorem Explanation
+
+Concept Breakdown:
+- Introduce the Pythagorean theorem: a² + b² = c²
+- Visualize a right triangle with sides a, b, and hypotenuse c.
+- Demonstrate the relationship between the areas of the squares on each side.
+
+Scene Steps:
+1. **Scene Introduction (0.0 - 1.0 seconds)**
+   - Display the title "Pythagorean Theorem" on the screen with a smooth fade-in effect.
+   - Use a simple background to keep the focus on the triangle.
+
+2. **Right Triangle Creation (1.0 - 3.0 seconds)**
+   - Draw a right triangle with vertices labeled A, B, and C.
+   - Label the sides: AB = a, BC = b, and AC = c.
+   - Add a brief text description: "In a right triangle..."
+
+3. **Area Visualization (3.0 - 7.0 seconds)**
+   - Animate squares being drawn on each side of the triangle:
+     - Square on side a (AB): label area as a².
+     - Square on side b (BC): label area as b².
+     - Square on side c (AC): label area as c².
+   - Use a contrasting color for each square to enhance visibility.
+   - Briefly display the equation a² + b² = c² beneath the triangle.
+
+4. **Area Comparison (7.0 - 10.0 seconds)**
+   - Animate the areas of squares a² and b² merging into square c².
+   - Highlight the transition with a glowing effect to show that the areas are equal.
+   - Add a text annotation: "The sum of the areas of the squares on the legs equals the area of the square on the hypotenuse."
+
+5. **Conclusion (10.0 - 12.0 seconds)**
+   - Fade out the triangle and squares.
+   - Display the final equation a² + b² = c² prominently on the screen.
+   - End with a voiceover or text saying, "This is the Pythagorean theorem!"
+
+Key Objects:
+- Right triangle (labeled)
+- Squares on each side (animated)
+- Text annotations for clarity
+- Background that complements the visuals
+
+Equations:
+- a² + b² = c²
+
+Timing Notes:
+- Ensure smooth transitions between scenes.
+- Allocate time for viewers to absorb each visual before moving to the next step.
+- Maintain a steady pace to fit within the 12-second target while ensuring clarity.

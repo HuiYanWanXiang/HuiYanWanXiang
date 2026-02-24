@@ -1,0 +1,45 @@
+Animation Plan for "勾股定理 (Pythagorean Theorem)"
+
+Concept Breakdown:
+- Introduce the Pythagorean Theorem: a² + b² = c²
+- Visualize a right triangle with sides a, b, and hypotenuse c.
+- Demonstrate the relationship between the areas of squares constructed on each side.
+
+Scene Steps:
+1. **Scene Introduction (0.0 - 1.5 seconds)**
+   - Fade in the title "勾股定理" at the center of the screen.
+   - Background music starts softly.
+
+2. **Draw the Right Triangle (1.5 - 3.0 seconds)**
+   - Animate the drawing of a right triangle labeled with vertices A, B, and C.
+   - Label the sides: AB = a, BC = b, and AC = c.
+   - Use a light color for the triangle to enhance visibility.
+
+3. **Construct Squares on Each Side (3.0 - 6.0 seconds)**
+   - Animate the construction of a square on side a (AB) with area a².
+   - Follow with a square on side b (BC) with area b².
+   - Lastly, animate a square on the hypotenuse (AC) with area c².
+   - Use distinct colors for each square for clarity.
+
+4. **Show Area Relationships (6.0 - 9.0 seconds)**
+   - Overlay the equation a² + b² = c² on the screen as the squares are displayed.
+   - Highlight the areas of the squares as they are mentioned in the equation.
+   - Consider using arrows or animations to indicate that the combined area of squares on sides a and b equals the area of the square on side c.
+
+5. **Conclusion (9.0 - 12.0 seconds)**
+   - Fade out the squares and triangle, leaving only the equation a² + b² = c² in bold.
+   - Add a voiceover or text that reinforces the theorem: "在直角三角形中，两个直角边的平方和等于斜边的平方."
+   - Fade out the title and background music concludes.
+
+Key Objects:
+- Right triangle (labeled with sides a, b, c)
+- Squares on each side (with labels a², b², c²)
+- Text overlays for the theorem and voiceover
+
+Equations:
+- a² + b² = c²
+
+Timing Notes:
+- Ensure smooth transitions between scenes.
+- Maintain a steady pace to ensure clarity, especially when explaining the areas of the squares.
+- Allow enough time for viewers to absorb the information before moving to the next step.

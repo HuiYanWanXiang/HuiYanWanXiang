@@ -1,0 +1,48 @@
+Concept Breakdown:
+- Introduce the Pythagorean Theorem (勾股定理).
+- Visualize a right triangle and the relationship between its sides.
+- Highlight the equation: a² + b² = c², where c is the hypotenuse.
+- Provide a real-world application or example.
+
+Scene Steps:
+1. Scene Introduction (0.0 - 1.0 seconds):
+   - Fade in from black to a title text: "勾股定理 (Pythagorean Theorem)".
+   - Use a simple, bold font for clarity.
+
+2. Draw Right Triangle (1.0 - 4.0 seconds):
+   - Draw a right triangle labeled with sides a, b, and hypotenuse c.
+   - Use bright colors for the triangle and labels for visibility.
+   - Position the triangle in the center of the screen.
+
+3. Highlight Sides (4.0 - 6.0 seconds):
+   - Animate a highlight effect on side a and side b, indicating they are the legs of the triangle.
+   - Display text: "直角三角形的两条直角边" (the two legs of the right triangle).
+
+4. Introduce Hypotenuse (6.0 - 8.0 seconds):
+   - Animate a highlight effect on side c, indicating it is the hypotenuse.
+   - Display text: "斜边" (the hypotenuse).
+
+5. Present the Equation (8.0 - 10.0 seconds):
+   - Fade in the equation: "a² + b² = c²" below the triangle.
+   - Use a dynamic effect to draw the equation, emphasizing each term one by one.
+
+6. Real-World Application (10.0 - 11.5 seconds):
+   - Show a simple visual example, such as a ladder leaning against a wall, illustrating the theorem in use.
+   - Add text: "应用示例: 计算斜边长度" (Application example: Calculate the length of the hypotenuse).
+
+7. Scene Conclusion (11.5 - 12.0 seconds):
+   - Fade out the triangle and equation while displaying the text: "勾股定理的美妙!" (The beauty of the Pythagorean Theorem!).
+   - Fade to black.
+
+Key Objects:
+- Right triangle with labeled sides (a, b, c).
+- Text labels in Mandarin.
+- Equation "a² + b² = c²".
+- Visual example (ladder against a wall).
+
+Equations:
+- a² + b² = c²
+
+Timing Notes:
+- Ensure smooth transitions between scenes.
+- Maintain a consistent pace to fit the 12.0 seconds target duration.

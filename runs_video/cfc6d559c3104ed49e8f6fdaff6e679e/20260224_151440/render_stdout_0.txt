@@ -1,0 +1,64 @@
+Manim Community v0.19.1
+
+[02/24/26 15:15:15] INFO     Writing \text{Pythagorean  tex_file_writing.py:111
+                             Theorem} to                                       
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\cfc6d559c3104ed49e8f                        
+                             6fdaff6e679e\20260224_1514                        
+                             40\media\Tex\177a69a003f0a                        
+                             6ec.tex                                           
+[02/24/26 15:15:18] INFO     Animation 0 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\cfc6d559c3104ed4                         
+                             9e8f6fdaff6e679e\20260224                         
+                             _151440\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\1292736442_3709287990                         
+                             _223132457.mp4'                                   
+[02/24/26 15:15:19] INFO     Animation 1 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\cfc6d559c3104ed4                         
+                             9e8f6fdaff6e679e\20260224                         
+                             _151440\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_4217992463                         
+                             _3751223538.mp4'                                  
+                    INFO     Animation 2 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\cfc6d559c3104ed4                         
+                             9e8f6fdaff6e679e\20260224                         
+                             _151440\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2019416163                         
+                             _223132457.mp4'                                   
+                    INFO     Writing A to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\cfc6d559c3104ed49e8f                        
+                             6fdaff6e679e\20260224_1514                        
+                             40\media\Tex\90f07b07e57ad                        
+                             f79.tex                                           
+[02/24/26 15:15:22] INFO     Writing B to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\cfc6d559c3104ed49e8f                        
+                             6fdaff6e679e\20260224_1514                        
+                             40\media\Tex\d82288bb87e99                        
+                             d59.tex                                           
+[02/24/26 15:15:24] INFO     Writing C to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\cfc6d559c3104ed49e8f                        
+                             6fdaff6e679e\20260224_1514                        
+                             40\media\Tex\86474863bfdee                        
+                             3e7.tex                                           

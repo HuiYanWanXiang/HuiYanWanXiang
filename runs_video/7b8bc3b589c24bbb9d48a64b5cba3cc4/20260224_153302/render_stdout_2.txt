@@ -1,0 +1,27 @@
+Manim Community v0.19.1
+
+[02/24/26 15:34:25] INFO     Animation 0 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             1292736442_936961486_22313245                     
+                             7)                                                
+                    INFO     Animation 1 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             2827983349_4217992463_3514627                     
+                             243)                                              
+                    INFO     Animation 2 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             2827983349_2606607764_1060396                     
+                             665)                                              
+[02/24/26 15:34:27] ERROR    LaTeX compilation error:   tex_file_writing.py:314
+                             LaTeX Error: There's no                           
+                             line here to end.                                 
+                                                                               
+                    ERROR    Context of error:          tex_file_writing.py:348
+                             \usepackage[english]{babel                        
+                             }                                                 
+                             \usepackage{amsmath}                              
+                             -> \usepackage{amssymb}                           
+                             \\usepackage{ctex}                                
+                             \begin{document}                                  
+                             \begin{align*}                                    
+                                                                               

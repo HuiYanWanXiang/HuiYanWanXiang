@@ -1,0 +1,40 @@
+<frozen runpy>:128: RuntimeWarning: 'manim.__main__' found in sys.modules after import of package 'manim', but prior to execution of 'manim.__main__'; this may result in unpredictable behaviour
+
+Animation 0: FadeIn(MathTex('\\text{Pythagorean Theorem}')):   0%|          | 0/1 [00:00<?, ?it/s]
+                                                                                                  
+
+Animation 2: Create(Polygon):   0%|          | 0/1 [00:00<?, ?it/s]
+                                                                   
++--------------------- Traceback (most recent call last) ---------------------+
+| D:\anaconda3\Lib\site-packages\manim\cli\render\commands.py:125 in render   |
+|                                                                             |
+|   122             try:                                                      |
+|   123                 with tempconfig({}):                                  |
+|   124                     scene = SceneClass()                              |
+| > 125                     scene.render()                                    |
+|   126             except Exception:                                         |
+|   127                 error_console.print_exception()                       |
+|   128                 sys.exit(1)                                           |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\scene\scene.py:260 in render           |
+|                                                                             |
+|    257         """                                                          |
+|    258         self.setup()                                                 |
+|    259         try:                                                         |
+| >  260             self.construct()                                         |
+|    261         except EndSceneEarlyException:                               |
+|    262             pass                                                     |
+|    263         except RerunSceneException:                                  |
+|                                                                             |
+| D:\Others\code_D\huiyanwanxiang\HuiYanWanXiang\runs_video\cfc6d559c3104ed49 |
+| e8f6fdaff6e679e\20260224_151440\generated_scene.py:18 in construct          |
+|                                                                             |
+|   15         labels = [                                                     |
+|   16             MathTex(r"A").next_to(triangle.get_vertices()[0], DOWN),   |
+|   17             MathTex(r"B").next_to(triangle.get_vertices()[1], RIGHT),  |
+| > 18             MathTex(r"C").next_to(triangle.get_vertices()[2], UP),     |
+|   19             MathTex(r"AB = a").next_to(triangle.get_vertices()[0], LEF |
+|   20             MathTex(r"BC = b").next_to(triangle.get_vertices()[1], UP) |
+|   21             MathTex(r"AC = c").next_to(triangle.get_vertices()[2], LEF |
++-----------------------------------------------------------------------------+
+IndexError: index 2 is out of bounds for axis 0 with size 2

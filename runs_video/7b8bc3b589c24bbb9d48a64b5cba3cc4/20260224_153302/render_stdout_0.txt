@@ -1,0 +1,189 @@
+Manim Community v0.19.1
+
+[02/24/26 15:33:35] WARNING  Font Arial-Bold not in         text_mobject.py:464
+                             ['AaRunXing (Non-Commercial                       
+                             Use)', 'Agency FB',                               
+                             'Algerian', 'Arial', 'Arial                       
+                             Rounded MT', 'Bahnschrift',                       
+                             'Baskerville Old Face',                           
+                             'Bauhaus 93', 'Bell MT',                          
+                             'Berlin Sans FB', 'Bernard                        
+                             MT', 'Blackadder ITC', 'Bodoni                    
+                             MT', 'Bodoni MT Poster', 'Book                    
+                             Antiqua', 'Bookman Old Style',                    
+                             'Bradley Hand ITC',                               
+                             'Britannic', 'Broadway',                          
+                             'Brush Script MT', 'Calibri',                     
+                             'Californian FB', 'Calisto                        
+                             MT', 'Cambria', 'Cambria                          
+                             Math', 'Candara', 'Cascadia                       
+                             Code', 'Cascadia Mono',                           
+                             'Castellar', 'Centaur',                           
+                             'Century', 'Century Gothic',                      
+                             'Century Schoolbook',                             
+                             'Chiller', 'Colonna MT',                          
+                             'Comic Sans MS', 'Consolas',                      
+                             'Constantia', 'Cooper',                           
+                             'Copperplate Gothic',                             
+                             'Corbel', 'Courier New',                          
+                             'Curlz MT', 'Cursive',                            
+                             'DFLiJinHeiW8-GB',                                
+                             'DFPLiJinHeiW8-GB',                               
+                             'DengXian', 'Dubai', 'Ebrima',                    
+                             'Edwardian Script ITC',                           
+                             'Elephant', 'Engravers MT',                       
+                             'Eras ITC',                                       
+                             'FZDaBiaoSong-B06S',                              
+                             'FZQingKeBenYueSongS-R-GB',                       
+                             'FZShuTi',                                        
+                             'FZXiaoBiaoSong-B05S',                            
+                             'FZYaoTi', 'FangSong',                            
+                             'Fantasy', 'Felix Titling',                       
+                             'Footlight MT', 'Forte',                          
+                             'Franklin Gothic', 'Franklin                      
+                             Gothic Book', 'Freestyle                          
+                             Script', 'French Script MT',                      
+                             'Gabriola', 'Gadugi',                             
+                             'Garamond', 'Georgia', 'Gigi',                    
+                             'Gill Sans', 'Gill Sans MT',                      
+                             'Gloucester MT', 'Goudy Old                       
+                             Style', 'Goudy Stout',                            
+                             'HYLiLiangHeiJ',                                  
+                             'Haettenschweiler', 'Harlow                       
+                             Solid', 'HarmonyOS Sans SC',                      
+                             'Harrington', 'High Tower                         
+                             Text', 'Impact', 'Imprint MT                      
+                             Shadow', 'Informal Roman',                        
+                             'Ink Free', 'Javanese Text',                      
+                             'Jokerman', 'Juice ITC',                          
+                             'KaiTi', 'Kristen ITC',                           
+                             'Kunstler Script', 'Leelawadee                    
+                             UI', 'Li Xuke', 'LiSu',                           
+                             'Lucida Bright', 'Lucida                          
+                             Calligraphy', 'Lucida                             
+                             Console', 'Lucida Fax',                           
+                             'Lucida Handwriting', 'Lucida                     
+                             Sans', 'Lucida Sans                               
+                             Typewriter', 'Lucida Sans                         
+                             Unicode', 'MS Gothic', 'MS                        
+                             PGothic', 'MS Reference Sans                      
+                             Serif', 'MS UI Gothic', 'MV                       
+                             Boli', 'Magneto', 'Maiandra                       
+                             GD', 'Malgun Gothic', 'Matura                     
+                             MT Script Capitals', 'MiSans',                    
+                             'Microsoft Himalaya',                             
+                             'Microsoft JhengHei',                             
+                             'Microsoft JhengHei UI',                          
+                             'Microsoft New Tai Lue',                          
+                             'Microsoft PhagsPa',                              
+                             'Microsoft Sans Serif',                           
+                             'Microsoft Tai Le', 'Microsoft                    
+                             YaHei', 'Microsoft YaHei UI',                     
+                             'Microsoft Yi Baiti',                             
+                             'MingLiU-ExtB',                                   
+                             'MingLiU_HKSCS-ExtB',                             
+                             'MingLiU_MSCS-ExtB',                              
+                             'Mistral', 'Modern No. 20',                       
+                             'Mongolian Baiti',                                
+                             'Monospace', 'Monotype                            
+                             Corsiva', 'Myanmar Text',                         
+                             'NSimSun', 'Niagara Engraved',                    
+                             'Niagara Solid', 'Nirmala                         
+                             Text', 'Nirmala UI', 'Noto                        
+                             Sans JP', 'Noto Sans SC',                         
+                             'Noto Serif SC', 'OCR A', 'Old                    
+                             English Text MT', 'Onyx',                         
+                             'PMingLiU-ExtB', 'Palace                          
+                             Script MT', 'Palatino                             
+                             Linotype', 'Papyrus',                             
+                             'Parchment', 'Perpetua',                          
+                             'Perpetua Titling MT',                            
+                             'Playbill', 'Poor Richard',                       
+                             'Pristina', 'Rage', 'Ravie',                      
+                             'Rockwell', 'STCaiyun',                           
+                             'STFangsong', 'STHupo',                           
+                             'STKaiti', 'STLiti', 'STSong',                    
+                             'STXihei', 'STXingkai',                           
+                             'STXinwei', 'STZhongsong',                        
+                             'Sans', 'Sans Serif                               
+                             Collection', 'Sans-Serif',                        
+                             'Script MT', 'Segoe Print',                       
+                             'Segoe Script', 'Segoe UI',                       
+                             'Segoe UI Emoji', 'Segoe UI                       
+                             Historic', 'Segoe UI Symbol',                     
+                             'Segoe UI Variable Display',                      
+                             'Segoe UI Variable Small',                        
+                             'Segoe UI Variable Text',                         
+                             'Serif', 'Showcard Gothic',                       
+                             'SimHei', 'SimSun',                               
+                             'SimSun-ExtB', 'SimSun-ExtG',                     
+                             'Sitka Banner', 'Sitka                            
+                             Display', 'Sitka Heading',                        
+                             'Sitka Small', 'Sitka                             
+                             Subheading', 'Sitka Text',                        
+                             'SlideTownsoul', 'Snap ITC',                      
+                             'Stencil', 'Sylfaen',                             
+                             'System-ui', 'Tahoma', 'Tempus                    
+                             Sans ITC', 'Times New Roman',                     
+                             'Trebuchet MS', 'Tw Cen MT',                      
+                             'Unispace', 'Verdana', 'Viner                     
+                             Hand ITC', 'Vivaldi',                             
+                             'Vladimir Script', 'WenYue                        
+                             XinQingNianTi (Authorization                      
+                             Required)', 'Wide Latin',                         
+                             'YouYuan', 'Yu Gothic', 'Yu                       
+                             Gothic UI', 'yuweij',                             
+                             '叶根友毛笔行书简体'].                            
+[02/24/26 15:33:38] INFO     Animation 0 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\7b8bc3b589c24bbb                         
+                             9d48a64b5cba3cc4\20260224                         
+                             _153302\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\1292736442_1252346746                         
+                             _223132457.mp4'                                   
+                    INFO     Animation 1 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\7b8bc3b589c24bbb                         
+                             9d48a64b5cba3cc4\20260224                         
+                             _153302\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_4217992463                         
+                             _2875385844.mp4'                                  
+[02/24/26 15:33:39] INFO     Animation 2 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\7b8bc3b589c24bbb                         
+                             9d48a64b5cba3cc4\20260224                         
+                             _153302\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_607791879_                         
+                             829694910.mp4'                                    
+                    INFO     Writing a to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\7b8bc3b589c24bbb9d48                        
+                             a64b5cba3cc4\20260224_1533                        
+                             02\media\Tex\bcb6db03bb81e                        
+                             f3e.tex                                           
+[02/24/26 15:33:40] ERROR    LaTeX compilation error:   tex_file_writing.py:314
+                             LaTeX Error: There's no                           
+                             line here to end.                                 
+                                                                               
+                    ERROR    Context of error:          tex_file_writing.py:348
+                             \usepackage[english]{babel                        
+                             }                                                 
+                             \usepackage{amsmath}                              
+                             -> \usepackage{amssymb}                           
+                             \\usepackage{ctex}                                
+                             \begin{document}                                  
+                             \begin{align*}                                    
+                                                                               

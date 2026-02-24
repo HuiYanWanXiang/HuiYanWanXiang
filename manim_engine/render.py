@@ -43,6 +43,23 @@ Goal: produce a clean educational animation matching the user's request.
 """
 
 # ============================================================
+# 1.5) 扩写提示词（先扩写，再写代码）
+# ============================================================
+EXPAND_INSTRUCTIONS = """You are a prompt expander for Manim educational animations.
+
+Task:
+- Expand the user's request into a clear, structured, detailed animation plan.
+- Include: concept breakdown, scene steps, key objects, equations, timing notes.
+- Keep it concise and actionable for a code generator.
+- Add strict layout constraints to keep all objects inside frame, avoid overlaps, and prevent drifting text/equations.
+
+Output rules:
+- Output plain text only.
+- Do NOT output code.
+- Do NOT use markdown fences.
+"""
+
+# ============================================================
 # 2) 安全检查：双保险（regex + AST）
 # ============================================================
 BANNED_PATTERNS = [
@@ -96,6 +113,45 @@ def patch_common_manim_api_issues(code: str) -> str:
     → 替换为 .plot(
     """
     code = re.sub(r"\.get_graph\s*\(", ".plot(", code)
+    # 处理中文 MathTex 在 pdfLaTeX 下报错：优先将纯中文 MathTex 改为 Tex
+    code = _downgrade_chinese_mathtex(code)
+    # 若出现中文 Tex/MathTex，则注入 xelatex + ctex 支持
+    code = _inject_xelatex_ctex(code)
+    return code
+
+def _has_chinese(text: str) -> bool:
+    return bool(re.search(r"[\u4e00-\u9fff]", text or ""))
+
+def _downgrade_chinese_mathtex(code: str) -> str:
+    """
+    将明显为纯中文标题的 MathTex(...) 替换为 Tex(...)
+    避免 math 模式下的中文导致 LaTeX 报错。
+    """
+    def _repl(m):
+        raw = m.group(1)
+        if _has_chinese(raw) and (not re.search(r"[0-9=+\-*/^_{}\\\\]", raw)):
+            return f'Tex(r"{raw}")'
+        return m.group(0)
+    return re.sub(r'MathTex\(r"([^"]*)"\)', _repl, code)
+
+def _inject_xelatex_ctex(code: str) -> str:
+    """
+    当代码中出现中文且使用 Tex/MathTex 时，注入 xelatex + ctex 配置。
+    """
+    if not _has_chinese(code):
+        return code
+    if not re.search(r"\b(Tex|MathTex)\s*\(", code):
+        return code
+    inject = (
+        "config.tex_compiler = \"xelatex\"\n"
+        "config.tex_template = TexTemplate()\n"
+        "config.tex_template.add_to_preamble(r\"\\\\usepackage{ctex}\")\n"
+    )
+    if inject in code:
+        return code
+    lines = code.splitlines()
+    if lines and lines[0].startswith("from manim import *"):
+        return "\n".join([lines[0], inject] + lines[1:])
     return code
 
 # ============================================================
@@ -151,6 +207,29 @@ def call_llm_raw(client: OpenAI, input_text: str) -> str:
         ],
         temperature=0.6,
         max_tokens=4096,
+        stream=False,
+    )
+    content = resp.choices[0].message.content if resp.choices else ""
+    return strip_code_fences(content or "")
+
+def expand_prompt(client: OpenAI, original_request: str, duration: float) -> str:
+    """
+    第一次调用 LLM：扩写提示词（不产出代码）。
+    """
+    user_text = (
+        "Expand this user request into a detailed Manim animation plan.\n"
+        f"Target duration: about {duration:.1f} seconds.\n"
+        "User request:\n"
+        f"{original_request}\n"
+    )
+    resp = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": EXPAND_INSTRUCTIONS},
+            {"role": "user", "content": user_text},
+        ],
+        temperature=0.6,
+        max_tokens=2048,
         stream=False,
     )
     content = resp.choices[0].message.content if resp.choices else ""
@@ -261,16 +340,24 @@ def main():
     # ✅ 关键：把 base_url 传给 OpenAI 客户端（兼容 deepseek / moonshot / aliyun 等）
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"], base_url=BASE_URL)
 
+    # 第一次调用：扩写提示词
+    expanded_prompt = expand_prompt(client, args.prompt, args.duration)
+    if not expanded_prompt.strip():
+        expanded_prompt = args.prompt
+    (run_dir / "expanded_prompt.txt").write_text(expanded_prompt, encoding="utf-8")
+
     initial_user_prompt = (
         "Generate a ManimCE educational animation.\n"
         f"Target total duration: about {args.duration:.1f} seconds.\n"
         "Style constraints:\n"
         "- Clear visuals, not cluttered.\n"
         "- Keep everything inside frame.\n"
+        "- Enforce stable layout: anchor groups, avoid overlaps, avoid drifting text, keep titles/top labels fixed.\n"
+        "- Use aligned positioning (shift/next_to/arrange) and avoid absolute coords that push objects off-screen.\n"
         "- Use MathTex for equations and animate steps cleanly.\n"
         "- IMPORTANT: All Tex/MathTex strings must be RAW strings: MathTex(r\"...\").\n"
-        "User request:\n"
-        f"{args.prompt}\n"
+        "Expanded request:\n"
+        f"{expanded_prompt}\n"
     )
 
     code = generate_code_with_retries(

@@ -1,0 +1,10 @@
+Manim Community v0.19.1
+
+[02/24/26 15:23:23] ERROR    LaTeX compilation error:   tex_file_writing.py:314
+                             LaTeX Error: Unicode                              
+                             character 勾 (U+52FE)                             
+                                                                               
+                    ERROR    Context of error:          tex_file_writing.py:348
+                             -> \text{勾股定理}                                
+                             \end{align*}                                      
+                             \end{document}                                    

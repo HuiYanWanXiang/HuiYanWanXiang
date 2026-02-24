@@ -55,6 +55,20 @@ app.include_router(manim_router)
 SAVE_DIR = "saved_projects"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
+# 运行期错误记录（用于前端展示）
+ERROR_LOGS = []
+MAX_ERROR_LOGS = 200
+
+def record_error(kind: str, message: str, detail: Optional[str] = None):
+    ERROR_LOGS.append({
+        "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "kind": kind,
+        "message": message,
+        "detail": detail or "",
+    })
+    if len(ERROR_LOGS) > MAX_ERROR_LOGS:
+        del ERROR_LOGS[: len(ERROR_LOGS) - MAX_ERROR_LOGS]
+
 # ==============================================================================
 # 2. 数据模型
 # ==============================================================================
@@ -164,6 +178,7 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
         # 业务可预期错误
         await _set_job(job_id, {"status": "error", "error": str(e)})
         logger.error(f"[HTML_JOB:{job_id}] HuiyanError: {e}")
+        record_error("html", str(e), f"job_id={job_id} | prompt={prompt} | model={req.model} | base_url={req.base_url}")
 
     except Exception as e:
         # LLM/网络/未知错误
@@ -171,6 +186,7 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
         msg = str(e)
         await _set_job(job_id, {"status": "error", "error": msg})
         logger.error(f"[HTML_JOB:{job_id}] Exception: {msg}")
+        record_error("html", msg, f"job_id={job_id} | prompt={prompt} | model={req.model} | base_url={req.base_url}")
 
     finally:
         try:
@@ -227,6 +243,13 @@ async def html_status(job_id: str):
 
     # 返回给前端：done 时带 html / saved_path；error 时带 error
     return JSONResponse(content=job)
+
+@app.get("/api/errors")
+async def get_errors():
+    """
+    返回最近的系统错误日志（HTML 生成等）
+    """
+    return {"items": ERROR_LOGS}
 
 # ==============================================================================
 # 5. 入口

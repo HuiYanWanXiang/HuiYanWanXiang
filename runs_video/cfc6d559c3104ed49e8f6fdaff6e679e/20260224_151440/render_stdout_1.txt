@@ -1,0 +1,14 @@
+Manim Community v0.19.1
+
+[02/24/26 15:15:48] INFO     Animation 0 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             1292736442_3709287990_2231324                     
+                             57)                                               
+                    INFO     Animation 1 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             2827983349_4217992463_3751223                     
+                             538)                                              
+                    INFO     Animation 2 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             2827983349_2019416163_2231324                     
+                             57)                                               
