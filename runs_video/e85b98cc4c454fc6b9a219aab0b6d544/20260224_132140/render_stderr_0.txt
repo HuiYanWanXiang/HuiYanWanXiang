@@ -1,0 +1,133 @@
+
+Animation 0: Write(MathTex('a^2 + b^2 = c^2')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 0: Write(MathTex('a^2 + b^2 = c^2')):  17%|█▋        | 5/30 [00:00<00:00, 48.32it/s]
+Animation 0: Write(MathTex('a^2 + b^2 = c^2')):  33%|███▎      | 10/30 [00:00<00:00, 44.21it/s]
+Animation 0: Write(MathTex('a^2 + b^2 = c^2')):  53%|█████▎    | 16/30 [00:00<00:00, 47.95it/s]
+Animation 0: Write(MathTex('a^2 + b^2 = c^2')):  70%|███████   | 21/30 [00:00<00:00, 43.86it/s]
+Animation 0: Write(MathTex('a^2 + b^2 = c^2')):  87%|████████▋ | 26/30 [00:00<00:00, 43.67it/s]
+                                                                                               
+
+Animation 2: Create(Polygon), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 2: Create(Polygon), etc.:  27%|██▋       | 8/30 [00:00<00:00, 67.17it/s]
+Animation 2: Create(Polygon), etc.:  50%|█████     | 15/30 [00:00<00:00, 68.43it/s]
+Animation 2: Create(Polygon), etc.:  73%|███████▎  | 22/30 [00:00<00:00, 60.64it/s]
+Animation 2: Create(Polygon), etc.: 100%|██████████| 30/30 [00:00<00:00, 64.22it/s]
+                                                                                   
+
+Animation 4: Write(MathTex('a')), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 4: Write(MathTex('a')), etc.:  23%|██▎       | 7/30 [00:00<00:00, 63.56it/s]
+Animation 4: Write(MathTex('a')), etc.:  47%|████▋     | 14/30 [00:00<00:00, 56.50it/s]
+Animation 4: Write(MathTex('a')), etc.:  67%|██████▋   | 20/30 [00:00<00:00, 56.53it/s]
+Animation 4: Write(MathTex('a')), etc.:  87%|████████▋ | 26/30 [00:00<00:00, 57.55it/s]
+                                                                                       
+
+Animation 6: Create(Square), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 6: Create(Square), etc.:  23%|██▎       | 7/30 [00:00<00:00, 64.64it/s]
+Animation 6: Create(Square), etc.:  47%|████▋     | 14/30 [00:00<00:00, 49.86it/s]
+Animation 6: Create(Square), etc.:  70%|███████   | 21/30 [00:00<00:00, 56.39it/s]
+Animation 6: Create(Square), etc.:  90%|█████████ | 27/30 [00:00<00:00, 53.19it/s]
+                                                                                  
+
+Animation 8: Create(Square), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 8: Create(Square), etc.:  23%|██▎       | 7/30 [00:00<00:00, 64.90it/s]
+Animation 8: Create(Square), etc.:  47%|████▋     | 14/30 [00:00<00:00, 63.81it/s]
+Animation 8: Create(Square), etc.:  70%|███████   | 21/30 [00:00<00:00, 48.87it/s]
+Animation 8: Create(Square), etc.:  90%|█████████ | 27/30 [00:00<00:00, 49.51it/s]
+                                                                                  
+
+Animation 10: Create(Square), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 10: Create(Square), etc.:  27%|██▋       | 8/30 [00:00<00:00, 70.21it/s]
+Animation 10: Create(Square), etc.:  53%|█████▎    | 16/30 [00:00<00:00, 59.76it/s]
+Animation 10: Create(Square), etc.:  77%|███████▋  | 23/30 [00:00<00:00, 58.82it/s]
+Animation 10: Create(Square), etc.:  97%|█████████▋| 29/30 [00:00<00:00, 53.39it/s]
+                                                                                   
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/cli/render/commands.py:125 in │
+│ render                                                                                           │
+│                                                                                                  │
+│   122 │   │   │   try:                                                                           │
+│   123 │   │   │   │   with tempconfig({}):                                                       │
+│   124 │   │   │   │   │   scene = SceneClass()                                                   │
+│ ❱ 125 │   │   │   │   │   scene.render()                                                         │
+│   126 │   │   │   except Exception:                                                              │
+│   127 │   │   │   │   error_console.print_exception()                                            │
+│   128 │   │   │   │   sys.exit(1)                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/scene/scene.py:260 in render  │
+│                                                                                                  │
+│    257 │   │   """                                                                               │
+│    258 │   │   self.setup()                                                                      │
+│    259 │   │   try:                                                                              │
+│ ❱  260 │   │   │   self.construct()                                                              │
+│    261 │   │   except EndSceneEarlyException:                                                    │
+│    262 │   │   │   pass                                                                          │
+│    263 │   │   except RerunSceneException:                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/e85b98cc4c454fc6b9a219aab0b6d544/20260224_132140/generated_sc │
+│ ene.py:94 in construct                                                                           │
+│                                                                                                  │
+│    91 │   │   self.wait(0.5)                                                                     │
+│    92 │   │                                                                                      │
+│    93 │   │   # Show equation with colors                                                        │
+│ ❱  94 │   │   equation = MathTex(                                                                │
+│    95 │   │   │   r"\textcolor{red}{a^2} + \textcolor{green}{b^2} = \textcolor{purple}{c^2}",    │
+│    96 │   │   │   font_size=48                                                                   │
+│    97 │   │   )                                                                                  │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:3 │
+│ 00 in __init__                                                                                   │
+│                                                                                                  │
+│   297 │   │   │   │   │   │   """,                                                               │
+│   298 │   │   │   │   │   ),                                                                     │
+│   299 │   │   │   │   )                                                                          │
+│ ❱ 300 │   │   │   raise compilation_error                                                        │
+│   301 │   │   self.set_color_by_tex_to_color_map(self.tex_to_color_map)                          │
+│   302 │   │                                                                                      │
+│   303 │   │   if self.organize_left_to_right:                                                    │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:2 │
+│ 79 in __init__                                                                                   │
+│                                                                                                  │
+│   276 │   │   self.brace_notation_split_occurred = False                                         │
+│   277 │   │   self.tex_strings = self._break_up_tex_strings(tex_strings)                         │
+│   278 │   │   try:                                                                               │
+│ ❱ 279 │   │   │   super().__init__(                                                              │
+│   280 │   │   │   │   self.arg_separator.join(self.tex_strings),                                 │
+│   281 │   │   │   │   tex_environment=self.tex_environment,                                      │
+│   282 │   │   │   │   tex_template=self.tex_template,                                            │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:8 │
+│ 0 in __init__                                                                                    │
+│                                                                                                  │
+│    77 │   │   self.tex_template: TexTemplate = tex_template                                      │
+│    78 │   │                                                                                      │
+│    79 │   │   self.tex_string = tex_string                                                       │
+│ ❱  80 │   │   file_name = tex_to_svg_file(                                                       │
+│    81 │   │   │   self._get_modified_expression(tex_string),                                     │
+│    82 │   │   │   environment=self.tex_environment,                                              │
+│    83 │   │   │   tex_template=self.tex_template,                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:65  │
+│ in tex_to_svg_file                                                                               │
+│                                                                                                  │
+│    62 │   if svg_file.exists():                                                                  │
+│    63 │   │   return svg_file                                                                    │
+│    64 │                                                                                          │
+│ ❱  65 │   dvi_file = compile_tex(                                                                │
+│    66 │   │   tex_file,                                                                          │
+│    67 │   │   tex_template.tex_compiler,                                                         │
+│    68 │   │   tex_template.output_format,                                                        │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:212 │
+│ in compile_tex                                                                                   │
+│                                                                                                  │
+│   209 │   │   if cp.returncode != 0:                                                             │
+│   210 │   │   │   log_file = tex_file.with_suffix(".log")                                        │
+│   211 │   │   │   print_all_tex_errors(log_file, tex_compiler, tex_file)                         │
+│ ❱ 212 │   │   │   raise ValueError(                                                              │
+│   213 │   │   │   │   f"{tex_compiler} error converting to"                                      │
+│   214 │   │   │   │   f" {output_format[1:]}. See log output above or"                           │
+│   215 │   │   │   │   f" the log file: {log_file}",                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+ValueError: latex error converting to dvi. See log output above or the log file: 
+/root/hui-yan-wan-xiang/runs_video/e85b98cc4c454fc6b9a219aab0b6d544/20260224_132140/media/Tex/f2847d425b96e22b.log

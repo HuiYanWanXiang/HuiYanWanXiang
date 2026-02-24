@@ -22,10 +22,10 @@ router = APIRouter(prefix="/api", tags=["manim"])
 class VideoRequest(BaseModel):
     prompt: str
     api_key: str
-    base_url: str = "https://api.openai.com/v1"
+    base_url: str = "https://api.openai.com/v1"  # DeepSeek 用 https://api.deepseek.com
     model: str = "gpt-4o-mini"
     duration: float = 12.0
-    quality: str = "m"          # l/m/h/k
+    quality: str = "m"             # l/m/h/k
     fps: int = 30
     resolution: str = "1920,1080"  # width,height
 
@@ -33,10 +33,8 @@ class VideoRequest(BaseModel):
 jobs_lock = threading.Lock()
 jobs: Dict[str, Dict[str, Any]] = {}
 
-
 def _tail(text: str, n: int = 4000) -> str:
     return (text or "")[-n:]
-
 
 def _extract_video_path(stdout: str) -> Optional[Path]:
     if not stdout:
@@ -47,7 +45,6 @@ def _extract_video_path(stdout: str) -> Optional[Path]:
             if p:
                 return Path(p)
     return None
-
 
 def _run_job(job_id: str, payload: VideoRequest) -> None:
     outdir = RUNS_DIR / job_id
@@ -65,16 +62,22 @@ def _run_job(job_id: str, payload: VideoRequest) -> None:
 
     env = dict(os.environ)
     env["OPENAI_API_KEY"] = payload.api_key
-    if payload.base_url:
-        env["OPENAI_BASE_URL"] = payload.base_url
-    if payload.model:
-        env["OPENAI_MODEL"] = payload.model
+    env["OPENAI_BASE_URL"] = payload.base_url or env.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
+    env["OPENAI_MODEL"] = payload.model or env.get("OPENAI_MODEL", "gpt-4o-mini")
 
     with jobs_lock:
         jobs[job_id]["status"] = "running"
         jobs[job_id]["cmd"] = " ".join(cmd)
 
-    proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    proc = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        env=env,
+        encoding="utf-8",
+        errors="replace",
+    )
+
     stdout = proc.stdout or ""
     stderr = proc.stderr or ""
     video_path = _extract_video_path(stdout)
@@ -97,7 +100,6 @@ def _run_job(job_id: str, payload: VideoRequest) -> None:
             jobs[job_id]["status"] = "error"
             jobs[job_id]["video_url"] = None
 
-
 @router.post("/generate-video")
 def generate_video(payload: VideoRequest):
     prompt = (payload.prompt or "").strip()
@@ -117,7 +119,6 @@ def generate_video(payload: VideoRequest):
 
     return {"job_id": job_id, "status": "queued"}
 
-
 @router.get("/video-status/{job_id}")
 def video_status(job_id: str):
     with jobs_lock:
@@ -134,7 +135,6 @@ def video_status(job_id: str):
         "stderr_tail": _tail(job.get("stderr", "")),
         "cmd": job.get("cmd"),
     }
-
 
 # --------------- helper to mount runs ---------------
 def mount_runs(app):
