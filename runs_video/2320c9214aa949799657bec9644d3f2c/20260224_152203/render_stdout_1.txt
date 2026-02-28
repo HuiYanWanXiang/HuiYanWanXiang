@@ -1,0 +1,17 @@
+Manim Community v0.19.1
+
+[02/24/26 15:22:57] INFO     Writing \text{勾股定理} to tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\2320c9214aa949799657                        
+                             bec9644d3f2c\20260224_1522                        
+                             03\media\Tex\a451d47129d28                        
+                             28b.tex                                           
+[02/24/26 15:22:58] ERROR    LaTeX compilation error:   tex_file_writing.py:314
+                             LaTeX Error: Unicode                              
+                             character 勾 (U+52FE)                             
+                                                                               
+                    ERROR    Context of error:          tex_file_writing.py:348
+                             -> \text{勾股定理}                                
+                             \end{align*}                                      
+                             \end{document}                                    

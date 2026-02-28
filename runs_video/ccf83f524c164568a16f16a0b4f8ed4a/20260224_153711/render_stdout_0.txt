@@ -1,0 +1,43 @@
+Manim Community v0.19.1
+
+[02/24/26 15:37:38] INFO     Writing Pythagorean        tex_file_writing.py:111
+                             Theorem to                                        
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\ccf83f524c164568a16f                        
+                             16a0b4f8ed4a\20260224_1537                        
+                             11\media\Tex\2ba1dd3fb6a1e                        
+                             5c8.tex                                           
+[02/24/26 15:37:42] INFO     Animation 0 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\1292736442_917063857_                         
+                             223132457.mp4'                                    
+[02/24/26 15:37:43] INFO     Animation 1 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2844360058                         
+                             _416383705.mp4'                                   
+                    INFO     Animation 2 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2651481853                         
+                             _4166880379.mp4'                                  

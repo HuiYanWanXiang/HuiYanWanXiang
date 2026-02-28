@@ -1,0 +1,92 @@
+<frozen runpy>:128: RuntimeWarning: 'manim.__main__' found in sys.modules after import of package 'manim', but prior to execution of 'manim.__main__'; this may result in unpredictable behaviour
++--------------------- Traceback (most recent call last) ---------------------+
+| D:\anaconda3\Lib\site-packages\manim\cli\render\commands.py:125 in render   |
+|                                                                             |
+|   122             try:                                                      |
+|   123                 with tempconfig({}):                                  |
+|   124                     scene = SceneClass()                              |
+| > 125                     scene.render()                                    |
+|   126             except Exception:                                         |
+|   127                 error_console.print_exception()                       |
+|   128                 sys.exit(1)                                           |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\scene\scene.py:260 in render           |
+|                                                                             |
+|    257         """                                                          |
+|    258         self.setup()                                                 |
+|    259         try:                                                         |
+| >  260             self.construct()                                         |
+|    261         except EndSceneEarlyException:                               |
+|    262             pass                                                     |
+|    263         except RerunSceneException:                                  |
+|                                                                             |
+| D:\Others\code_D\huiyanwanxiang\HuiYanWanXiang\runs_video\2320c9214aa949799 |
+| 657bec9644d3f2c\20260224_152203\generated_scene.py:6 in construct           |
+|                                                                             |
+|    3 class GeneratedScene(Scene):                                           |
+|    4     def construct(self):                                               |
+|    5         # Scene Introduction                                           |
+| >  6         title = MathTex(r"\text{勾股定理}").scale(1.5)                 |
+|    7         self.play(FadeIn(title))                                       |
+|    8         self.wait(1.5)                                                 |
+|    9         self.play(FadeOut(title))                                      |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\mobject\text\tex_mobject.py:300 in     |
+| __init__                                                                    |
+|                                                                             |
+|   297                         """,                                          |
+|   298                     ),                                                |
+|   299                 )                                                     |
+| > 300             raise compilation_error                                   |
+|   301         self.set_color_by_tex_to_color_map(self.tex_to_color_map)     |
+|   302                                                                       |
+|   303         if self.organize_left_to_right:                               |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\mobject\text\tex_mobject.py:279 in     |
+| __init__                                                                    |
+|                                                                             |
+|   276         self.brace_notation_split_occurred = False                    |
+|   277         self.tex_strings = self._break_up_tex_strings(tex_strings)    |
+|   278         try:                                                          |
+| > 279             super().__init__(                                         |
+|   280                 self.arg_separator.join(self.tex_strings),            |
+|   281                 tex_environment=self.tex_environment,                 |
+|   282                 tex_template=self.tex_template,                       |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\mobject\text\tex_mobject.py:80 in      |
+| __init__                                                                    |
+|                                                                             |
+|    77         self.tex_template: TexTemplate = tex_template                 |
+|    78                                                                       |
+|    79         self.tex_string = tex_string                                  |
+| >  80         file_name = tex_to_svg_file(                                  |
+|    81             self._get_modified_expression(tex_string),                |
+|    82             environment=self.tex_environment,                         |
+|    83             tex_template=self.tex_template,                           |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\utils\tex_file_writing.py:65 in        |
+| tex_to_svg_file                                                             |
+|                                                                             |
+|    62     if svg_file.exists():                                             |
+|    63         return svg_file                                               |
+|    64                                                                       |
+| >  65     dvi_file = compile_tex(                                           |
+|    66         tex_file,                                                     |
+|    67         tex_template.tex_compiler,                                    |
+|    68         tex_template.output_format,                                   |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\utils\tex_file_writing.py:212 in       |
+| compile_tex                                                                 |
+|                                                                             |
+|   209         if cp.returncode != 0:                                        |
+|   210             log_file = tex_file.with_suffix(".log")                   |
+|   211             print_all_tex_errors(log_file, tex_compiler, tex_file)    |
+| > 212             raise ValueError(                                         |
+|   213                 f"{tex_compiler} error converting to"                 |
+|   214                 f" {output_format[1:]}. See log output above or"      |
+|   215                 f" the log file: {log_file}",                         |
++-----------------------------------------------------------------------------+
+ValueError: latex error converting to dvi. See log output above or the log 
+file: 
+D:\Others\code_D\huiyanwanxiang\HuiYanWanXiang\runs_video\2320c9214aa949799657b
+ec9644d3f2c\20260224_152203\media\Tex\a451d47129d2828b.log

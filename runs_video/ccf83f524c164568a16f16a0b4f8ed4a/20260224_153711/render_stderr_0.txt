@@ -1,0 +1,82 @@
+<frozen runpy>:128: RuntimeWarning: 'manim.__main__' found in sys.modules after import of package 'manim', but prior to execution of 'manim.__main__'; this may result in unpredictable behaviour
+
+Animation 0: FadeIn(MathTex('Pythagorean Theorem')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 0: FadeIn(MathTex('Pythagorean Theorem')):  33%|###3      | 10/30 [00:00<00:00, 92.73it/s]
+Animation 0: FadeIn(MathTex('Pythagorean Theorem')):  67%|######6   | 20/30 [00:00<00:00, 89.51it/s]
+Animation 0: FadeIn(MathTex('Pythagorean Theorem')):  97%|#########6| 29/30 [00:00<00:00, 82.81it/s]
+                                                                                                    
+
+Animation 2: FadeOut(MathTex('Pythagorean Theorem')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 2: FadeOut(MathTex('Pythagorean Theorem')):  23%|##3       | 7/30 [00:00<00:00, 67.18it/s]
+Animation 2: FadeOut(MathTex('Pythagorean Theorem')):  47%|####6     | 14/30 [00:00<00:00, 59.63it/s]
+Animation 2: FadeOut(MathTex('Pythagorean Theorem')):  70%|#######   | 21/30 [00:00<00:00, 58.76it/s]
+Animation 2: FadeOut(MathTex('Pythagorean Theorem')):  93%|#########3| 28/30 [00:00<00:00, 60.68it/s]
+                                                                                                     
++--------------------- Traceback (most recent call last) ---------------------+
+| D:\anaconda3\Lib\site-packages\manim\cli\render\commands.py:125 in render   |
+|                                                                             |
+|   122             try:                                                      |
+|   123                 with tempconfig({}):                                  |
+|   124                     scene = SceneClass()                              |
+| > 125                     scene.render()                                    |
+|   126             except Exception:                                         |
+|   127                 error_console.print_exception()                       |
+|   128                 sys.exit(1)                                           |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\scene\scene.py:260 in render           |
+|                                                                             |
+|    257         """                                                          |
+|    258         self.setup()                                                 |
+|    259         try:                                                         |
+| >  260             self.construct()                                         |
+|    261         except EndSceneEarlyException:                               |
+|    262             pass                                                     |
+|    263         except RerunSceneException:                                  |
+|                                                                             |
+| D:\Others\code_D\huiyanwanxiang\HuiYanWanXiang\runs_video\ccf83f524c164568a |
+| 16f16a0b4f8ed4a\20260224_153711\generated_scene.py:12 in construct          |
+|                                                                             |
+|    9         self.play(FadeOut(title))                                      |
+|   10                                                                        |
+|   11         # Triangle Creation                                            |
+| > 12         triangle = Polygon(ORIGIN, 3, 0, 3, 4, color=WHITE)            |
+|   13         labels = {                                                     |
+|   14             'A': Dot(triangle.get_vertices()[0]),                      |
+|   15             'B': Dot(triangle.get_vertices()[1]),                      |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\mobject\geometry\polygram.py:330 in    |
+| __init__                                                                    |
+|                                                                             |
+|   327     """                                                               |
+|   328                                                                       |
+|   329     def __init__(self, *vertices: Point3DLike, **kwargs: Any) -> None |
+| > 330         super().__init__(vertices, **kwargs)                          |
+|   331                                                                       |
+|   332                                                                       |
+|   333 class RegularPolygram(Polygram):                                      |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\mobject\geometry\polygram.py:97 in     |
+| __init__                                                                    |
+|                                                                             |
+|    94             first_vertex = np.array(first_vertex)                     |
+|    95                                                                       |
+|    96             self.start_new_path(first_vertex)                         |
+| >  97             self.add_points_as_corners(                               |
+|    98                 [*(np.array(vertex) for vertex in vertices), first_ve |
+|    99             )                                                         |
+|   100                                                                       |
+|                                                                             |
+| D:\anaconda3\Lib\site-packages\manim\mobject\types\vectorized_mobject.py:10 |
+| 58 in add_points_as_corners                                                 |
+|                                                                             |
+|   1055         """                                                          |
+|   1056         self.throw_error_if_no_points()                              |
+|   1057                                                                      |
+| > 1058         points = np.asarray(points).reshape(-1, self.dim)            |
+|   1059         num_points = points.shape[0]                                 |
+|   1060         if num_points == 0:                                          |
+|   1061             return self                                              |
++-----------------------------------------------------------------------------+
+ValueError: setting an array element with a sequence. The requested array has 
+an inhomogeneous shape after 1 dimensions. The detected shape was (5,) + 
+inhomogeneous part.

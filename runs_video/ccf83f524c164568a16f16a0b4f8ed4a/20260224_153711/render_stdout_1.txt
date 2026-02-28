@@ -1,0 +1,332 @@
+Manim Community v0.19.1
+
+[02/24/26 15:38:05] INFO     Animation 0 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             1292736442_917063857_22313245                     
+                             7)                                                
+                    INFO     Animation 1 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             2827983349_2844360058_4163837                     
+                             05)                                               
+                    INFO     Animation 2 : Using cached    cairo_renderer.py:94
+                             data (hash :                                      
+                             2827983349_2651481853_4166880                     
+                             379)                                              
+                    INFO     Writing A to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\ccf83f524c164568a16f                        
+                             16a0b4f8ed4a\20260224_1537                        
+                             11\media\Tex\90f07b07e57ad                        
+                             f79.tex                                           
+[02/24/26 15:38:08] INFO     Writing B to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\ccf83f524c164568a16f                        
+                             16a0b4f8ed4a\20260224_1537                        
+                             11\media\Tex\d82288bb87e99                        
+                             d59.tex                                           
+[02/24/26 15:38:11] INFO     Writing C to               tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\ccf83f524c164568a16f                        
+                             16a0b4f8ed4a\20260224_1537                        
+                             11\media\Tex\86474863bfdee                        
+                             3e7.tex                                           
+[02/24/26 15:38:14] INFO     Animation 3 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_3827333807                         
+                             _1666280314.mp4'                                  
+                    INFO     Animation 4 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2199947040                         
+                             _2082703550.mp4'                                  
+[02/24/26 15:38:15] INFO     Animation 5 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_1427613315                         
+                             _3534638718.mp4'                                  
+                    INFO     Animation 6 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2941376204                         
+                             _2635677389.mp4'                                  
+[02/24/26 15:38:16] INFO     Animation 7 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_4217992463                         
+                             _508317562.mp4'                                   
+                    INFO     Animation 8 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2762089421                         
+                             _948307428.mp4'                                   
+[02/24/26 15:38:17] INFO     Animation 9 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_1673460139                         
+                             _3981690343.mp4'                                  
+[02/24/26 15:38:18] INFO     Animation 10 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2684920060                         
+                             _3703022723.mp4'                                  
+[02/24/26 15:38:19] INFO     Animation 11 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_4217992463                         
+                             _1191490270.mp4'                                  
+                    INFO     Writing a^2 + b^2 = c^2 to tex_file_writing.py:111
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\ccf83f524c164568a16f                        
+                             16a0b4f8ed4a\20260224_1537                        
+                             11\media\Tex\e4be163a00cf4                        
+                             24f.tex                                           
+[02/24/26 15:38:22] INFO     Animation 12 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_1334068846                         
+                             _1406189222.mp4'                                  
+                    INFO     Animation 13 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_4217992463                         
+                             _4205466861.mp4'                                  
+[02/24/26 15:38:23] INFO     Animation 14 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_1956905843                         
+                             _1874591586.mp4'                                  
+                    INFO     Animation 15 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_3394500337                         
+                             _1536225391.mp4'                                  
+[02/24/26 15:38:24] INFO     Animation 16 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2592031555                         
+                             _1910169223.mp4'                                  
+                    INFO     Animation 17 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_3394500337                         
+                             _3579154860.mp4'                                  
+[02/24/26 15:38:25] INFO     Animation 18 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2592031555                         
+                             _2360454342.mp4'                                  
+                    INFO     Animation 19 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_3394500337                         
+                             _3558052561.mp4'                                  
+[02/24/26 15:38:26] INFO     Animation 20 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2592031555                         
+                             _2345292711.mp4'                                  
+                    INFO     Animation 21 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_3394500337                         
+                             _3109495786.mp4'                                  
+                    INFO     Animation 22 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2592031555                         
+                             _1024460849.mp4'                                  
+[02/24/26 15:38:27] INFO     Animation 23 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_3394500337                         
+                             _3976195418.mp4'                                  
+                    INFO     Writing In a right         tex_file_writing.py:111
+                             triangle, the square of                           
+                             the hypotenuse equals the                         
+                             sum of the squares of the                         
+                             other two sides. to                               
+                             D:\Others\code_D\huiyanwan                        
+                             xiang\HuiYanWanXiang\runs_                        
+                             video\ccf83f524c164568a16f                        
+                             16a0b4f8ed4a\20260224_1537                        
+                             11\media\Tex\9f2cb7b02ae1e                        
+                             e17.tex                                           
+[02/24/26 15:38:32] INFO     Animation 24 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_54471135_1                         
+                             530876938.mp4'                                    
+[02/24/26 15:38:33] INFO     Animation 25 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2844360058                         
+                             _254736584.mp4'                                   
+[02/24/26 15:38:35] INFO     Animation 26 : Partial    scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_1898121577                         
+                             _2523315273.mp4'                                  
+                    INFO     Combining to Movie file.  scene_file_writer.py:740
+[02/24/26 15:38:36] INFO                               scene_file_writer.py:887
+                             File ready at                                     
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\ccf83f524c164568                         
+                             a16f16a0b4f8ed4a\20260224                         
+                             _153711\media\videos\gene                         
+                             rated_scene\720p30\Genera                         
+                             tedScene.mp4'                                     
+                                                                               
+                    INFO     Rendered GeneratedScene               scene.py:279
+                             Played 27 animations                              
+You are using manim version v0.19.1, but version v0.20.0 is available.
+You should consider upgrading via pip install -U manim

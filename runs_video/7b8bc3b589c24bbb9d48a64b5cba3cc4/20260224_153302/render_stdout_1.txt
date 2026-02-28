@@ -1,0 +1,48 @@
+Manim Community v0.19.1
+
+[02/24/26 15:34:01] INFO     Animation 0 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\7b8bc3b589c24bbb                         
+                             9d48a64b5cba3cc4\20260224                         
+                             _153302\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\1292736442_936961486_                         
+                             223132457.mp4'                                    
+[02/24/26 15:34:02] INFO     Animation 1 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\7b8bc3b589c24bbb                         
+                             9d48a64b5cba3cc4\20260224                         
+                             _153302\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_4217992463                         
+                             _3514627243.mp4'                                  
+[02/24/26 15:34:03] INFO     Animation 2 : Partial     scene_file_writer.py:590
+                             movie file written in                             
+                             'D:\Others\code_D\huiyanw                         
+                             anxiang\HuiYanWanXiang\ru                         
+                             ns_video\7b8bc3b589c24bbb                         
+                             9d48a64b5cba3cc4\20260224                         
+                             _153302\media\videos\gene                         
+                             rated_scene\720p30\partia                         
+                             l_movie_files\GeneratedSc                         
+                             ene\2827983349_2606607764                         
+                             _1060396665.mp4'                                  
+[02/24/26 15:34:04] ERROR    LaTeX compilation error:   tex_file_writing.py:314
+                             LaTeX Error: There's no                           
+                             line here to end.                                 
+                                                                               
+                    ERROR    Context of error:          tex_file_writing.py:348
+                             \usepackage[english]{babel                        
+                             }                                                 
+                             \usepackage{amsmath}                              
+                             -> \usepackage{amssymb}                           
+                             \\usepackage{ctex}                                
+                             \begin{document}                                  
+                             \begin{align*}                                    
+                                                                               
