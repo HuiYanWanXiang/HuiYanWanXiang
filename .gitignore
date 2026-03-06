@@ -18,3 +18,16 @@ saved_projects/
 # generated outputs
 runs_video/
 
+
+# ===== generated / cache =====
+runs_video/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.tmp
+.DS_Store
+.ipynb_checkpoints/
+.cache/
+dist/
+build/
