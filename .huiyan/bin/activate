@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV=/root/hui-yan-wan-xiang/.huiyan
+VIRTUAL_ENV=/root/HuiYanWanXiang/.huiyan
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -59,6 +59,7 @@ os.makedirs(SAVE_DIR, exist_ok=True)
 ERROR_LOGS = []
 MAX_ERROR_LOGS = 200
 
+
 def record_error(kind: str, message: str, detail: Optional[str] = None):
     ERROR_LOGS.append({
         "time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -68,6 +69,7 @@ def record_error(kind: str, message: str, detail: Optional[str] = None):
     })
     if len(ERROR_LOGS) > MAX_ERROR_LOGS:
         del ERROR_LOGS[: len(ERROR_LOGS) - MAX_ERROR_LOGS]
+
 
 # ==============================================================================
 # 2. 数据模型
@@ -79,6 +81,7 @@ class GenRequest(BaseModel):
     base_url: str
     model: str
 
+
 # ==============================================================================
 # 3. HTML 异步任务管理（内存版）
 # ==============================================================================
@@ -88,13 +91,16 @@ class GenRequest(BaseModel):
 html_jobs: Dict[str, Dict[str, Any]] = {}
 html_jobs_lock = asyncio.Lock()
 
+
 def _mask_key(k: str) -> str:
     if not k:
         return "***"
     return k[:6] + "******" if len(k) > 6 else "***"
 
+
 def _now_ts() -> str:
     return datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
 
 async def _set_job(job_id: str, patch: Dict[str, Any]) -> None:
     async with html_jobs_lock:
@@ -103,10 +109,12 @@ async def _set_job(job_id: str, patch: Dict[str, Any]) -> None:
             return
         job.update(patch)
 
+
 async def _get_job(job_id: str) -> Optional[Dict[str, Any]]:
     async with html_jobs_lock:
         job = html_jobs.get(job_id)
         return dict(job) if job else None
+
 
 def _build_system_prompt(user_prompt: str) -> str:
     base_system_prompt = load_system_prompt()
@@ -121,6 +129,7 @@ def _build_system_prompt(user_prompt: str) -> str:
     if knowledge_augmentation:
         final_system_prompt += "\n\n【补充物理领域知识】\n" + knowledge_augmentation
     return final_system_prompt
+
 
 def _normalize_html_footer(html: str) -> str:
     """
@@ -157,6 +166,7 @@ def _normalize_html_footer(html: str) -> str:
         html += "\n" + footer_block + "\n"
 
     return html
+
 
 async def _html_worker(job_id: str, req: GenRequest) -> None:
     """
@@ -231,16 +241,32 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
         except Exception:
             pass
 
+
 # ==============================================================================
 # 4. 路由
 # ==============================================================================
 
 @app.get("/")
-async def read_index():
+async def login_page():
+    """
+    登录页：/  -> web_interface/login.html
+    """
+    login_path = "web_interface/login.html"
+    if not os.path.exists(login_path):
+        return "System Error: login.html not found."
+    return FileResponse(login_path)
+
+
+@app.get("/app")
+async def app_page():
+    """
+    控制台页：/app -> web_interface/index.html
+    """
     index_path = "web_interface/index.html"
     if not os.path.exists(index_path):
         return "System Error: index.html not found."
     return FileResponse(index_path)
+
 
 @app.post("/api/generate-html")
 async def generate_html(request: GenRequest):
@@ -271,13 +297,14 @@ async def generate_html(request: GenRequest):
 
     return JSONResponse(content={"status": "queued", "job_id": job_id})
 
+
 @app.get("/api/html-status/{job_id}")
 async def html_status(job_id: str):
     job = await _get_job(job_id)
     if not job:
         raise HTTPException(status_code=404, detail="job_id 不存在")
 
-    # ✅ 输出路径清理：前端永远拿不到 saved_path / timestamp（看你要不要保留 timestamp）
+    # ✅ 输出路径清理：前端永远拿不到 saved_path / timestamp
     public_job = dict(job)
     public_job.pop("saved_path", None)
     public_job.pop("timestamp", None)
@@ -287,6 +314,7 @@ async def html_status(job_id: str):
         public_job["download_url"] = f"/api/html-download/{job_id}"
 
     return JSONResponse(content=public_job)
+
 
 @app.get("/api/html-download/{job_id}")
 async def html_download(job_id: str):
@@ -308,9 +336,11 @@ async def html_download(job_id: str):
     download_name = "huiyanwanxiang_generated.html"
     return FileResponse(file_path, media_type="text/html", filename=download_name)
 
+
 @app.get("/api/errors")
 async def get_errors():
     return {"items": ERROR_LOGS}
+
 
 # ==============================================================================
 # 5. 入口

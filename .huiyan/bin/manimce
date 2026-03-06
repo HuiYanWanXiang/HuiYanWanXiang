@@ -1,4 +1,4 @@
-#!/root/hui-yan-wan-xiang/.huiyan/bin/python
+#!/root/HuiYanWanXiang/.huiyan/bin/python3
 import sys
 from manim.__main__ import main
 if __name__ == '__main__':

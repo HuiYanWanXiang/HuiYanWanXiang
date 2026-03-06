@@ -1,4 +1,4 @@
-#!/root/hui-yan-wan-xiang/.huiyan/bin/python
+#!/root/HuiYanWanXiang/.huiyan/bin/python3
 import sys
 from openai.cli import main
 if __name__ == '__main__':
