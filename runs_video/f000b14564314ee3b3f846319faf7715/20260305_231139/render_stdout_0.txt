@@ -1,0 +1,99 @@
+Manim Community v0.19.1
+
+[03/05/26 23:13:48] INFO     Writing A to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/90f07b07e57adf79.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:13:49] INFO     Writing B to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/d82288bb87e99d59.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:13:50] INFO     Writing C to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/86474863bfdee3e7.t                        
+                             ex                                                                                                                                      
+                    INFO     Writing a to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/8bb2a9c5ac9d5a80.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:13:51] INFO     Writing b to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/54d4a631621012a2.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:13:52] INFO     Writing c to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/40d611f661d7621b.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:13:55] INFO     Animation 0 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/1292736442_2723295868_223132457.mp4'                                                       
+                    INFO     Animation 1 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_681721053_2276622479.mp4'                                                       
+[03/05/26 23:13:57] INFO     Animation 2 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_3944585077_1599205502.mp4'                                                      
+[03/05/26 23:13:58] INFO     Animation 3 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_1258522296_4289325577.mp4'                                                      
+[03/05/26 23:13:59] INFO     Animation 4 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_1401346123.mp4'                                                      
+                    INFO     Writing a^2 to                                                                                                   tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/4cd880482a26144d.t                        
+                             ex                                                                                                                                      
+                    INFO     Writing b^2 to                                                                                                   tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/252a52111768029a.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:14:00] INFO     Writing c^2 to                                                                                                   tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/e2b185d5b7067717.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:14:03] INFO     Animation 5 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_2666066541_2088388163.mp4'                                                      
+[03/05/26 23:14:04] INFO     Animation 6 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_2455068370_2131492619.mp4'                                                      
+[03/05/26 23:14:05] INFO     Animation 7 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_3715570471.mp4'                                                      
+[03/05/26 23:14:07] INFO     Animation 8 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_2666851944_1394743912.mp4'                                                      
+                    INFO     Writing a^2 + b^2 = c^2 to                                                                                       tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/e4be163a00cf424f.t                        
+                             ex                                                                                                                                      
+                    INFO     Writing + to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/9f38976a758de16a.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:14:08] INFO     Writing = to                                                                                                     tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/Tex/383d1fb9b7d92e82.t                        
+                             ex                                                                                                                                      
+[03/05/26 23:14:11] INFO     Animation 9 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_1795783193_3550370201.mp4'                                                      
+                    INFO     Animation 10 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_1131964893.mp4'                                                      
+[03/05/26 23:14:13] INFO     Animation 11 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_205577760_1921662879.mp4'                                                       
+[03/05/26 23:14:15] INFO     Animation 12 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_1176211845_2723488514.mp4'                                                      
+[03/05/26 23:14:16] INFO     Animation 13 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_334758259_3458017360.mp4'                                                       
+[03/05/26 23:14:19] INFO     Animation 14 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_3379050463_1982380214.mp4'                                                      
+[03/05/26 23:14:20] INFO     Animation 15 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_322855670_695382893.mp4'                                                        
+[03/05/26 23:14:21] INFO     Animation 16 : Partial movie file written in                                                                    scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_667144672_1054325445.mp4'                                                       
+                    INFO     Combining to Movie file.                                                                                        scene_file_writer.py:740
+[03/05/26 23:14:22] INFO                                                                                                                     scene_file_writer.py:887
+                             File ready at                                                                                                                           
+                             '/root/hui-yan-wan-xiang/runs_video/f000b14564314ee3b3f846319faf7715/20260305_231139/media/videos/generated_sce                         
+                             ne/720p30/GeneratedScene.mp4'                                                                                                           
+                                                                                                                                                                     
+                    INFO     Rendered GeneratedScene                                                                                                     scene.py:279
+                             Played 17 animations                                                                                                                    
+You are using manim version v0.19.1, but version v0.20.1 is available.
+You should consider upgrading via pip install -U manim

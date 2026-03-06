@@ -1,0 +1,60 @@
+**Animation Plan: Forced Oscillations (Forced Vibration)**
+
+**Core Concept:** A damped harmonic oscillator (mass-spring system) is subjected to an external periodic driving force. The animation will show the transient response settling into steady-state oscillation at the driving frequency, with amplitude depending on the driving frequency relative to the natural frequency.
+
+**Strict Layout Constraints:**
+*   **Frame Boundaries:** All objects (mass, axes, labels, equations) must remain within the central 80% of the frame (safe zone) to prevent clipping.
+*   **Static Regions:** The equation box and axis labels are fixed in position for the entire animation. No drifting.
+*   **Spatial Separation:** The physical simulation (top 60% of frame) is visually distinct from the equation/parameter region (bottom 40%). A subtle horizontal line can separate them.
+*   **Object Priority:** The moving mass and force arrows are the primary visual focus. Text and equations are secondary and must not overlap with the active simulation area.
+
+**Scene Breakdown:**
+
+**Scene 1 (0.0s - 3.0s): Setup and Natural Damped Oscillation**
+*   **Step 1 (0.0s-1.5s):** Construct the system.
+    *   A fixed wall on the left.
+    *   A horizontal spring attached to the wall.
+    *   A mass (circle) attached to the spring's end.
+    *   A dashed horizontal line representing the equilibrium position.
+    *   A labeled coordinate axis below the mass: x-axis with "0" at equilibrium.
+*   **Step 2 (1.5s-3.0s):** Show damped free oscillation.
+    *   Pull the mass to the right (displacement `x₀`), show a temporary label "Initial Displacement".
+    *   Release it. It oscillates with visibly decaying amplitude.
+    *   Introduce a damping visual (e.g., a small "viscous drag" arrow opposite to velocity, or a subtle fading trail).
+    *   **Label appears:** "Damped Natural Oscillation: Amplitude decays".
+
+**Scene 2 (3.0s - 6.0s): Introduce Driving Force**
+*   **Step 1 (3.0s-4.0s):** Freeze the damped motion. The mass is near but not at equilibrium.
+*   **Step 2 (4.0s-6.0s):** Introduce the driving force.
+    *   An arrow labeled `F_d(t)` appears above the mass, pointing horizontally.
+    *   This arrow pulsates in sync with a new parameter display.
+    *   **Equation Box appears (static, bottom-left):**
+        *   Title: **Equation of Motion**
+        *   `m d²x/dt² + γ dx/dt + kx = F_d(t)`
+        *   Below it: **Driving Force:** `F_d(t) = F₀ cos(ω_d t)`
+    *   **Parameter Display appears (static, bottom-right):**
+        *   `ω₀ = sqrt(k/m)` (Natural Frequency)
+        *   `ω_d =` [Value that will change] (Driving Frequency)
+        *   `F₀` (Driving Amplitude) - constant.
+    *   **Narration Point:** "Applying a periodic driving force `F_d(t)`..."
+
+**Scene 3 (6.0s - 12.0s): Transient and Steady-State Response**
+*   **Step 1 (6.0s-9.0s):** Show transient response.
+    *   The system starts moving from its frozen state.
+    *   The motion is irregular at first – a superposition of the natural damped frequency and the driving frequency.
+    *   The `F_d(t)` arrow continues to pulsate with frequency `ω_d`.
+    *   **Label appears:** "Transient Response: Complex motion".
+*   **Step 2 (9.0s-12.0s):** Show steady-state.
+    *   The natural oscillation dies out due to damping.
+    *   The mass settles into a pure, constant-amplitude oscillation.
+    *   The frequency of this oscillation is exactly the driving frequency `ω_d`. This sync is visually emphasized.
+    *   **Update Parameter Display:** `ω_d` value is highlighted.
+    *   **Label updates:** "Steady-State: Oscillates at driving frequency `ω_d`".
+    *   **Final Text (centered, bottom):** "Forced Vibration: System eventually 'locks' to the driver's frequency."
+
+**Timing Notes:**
+*   Total Target: ~12 seconds.
+*   Scene 1: 3s (Setup & Baseline).
+*   Scene 2: 3s (Introduce Force Concept).
+*   Scene 3: 6s (Show the key transition from transient to steady-state, which is the core lesson).
+*   All animations (movements, arrow pulsations) should use smooth interpolation for clarity.

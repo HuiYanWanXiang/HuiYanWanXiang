@@ -1,0 +1,47 @@
+**Animation Plan: Geometric Meaning of the Definite Integral**
+
+**Concept Breakdown:**
+- Visualize the definite integral as the net signed area under a curve.
+- Show Riemann sum approximation with rectangles.
+- Transition from finite rectangles to the limit (integral).
+- Emphasize area above x-axis as positive, below as negative.
+
+**Strict Layout Constraints:**
+- All objects must remain within the central 80% of frame width and 70% of frame height.
+- Text and equations must be anchored to frame edges (not drifting).
+- Rectangles must not overlap axis labels or function labels.
+- Area shading must be clearly distinguishable from axes.
+
+**Scene 1: Setup Function and Area Concept (3 seconds)**
+- Draw x-axis (from x=-1 to 4) and y-axis (from y=-2 to 3).
+- Plot function f(x) = sin(x) + 0.5 (or similar wave crossing x-axis).
+- Label axes: "x", "y", and function "f(x)".
+- Highlight integration interval [a, b] with vertical lines at x=1 and x=3.5.
+- Animate shading of area under curve between a and b with light color.
+
+**Scene 2: Riemann Sum Approximation (4 seconds)**
+- Divide interval [a, b] into 4 subintervals (n=4).
+- Draw rectangles using right endpoints (height = f(x_i)).
+- Animate rectangles appearing one by one.
+- Display sum formula: Σ f(x_i) Δx (positioned top-left, anchored).
+- Shade rectangles to match area color from Scene 1.
+- Show numeric approximation (e.g., "≈ 2.34").
+
+**Scene 3: Limit to Definite Integral (3 seconds)**
+- Increase partitions to n=8, then n=16 (quick morph).
+- Rectangles become thinner, approximating area more closely.
+- Replace sum with integral symbol: ∫_a^b f(x) dx (center-top, fixed).
+- Fade out rectangles, leaving shaded area under curve.
+- Display "Net Signed Area = ∫_a^b f(x) dx" (bottom-center, anchored).
+
+**Scene 4: Signed Area Explanation (2 seconds)**
+- Highlight portion where f(x) > 0 (area above x-axis) in green.
+- Highlight portion where f(x) < 0 (area below x-axis) in red.
+- Show net calculation: green area + (- red area) = net area.
+- Final text: "Integral = Net Signed Area" (center, large).
+
+**Timing Notes:**
+- Total: ~12 seconds.
+- Smooth transitions between scenes.
+- Keep all labels static and legible.
+- Ensure axis scaling keeps entire curve visible without clipping.

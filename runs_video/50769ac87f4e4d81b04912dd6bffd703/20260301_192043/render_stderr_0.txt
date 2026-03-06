@@ -1,0 +1,67 @@
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/cli/render/commands.py:125 in │
+│ render                                                                                           │
+│                                                                                                  │
+│   122 │   │   │   try:                                                                           │
+│   123 │   │   │   │   with tempconfig({}):                                                       │
+│   124 │   │   │   │   │   scene = SceneClass()                                                   │
+│ ❱ 125 │   │   │   │   │   scene.render()                                                         │
+│   126 │   │   │   except Exception:                                                              │
+│   127 │   │   │   │   error_console.print_exception()                                            │
+│   128 │   │   │   │   sys.exit(1)                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/scene/scene.py:260 in render  │
+│                                                                                                  │
+│    257 │   │   """                                                                               │
+│    258 │   │   self.setup()                                                                      │
+│    259 │   │   try:                                                                              │
+│ ❱  260 │   │   │   self.construct()                                                              │
+│    261 │   │   except EndSceneEarlyException:                                                    │
+│    262 │   │   │   pass                                                                          │
+│    263 │   │   except RerunSceneException:                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/50769ac87f4e4d81b04912dd6bffd703/20260301_192043/generated_sc │
+│ ene.py:54 in construct                                                                           │
+│                                                                                                  │
+│    51 │   │   │   return np.array([center_x, 0, 0]), radius                                      │
+│    52 │   │                                                                                      │
+│    53 │   │   # Create circle (will be updated)                                                  │
+│ ❱  54 │   │   circle = always_redraw(lambda: Circle(                                             │
+│    55 │   │   │   radius=get_circle_data(k_value.get_value())[1],                                │
+│    56 │   │   │   color=BLUE,                                                                    │
+│    57 │   │   │   stroke_width=2,                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/animation/updaters/mobject_up │
+│ date_utils.py:104 in always_redraw                                                               │
+│                                                                                                  │
+│   101 │   │   │   │   self.add(ax, sine, point, tangent)                                         │
+│   102 │   │   │   │   self.play(alpha.animate.set_value(1), rate_func=linear, run_time=2)        │
+│   103 │   """                                                                                    │
+│ ❱ 104 │   mob = func()                                                                           │
+│   105 │   mob.add_updater(lambda _: mob.become(func()))                                          │
+│   106 │   return mob                                                                             │
+│   107                                                                                            │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/50769ac87f4e4d81b04912dd6bffd703/20260301_192043/generated_sc │
+│ ene.py:55 in <lambda>                                                                            │
+│                                                                                                  │
+│    52 │   │                                                                                      │
+│    53 │   │   # Create circle (will be updated)                                                  │
+│    54 │   │   circle = always_redraw(lambda: Circle(                                             │
+│ ❱  55 │   │   │   radius=get_circle_data(k_value.get_value())[1],                                │
+│    56 │   │   │   color=BLUE,                                                                    │
+│    57 │   │   │   stroke_width=2,                                                                │
+│    58 │   │   │   stroke_opacity=0.8                                                             │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/50769ac87f4e4d81b04912dd6bffd703/20260301_192043/generated_sc │
+│ ene.py:37 in get_circle_data                                                                     │
+│                                                                                                  │
+│    34 │   │                                                                                      │
+│    35 │   │   # Function to calculate circle center and radius                                   │
+│    36 │   │   def get_circle_data(k):                                                            │
+│ ❱  37 │   │   │   x1, y1 = F1_POS                                                                │
+│    38 │   │   │   x2, y2 = F2_POS                                                                │
+│    39 │   │   │   d = abs(x2 - x1)                                                               │
+│    40                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+ValueError: too many values to unpack (expected 2)

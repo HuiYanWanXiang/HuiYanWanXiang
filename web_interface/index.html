@@ -1,258 +1,408 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>绘演万象 | 核心控制台</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <style>
-        .settings-box {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed var(--border-color);
-            margin-bottom: 20px;
-        }
-        .settings-row { margin-bottom: 10px; }
-        .settings-row label { display: block; color: #888; font-size: 11px; margin-bottom: 4px; }
-        .settings-row select, .settings-row input {
-            width: 100%;
-            background: #222;
-            border: 1px solid #444;
-            color: var(--accent-color);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 12px;
-            outline: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>绘演万象 | Web 控制台</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
 </head>
-
-<!-- 帮助弹窗 -->
-<div id="helpModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999;">
-    <div style="width:70%; max-width:800px; margin:50px auto; background:#1e1e1e; border:1px solid #00f3ff; border-radius:10px; padding:30px; color:#ddd; font-family:'Microsoft YaHei'; overflow-y:auto; max-height:80vh;">
-        <h2 style="color:#00f3ff; border-bottom:1px solid #333; padding-bottom:10px;">绘演万象用户操作手册 V1.0</h2>
-
-        <h3 style="color:#fff; margin-top:20px;">1. 系统简介</h3>
-        <p style="line-height:1.6; font-size:14px; color:#aaa;">
-            本系统是一款基于大语言模型（LLM）的Web端交互式物理仿真实验平台。旨在通过自然语言指令，快速生成具备专业级UI、实时物理引擎渲染及数学公式推导的教学课件。
-        </p>
-
-        <h3 style="color:#fff; margin-top:20px;">2. 快速入门</h3>
-        <ul style="line-height:1.8; font-size:14px; color:#aaa; padding-left:20px;">
-            <li><strong>步骤一：配置引擎</strong> - 选择模型厂商（DeepSeek/Kimi等），并填入有效的 API Key。</li>
-            <li><strong>步骤二：输入指令</strong> - 在 Prompt 输入框中描述您想要的物理场景。</li>
-            <li><strong>步骤三：启动生成</strong> - 点击“🚀 启动生成”生成交互网页。</li>
-            <li><strong>步骤四：生成视频</strong> - 点击“🎬 生成视频”生成 Manim 讲解视频。</li>
-            <li><strong>步骤五：源码调试</strong> - 点击“⚡ 手动运行”进入开发者模式，可直接修改 HTML/JS 代码并热更新。</li>
-        </ul>
-
-        <h3 style="color:#fff; margin-top:20px;">3. 常见问题 (FAQ)</h3>
-        <div style="background:#222; padding:10px; border-radius:4px; margin-top:10px;">
-            <p style="color:#00f3ff; font-size:13px; font-weight:bold;">Q: 为什么点击生成后没有反应？</p>
-            <p style="color:#888; font-size:13px;">A: 请检查 API Key 是否正确填写，以及网络连接是否正常。</p>
-        </div>
-
-        <button onclick="document.getElementById('helpModal').style.display='none'"
-                style="margin-top:20px; width:100%; background:#333; border:none; padding:15px; color:#fff; cursor:pointer;">
-            关闭窗口 [CLOSE]
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        绘演万象<span class="brand-dot">.</span>
+      </a>
+      <nav class="nav">
+        <a href="#console">控制台</a>
+        <a href="#video">视频</a>
+        <a href="#embed">嵌入预览</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="btn ghost" id="btnFillDemo" type="button">填充示例</button>
+        <button class="btn primary" type="button" onclick="document.querySelector('#console').scrollIntoView({behavior:'smooth'})">
+          开始生成 →
         </button>
+      </div>
     </div>
-</div>
+  </header>
 
-<!-- 右下角 ? -->
-<div style="position:fixed; bottom:20px; right:20px; width:40px; height:40px; background:#333; border-radius:50%;
-            text-align:center; line-height:40px; cursor:pointer; border:1px solid #555; z-index:1000;"
-     onclick="document.getElementById('helpModal').style.display='block'">
-    <span style="color:#fff; font-weight:bold;">?</span>
-</div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="pill">🚀 我们专注于辅助教育</div>
 
-<body>
-    <div class="sidebar">
-        <h2>绘演万象 <span style="font-size:12px; opacity:0.6;">PRO</span></h2>
+      <h1 class="hero-title">
+        绘演万象<br/>
+        <span class="accent">AI辅助</span>
+      </h1>
 
-        <span class="label">⚙️ 引擎配置 (ENGINE CONFIG)</span>
-        <div class="settings-box">
-            <div class="settings-row">
-                <label>选择模型厂商 (Provider)</label>
-                <select id="providerSelect" onchange="updateModelConfig()">
-                    <option value="deepseek">DeepSeek (深度求索)</option>
-                    <option value="openai">OpenAI</option>
-                    <option value="moonshot">Kimi (月之暗面)</option>
-                    <option value="aliyun">通义千问 (阿里云)</option>
-                    <option value="custom">自定义 (Custom)</option>
+      <p class="hero-sub">
+        输入自然语言提示词，生成可交互教学网页，并生成讲解视频。
+      </p>
+    </div>
+  </section>
+
+  <!-- Console -->
+  <section class="section" id="console">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Web 控制台</h2>
+        <p class="section-sub">引擎配置 → 输入 Prompt → 生成 HTML / Manim 视频 → 预览。</p>
+      </div>
+
+      <div class="grid">
+        <!-- Left: console panel -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">提示词输入</div>
+            <div class="tag ok">API Ready</div>
+          </div>
+
+          <div class="card-body">
+            <!-- UI 不显示 BaseURL/Model，但后端需要，保留隐藏值 -->
+            <input type="hidden" id="baseUrlInput" />
+            <input type="hidden" id="modelNameInput" />
+
+            <div class="form-grid">
+              <div class="field">
+                <div class="label">Provider</div>
+                <select class="input" id="providerSelect">
+                  <option value="deepseek">DeepSeek</option>
+                  <option value="openai">ChatGPT</option>
+                  <option value="moonshot">Kimi</option>
+                  <option value="aliyun">通义千问</option>
+                  <option value="custom">Gemini</option>
                 </select>
+              </div>
+
+              <div class="field">
+                <div class="label">API Key</div>
+                <input class="input" type="password" id="apiKeyInput" placeholder="sk-xxxxxxxx..." />
+              </div>
             </div>
 
-            <div class="settings-row">
-                <label>API Key (密钥)</label>
-                <input type="password" id="apiKeyInput" placeholder="sk-xxxxxxxx..." value="">
+            <!-- 仅当 custom 才显示 -->
+            <div class="form-grid" id="customRows" style="display:none; margin-top:12px;">
+              <div class="field">
+                <div class="label">Base URL（Custom）</div>
+                <input class="input" id="baseUrlInputVisible" placeholder="https://api.xxx.com/v1" />
+              </div>
+              <div class="field">
+                <div class="label">Model（Custom）</div>
+                <input class="input" id="modelNameInputVisible" placeholder="model-name" />
+              </div>
             </div>
 
-            <div class="settings-row" id="customUrlRow" style="display:none;">
-                <label>Base URL</label>
-                <input type="text" id="baseUrlInput" value="https://api.deepseek.com">
+            <div class="field" style="margin-top:12px;">
+              <div class="label">Prompt</div>
+              <textarea class="textarea" id="userPrompt" placeholder="例如：生成一个受迫振动交互式演示页面，包含参数滑条、相图、位移-时间曲线，并有小测验。"></textarea>
+              <div class="hint">建议写清：知识点 / 目标 / 互动组件 / 输出风格。</div>
             </div>
 
-            <div class="settings-row" id="customModelRow" style="display:none;">
-                <label>Model Name</label>
-                <input type="text" id="modelNameInput" value="deepseek-coder">
+            <!-- 折叠：提示词优化 -->
+            <details class="details" id="optimizerDetails">
+              <summary class="details-summary">
+                <span class="details-title">提示词优化（可选）</span>
+                <span class="details-chev">▾</span>
+              </summary>
+
+              <div class="details-body">
+                <div class="toggle-row">
+                  <div>
+                    <div class="toggle-main">启用提示词优化</div>
+                    <div class="toggle-sub">展开后可选择是否进行结构化增强（当前透传字段，后端可按需接入优化流程）</div>
+                  </div>
+                  <button class="switch" id="optSwitch" type="button" aria-checked="false">
+                    <span class="knob"></span>
+                  </button>
+                </div>
+
+                <div class="field" style="margin-top:10px;">
+                  <div class="label">优化偏好 / 约束（可选）</div>
+                  <textarea class="textarea small" id="optHint" placeholder="例如：输出必须包含：1) 概念解释 2) 公式推导 3) 互动控件 4) 例题 5) 小测验（答案折叠）；整体风格简洁、信息密度高。"></textarea>
+                </div>
+              </div>
+            </details>
+
+            <div class="btn-row">
+              <button class="btn primary" id="generateBtn" type="button">生成 HTML 页面</button>
+              <button class="btn ghost" id="downloadHtmlBtn" type="button" disabled>下载 HTML</button>
+              <button class="btn ghost" id="applyBtn" type="button">手动运行（用编辑器）</button>
             </div>
+
+            <div class="status" id="statusText">READY. 输入 Prompt 后点击「生成 HTML 页面」。</div>
+          </div>
         </div>
 
-        <span class="label">指令输入 (PROMPT)</span>
-        <textarea id="userPrompt" placeholder="> 例如：生成一个受迫振动演示..."></textarea>
+        <!-- Right: editor only -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">源码编辑器</div>
+            <div class="tag" id="editorPill">等待生成…</div>
+          </div>
 
-        <div class="btn-group">
-            <button class="primary" id="generateBtn" onclick="generatePage()">🚀 启动生成</button>
-            <button class="secondary" id="generateVideoBtn" onclick="generateVideo()">🎬 生成视频</button>
-            <button onclick="applyCode()">⚡ 手动运行</button>
+          <div class="card-body">
+            <div class="editor editor-right" style="margin-top:0;">
+              <div class="editor-head">
+                <div class="editor-title">源码编辑器</div>
+                <div class="editor-sub">生成后可手动修改并运行（不会影响后端保存的原始生成文件）。</div>
+              </div>
+              <textarea id="codeEditor" class="code" spellcheck="false" placeholder="// 等待生成..."></textarea>
+            </div>
+          </div>
         </div>
-
-        <div class="code-panel">
-            <span class="label">源码编辑器</span>
-            <textarea id="codeEditor" placeholder="// 等待生成..." spellcheck="false"></textarea>
-        </div>
-    </div>
-
-    <div class="preview-area">
-        <div class="status-bar" id="statusText"><span class="blink"></span>WAITING FOR CONFIG...</div>
-
-        <div class="iframe-container">
-            <!-- ✅ 关键：默认暗色 srcdoc 占位页，彻底消灭白屏 -->
-            <iframe id="previewFrame"
-                    srcdoc='<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style>
-  :root{
-    --bg:#0b0f14;
-    --panel: rgba(0,0,0,0.45);
-    --border: rgba(0,243,255,0.18);
-    --accent:#00f3ff;
-    --text: rgba(127,231,255,0.92);
-    --muted: rgba(160,220,235,0.55);
-  }
-  html,body{
-    margin:0; height:100%;
-    background: radial-gradient(900px 420px at 50% 35%, rgba(0,243,255,0.10), rgba(0,0,0,0.85)),
-                linear-gradient(180deg, rgba(10,12,18,0.98), rgba(0,0,0,0.98));
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Microsoft YaHei, Arial, sans-serif;
-    color: var(--text);
-  }
-  .wrap{ height:100%; display:flex; align-items:center; justify-content:center; padding:24px; box-sizing:border-box; }
-  .card{
-    width:min(760px, 92vw);
-    border:1px solid var(--border);
-    border-radius:14px;
-    background: var(--panel);
-    box-shadow: 0 0 0 1px rgba(0,243,255,0.06) inset, 0 18px 50px rgba(0,0,0,0.55);
-    padding:22px 22px 18px;
-  }
-  .title{ display:flex; align-items:center; gap:10px; letter-spacing:1px; font-weight:700; color: var(--accent); }
-  .dot{
-    width:10px; height:10px; border-radius:50%;
-    background: var(--accent);
-    box-shadow: 0 0 16px rgba(0,243,255,0.65);
-    animation: pulse 1.4s ease-in-out infinite;
-  }
-  @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(0.55); opacity:0.2; } }
-  .hint{ margin-top:10px; line-height:1.7; color: var(--muted); font-size: 13px; }
-  .steps{
-    margin-top:14px;
-    border-top:1px dashed rgba(0,243,255,0.18);
-    padding-top:12px;
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap:10px;
-    font-size:12px;
-    color: rgba(160,220,235,0.68);
-  }
-  .pill{ border:1px solid rgba(0,243,255,0.14); border-radius:999px; padding:8px 10px; background: rgba(0,0,0,0.25); }
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <div class="title"><span class="dot"></span><span>WAITING FOR CONFIG…</span></div>
-      <div class="hint">
-        右侧预览区已就绪。请在左侧完成引擎配置（Provider + API Key），输入 Prompt，
-        点击 <b>🚀 启动生成</b> 生成交互网页；或点击 <b>🎬 生成视频</b> 生成 Manim 讲解视频。
-      </div>
-      <div class="steps">
-        <div class="pill">① 配置 Provider / Key</div>
-        <div class="pill">② 输入 Prompt</div>
-        <div class="pill">③ 点击生成按钮</div>
       </div>
     </div>
-  </div>
-</body>
-</html>'>
-            </iframe>
+  </section>
+
+  <!-- Video (wider: 2 columns) -->
+  <section class="section alt" id="video">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Manim 动画视频</h2>
+        <p class="section-sub"></p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">视频输出</div>
+          <div class="tag" id="videoPill">等待任务…</div>
         </div>
 
-        <!-- ✅ Manim 视频面板 -->
-        <div id="videoPanel" style="padding: 12px 14px;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-                <span style="color:#00f3ff; font-weight:600; letter-spacing:0.5px;">MANIM VIDEO</span>
-                <a id="videoOpenLink"
-                   href="#"
-                   target="_blank"
-                   style="display:none; color:#7fe7ff; text-decoration:none; font-size:12px;">
-                   打开视频文件
-                </a>
+        <div class="card-body">
+          <div class="btn-row" style="align-items:center;">
+            <button class="btn primary" id="generateVideoBtn" type="button">生成 Manim 视频</button>
+            <a class="link" id="videoOpenLink" href="#" target="_blank" style="display:none;">打开视频文件</a>
+          </div>
+
+          <div class="video">
+            <div class="video-pane">
+              <video id="videoPlayer" controls class="video big"></video>
             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <video id="videoPlayer"
-                   controls
-                   style="width:100%; max-height:360px; background:#000; border-radius:10px;
-                          border:1px solid rgba(0,243,255,0.25);">
-            </video>
+  <!-- Embedded HTML (keep) -->
+  <section class="section" id="embed">
+    <div class="container">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">交互式网页</div>
+          <div class="tag" id="embedPill">等待生成…</div>
+        </div>
+        <div class="card-body">
+          <div class="frame-box embed">
+            <iframe id="embeddedFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+          </div>
+          <div class="hint" style="margin-top:10px;">
+            点击「生成 HTML 页面」或「手动运行」后，这里会自动更新为交互式页面。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <pre id="videoStatus"
-                 style="margin-top:10px; padding:10px; background:rgba(0,0,0,0.35); color:#7fe7ff;
-                        border-radius:10px; border:1px dashed rgba(0,243,255,0.25);
-                        white-space:pre-wrap; font-size:12px; line-height:1.35;">
-等待生成视频...
-            </pre>
+  <!-- ====== NEW: Get more value section (your content) ====== -->
+  <section class="section-padding text-center">
+    <div class="container">
+      <h2 class="mb-4" style="font-size: 2rem;">我们的优势</h2>
+      <p class="subtitle mb-4">对枯燥的课本知识说不，使用更生动的方式学习任何知识！</p>
+      <a href="#" class="btn-primary mb-4">开始使用 →</a>
+
+      <div class="grid-3" style="text-align: left; margin-top: 60px;">
+        <div class="mini-card">
+          <h3>⚡ 调用最先进的模型</h3>
+          <p>我们提供了各种大语言模型供您使用,包括但不限于ChatGPT,Deepseek.</p>
+        </div>
+        <div class="mini-card">
+          <h3>🎓 使用内置知识库增强输出</h3>
+          <p>绘演万象内置知识库涵盖了物理,数学等学科知识资料库来严格限制输出,保证您得到的输出完全贴合要求</p>
+        </div>
+        <div class="mini-card">
+          <h3>💻 更生动地理解任何知识</h3>
+          <p>您不仅可以观看由manim驱动的演示视频,还可以调整各个参数直观理解变量之间的关系</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NEW: Testimonials section (your content) ====== -->
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="text-center mb-4" style="font-size: 2rem;">团队成员奉上</h2>
+      <p class="subtitle mb-4">对枯燥的课本知识说不，使用更生动的方式学习任何知识！</p>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p class="t-quote">"我们提出的使用大语言模型生成可操作性网页对学生非常友好,通过拖拽按钮即可直观感受各个变量之间的关系.无论是谁,现在都可以通过这项技术接触到复杂的数学问题."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">张艺严</div>
+              <div class="t-role">项目负责人</div>
+            </div>
+          </div>
         </div>
 
+        <div class="testimonial-card">
+          <p class="t-quote">"我们在现有AI工具生成视频不准确的缺陷下,创新性地提出了使用manim生成数理视频的思路,解决了专业数理视频的生成问题,希望我们的产品可以帮助更多中小学生学习."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">王翔宇</div>
+              <div class="t-role">技术负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"绘演万象这款工具的整体表现十分出色,只需输入一段简洁的提示词,就能快速自动生成高质量视频与可直接交互操作的网页,功能直观且稳定,大幅降低了内容创作与知识展示的门槛."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">康涵禹</div>
+              <div class="t-role">产品经理</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"我们想让绘演万象成为更多学生的学习助手,帮助更多学生深刻理解各种原理和公式."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">吕博洋</div>
+              <div class="t-role">算法负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"希望我们的交互式平台可以帮助大家更好理解物理知识."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">张伟杰</div>
+              <div class="t-role">算法工程师</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"知识库的存在使我们的输出不存在幻觉现象,可以很好的辅助教学."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">金雨轩</div>
+              <div class="t-role">后端负责人</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"将大模型生成能力与教学设计（概念交互+讲解视频）深度耦合,形成差异化竞争优势."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">孙晗宁</div>
+              <div class="t-role">前端负责人</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"不是炫技式生成,而是围绕“可讲、可练、可验证”的教学流程设计,落地场景明确."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">郑权</div>
+              <div class="t-role">视频生成负责人</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"把“看懂”升级成“动手验证”,交互式概念解读让知识点可操作、可探索."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">刘简鹏</div>
+              <div class="t-role">交互内容工程师</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"通过控制台参数化配置与即时预览,降低“AI 输出不可控”的风险,适合教学场景稳定使用."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">李思雨</div>
+              <div class="t-role">后端开发</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"能按学段、难度、题型组织输出,适配初高中与竞赛/拓展教学的不同表达方式."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">李瀚卿</div>
+              <div class="t-role">后端开发</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"把教师的备课劳动从“制作”转为“审核与微调”,明显缩短内容生产周期."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">何冠賢</div>
+              <div class="t-role">前端开发</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"不仅有算法/模型,还具备可访问的线上系统与规范化的运行方式,呈现“产品级”成果."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">李思莹</div>
+              <div class="t-role">前端开发</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"模块化的网页/视频生成机制,便于后续接入更多学科模板、题库与多媒体资源."</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">沈宇轩</div>
+              <div class="t-role">产品测试</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="t-quote">"同一知识点可用“文字—动画—交互”多模态呈现，演示直观、冲击力足。"</p>
+          <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+              <div class="t-name">邵嗣琛</div>
+              <div class="t-role">运维&安全</div>
+            </div>
+          </div>
+
+      </div>
     </div>
+  </section>
 
-    <script src="/static/js/app.js"></script>
-    <script>
-        // 简单的配置切换逻辑
-        function updateModelConfig() {
-            const provider = document.getElementById('providerSelect').value;
-            const urlRow = document.getElementById('customUrlRow');
-            const modelRow = document.getElementById('customModelRow');
-            const urlInput = document.getElementById('baseUrlInput');
-            const modelInput = document.getElementById('modelNameInput');
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="muted">© 绘演万象 · 一种定义教育的新方式</div>
+    </div>
+  </footer>
 
-            if (provider === 'custom') {
-                urlRow.style.display = 'block';
-                modelRow.style.display = 'block';
-            } else {
-                urlRow.style.display = 'none';
-                modelRow.style.display = 'none';
-                // 预设参数
-                if (provider === 'deepseek') {
-                    urlInput.value = "https://api.deepseek.com";
-                    modelInput.value = "deepseek-coder";
-                } else if (provider === 'openai') {
-                    urlInput.value = "https://api.openai.com/v1";
-                    modelInput.value = "gpt-4o-mini";
-                } else if (provider === 'moonshot') {
-                    urlInput.value = "https://api.moonshot.cn/v1";
-                    modelInput.value = "moonshot-v1-8k";
-                } else if (provider === 'aliyun') {
-                    urlInput.value = "https://dashscope.aliyuncs.com/compatible-mode/v1";
-                    modelInput.value = "qwen-plus";
-                }
-            }
-        }
-        updateModelConfig();
-    </script>
+  <script src="/static/js/app.js"></script>
 </body>
 </html>

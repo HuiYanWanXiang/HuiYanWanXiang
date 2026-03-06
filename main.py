@@ -29,7 +29,7 @@ from openai import AsyncOpenAI
 from prompts.loader import load_system_prompt
 from prompts.physics_knowledge import get_physics_prompt
 from utils.logger import setup_logger
-from utils.exceptions import LLMConnectionError, PromptEmptyError, HuiyanError
+from utils.exceptions import HuiyanError
 
 from manim_engine.router import router as manim_router, mount_runs
 
@@ -122,6 +122,42 @@ def _build_system_prompt(user_prompt: str) -> str:
         final_system_prompt += "\n\n【补充物理领域知识】\n" + knowledge_augmentation
     return final_system_prompt
 
+def _normalize_html_footer(html: str) -> str:
+    """
+    统一把生成网页的页脚替换为：@ 绘演万象 版权所有
+    兼容：LLM 可能生成的各种 footer 文案（例如“受迫振动交互式演示 | 理论力学与Web可视化 ...”）
+    """
+    if not html:
+        return html
+
+    # 1) 删除已有 footer（粗暴但有效：删掉 <footer ...>...</footer>）
+    html = re.sub(r"<footer\b[^>]*>.*?</footer>", "", html, flags=re.IGNORECASE | re.DOTALL)
+
+    # 2) 删除你点名的遗留文案（即使不是 footer，也做兜底清理）
+    html = html.replace("受迫振动交互式演示 | 理论力学与Web可视化 | 使用HTML5 Canvas构建", "")
+    html = html.replace("受迫振动交互式演示|理论力学与Web可视化|使用HTML5 Canvas构建", "")
+
+    # 3) 注入统一 footer（尽量插到 </body> 前）
+    footer_block = """
+<footer style="
+  margin-top: 18px;
+  padding: 14px 10px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  border-top: 1px solid rgba(255,255,255,0.08);
+">
+  @ 绘演万象 版权所有
+</footer>
+""".strip()
+
+    if re.search(r"</body\s*>", html, flags=re.IGNORECASE):
+        html = re.sub(r"</body\s*>", footer_block + "\n</body>", html, flags=re.IGNORECASE)
+    else:
+        html += "\n" + footer_block + "\n"
+
+    return html
+
 async def _html_worker(job_id: str, req: GenRequest) -> None:
     """
     后台执行 HTML 生成，写回 html_jobs[job_id]
@@ -157,6 +193,9 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
             logger.warning(f"[HTML_JOB:{job_id}] html truncated, auto append </html>")
             clean_html += "\n\n</body></html>"
 
+        # ✅ 强制统一页脚
+        clean_html = _normalize_html_footer(clean_html)
+
         ts = _now_ts()
         safe_prompt = re.sub(r'[\\/*?:"<>|]', "", prompt)[:15]
         filename = f"{ts}_{safe_prompt}.html"
@@ -165,6 +204,7 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(clean_html)
 
+        # ✅ 内部记录 saved_path（仅供服务端下载接口使用），但不回传前端
         await _set_job(job_id, {
             "status": "done",
             "html": clean_html,
@@ -175,14 +215,11 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
         logger.info(f"[HTML_JOB:{job_id}] done | saved={file_path}")
 
     except HuiyanError as e:
-        # 业务可预期错误
         await _set_job(job_id, {"status": "error", "error": str(e)})
         logger.error(f"[HTML_JOB:{job_id}] HuiyanError: {e}")
         record_error("html", str(e), f"job_id={job_id} | prompt={prompt} | model={req.model} | base_url={req.base_url}")
 
     except Exception as e:
-        # LLM/网络/未知错误
-        # 你也可以更精细：遇到 openai 的认证错误、超时等都归到 LLMConnectionError
         msg = str(e)
         await _set_job(job_id, {"status": "error", "error": msg})
         logger.error(f"[HTML_JOB:{job_id}] Exception: {msg}")
@@ -221,8 +258,8 @@ async def generate_html(request: GenRequest):
             "created_at": datetime.datetime.now().isoformat(),
             "prompt": user_prompt,
             "model": request.model,
-            "saved_path": None,
-            "timestamp": None,
+            "saved_path": None,     # 内部字段，不回传前端
+            "timestamp": None,      # 可选内部字段
             "html": None,
             "error": None,
         }
@@ -230,7 +267,6 @@ async def generate_html(request: GenRequest):
     masked_key = _mask_key(request.api_key)
     logger.info(f"[HTML_JOB:{job_id}] queued | model={request.model} | key={masked_key}")
 
-    # 后台启动任务（不阻塞请求）
     asyncio.create_task(_html_worker(job_id, request))
 
     return JSONResponse(content={"status": "queued", "job_id": job_id})
@@ -241,14 +277,39 @@ async def html_status(job_id: str):
     if not job:
         raise HTTPException(status_code=404, detail="job_id 不存在")
 
-    # 返回给前端：done 时带 html / saved_path；error 时带 error
-    return JSONResponse(content=job)
+    # ✅ 输出路径清理：前端永远拿不到 saved_path / timestamp（看你要不要保留 timestamp）
+    public_job = dict(job)
+    public_job.pop("saved_path", None)
+    public_job.pop("timestamp", None)
+
+    # ✅ 给专业下载链接（不暴露服务器路径）
+    if job.get("status") == "done":
+        public_job["download_url"] = f"/api/html-download/{job_id}"
+
+    return JSONResponse(content=public_job)
+
+@app.get("/api/html-download/{job_id}")
+async def html_download(job_id: str):
+    job = await _get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="job_id 不存在")
+    if job.get("status") != "done":
+        raise HTTPException(status_code=400, detail="任务未完成，无法下载")
+
+    filename = job.get("saved_path")
+    if not filename:
+        raise HTTPException(status_code=500, detail="生成文件缺失")
+
+    file_path = os.path.join(SAVE_DIR, filename)
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="文件不存在")
+
+    # 下载名：更产品化，不泄露内部命名规则
+    download_name = "huiyanwanxiang_generated.html"
+    return FileResponse(file_path, media_type="text/html", filename=download_name)
 
 @app.get("/api/errors")
 async def get_errors():
-    """
-    返回最近的系统错误日志（HTML 生成等）
-    """
     return {"items": ERROR_LOGS}
 
 # ==============================================================================

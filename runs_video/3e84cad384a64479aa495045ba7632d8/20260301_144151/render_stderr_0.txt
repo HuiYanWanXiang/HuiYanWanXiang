@@ -1,0 +1,130 @@
+
+Animation 0: Write(Text('受迫振动')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 0: Write(Text('受迫振动')):  17%|█▋        | 5/30 [00:00<00:00, 49.56it/s]
+Animation 0: Write(Text('受迫振动')):  37%|███▋      | 11/30 [00:00<00:00, 54.63it/s]
+Animation 0: Write(Text('受迫振动')):  57%|█████▋    | 17/30 [00:00<00:00, 47.72it/s]
+Animation 0: Write(Text('受迫振动')):  73%|███████▎  | 22/30 [00:00<00:00, 41.41it/s]
+Animation 0: Write(Text('受迫振动')):  90%|█████████ | 27/30 [00:00<00:00, 39.99it/s]
+                                                                                     
+
+Animation 2: Create(Rectangle), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 2: Create(Rectangle), etc.:  17%|█▋        | 5/30 [00:00<00:00, 49.76it/s]
+Animation 2: Create(Rectangle), etc.:  33%|███▎      | 10/30 [00:00<00:00, 49.05it/s]
+Animation 2: Create(Rectangle), etc.:  57%|█████▋    | 17/30 [00:00<00:00, 57.58it/s]
+Animation 2: Create(Rectangle), etc.:  77%|███████▋  | 23/30 [00:00<00:00, 51.09it/s]
+Animation 2: Create(Rectangle), etc.:  97%|█████████▋| 29/30 [00:00<00:00, 39.54it/s]
+                                                                                     
+
+Animation 3: Create(ParametricFunction), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 3: Create(ParametricFunction), etc.:  13%|█▎        | 4/30 [00:00<00:00, 38.13it/s]
+Animation 3: Create(ParametricFunction), etc.:  27%|██▋       | 8/30 [00:00<00:00, 33.85it/s]
+Animation 3: Create(ParametricFunction), etc.:  40%|████      | 12/30 [00:00<00:00, 27.05it/s]
+Animation 3: Create(ParametricFunction), etc.:  50%|█████     | 15/30 [00:00<00:00, 26.38it/s]
+Animation 3: Create(ParametricFunction), etc.:  60%|██████    | 18/30 [00:00<00:00, 25.44it/s]
+Animation 3: Create(ParametricFunction), etc.:  70%|███████   | 21/30 [00:00<00:00, 26.54it/s]
+Animation 3: Create(ParametricFunction), etc.:  80%|████████  | 24/30 [00:00<00:00, 26.14it/s]
+Animation 3: Create(ParametricFunction), etc.:  90%|█████████ | 27/30 [00:01<00:00, 22.35it/s]
+Animation 3: Create(ParametricFunction), etc.: 100%|██████████| 30/30 [00:01<00:00, 24.12it/s]
+                                                                                              
+
+Animation 4: Write(Text('质量 m')), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 4: Write(Text('质量 m')), etc.:  13%|█▎        | 4/30 [00:00<00:00, 34.34it/s]
+Animation 4: Write(Text('质量 m')), etc.:  27%|██▋       | 8/30 [00:00<00:01, 21.19it/s]
+Animation 4: Write(Text('质量 m')), etc.:  37%|███▋      | 11/30 [00:00<00:01, 17.90it/s]
+Animation 4: Write(Text('质量 m')), etc.:  47%|████▋     | 14/30 [00:00<00:00, 20.66it/s]
+Animation 4: Write(Text('质量 m')), etc.:  57%|█████▋    | 17/30 [00:00<00:00, 22.23it/s]
+Animation 4: Write(Text('质量 m')), etc.:  67%|██████▋   | 20/30 [00:00<00:00, 22.84it/s]
+Animation 4: Write(Text('质量 m')), etc.:  77%|███████▋  | 23/30 [00:01<00:00, 22.19it/s]
+Animation 4: Write(Text('质量 m')), etc.:  87%|████████▋ | 26/30 [00:01<00:00, 22.01it/s]
+Animation 4: Write(Text('质量 m')), etc.:  97%|█████████▋| 29/30 [00:01<00:00, 22.62it/s]
+                                                                                         
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/cli/render/commands.py:125 in │
+│ render                                                                                           │
+│                                                                                                  │
+│   122 │   │   │   try:                                                                           │
+│   123 │   │   │   │   with tempconfig({}):                                                       │
+│   124 │   │   │   │   │   scene = SceneClass()                                                   │
+│ ❱ 125 │   │   │   │   │   scene.render()                                                         │
+│   126 │   │   │   except Exception:                                                              │
+│   127 │   │   │   │   error_console.print_exception()                                            │
+│   128 │   │   │   │   sys.exit(1)                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/scene/scene.py:260 in render  │
+│                                                                                                  │
+│    257 │   │   """                                                                               │
+│    258 │   │   self.setup()                                                                      │
+│    259 │   │   try:                                                                              │
+│ ❱  260 │   │   │   self.construct()                                                              │
+│    261 │   │   except EndSceneEarlyException:                                                    │
+│    262 │   │   │   pass                                                                          │
+│    263 │   │   except RerunSceneException:                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/3e84cad384a64479aa495045ba7632d8/20260301_144151/generated_sc │
+│ ene.py:91 in construct                                                                           │
+│                                                                                                  │
+│    88 │   │   self.wait(1)                                                                       │
+│    89 │   │                                                                                      │
+│    90 │   │   # Scene 2: Introduce driving force                                                 │
+│ ❱  91 │   │   force_eq = MathTex(r"F(t) = F_0 \cos(\omega_d t)", color=FORCE_COLOR, font_size=   │
+│    92 │   │   force_eq.to_edge(DOWN, buff=0.8)                                                   │
+│    93 │   │                                                                                      │
+│    94 │   │   force_label = MathTex(r"\text{驱动力}", color=FORCE_COLOR, font_size=28)           │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:3 │
+│ 00 in __init__                                                                                   │
+│                                                                                                  │
+│   297 │   │   │   │   │   │   """,                                                               │
+│   298 │   │   │   │   │   ),                                                                     │
+│   299 │   │   │   │   )                                                                          │
+│ ❱ 300 │   │   │   raise compilation_error                                                        │
+│   301 │   │   self.set_color_by_tex_to_color_map(self.tex_to_color_map)                          │
+│   302 │   │                                                                                      │
+│   303 │   │   if self.organize_left_to_right:                                                    │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:2 │
+│ 79 in __init__                                                                                   │
+│                                                                                                  │
+│   276 │   │   self.brace_notation_split_occurred = False                                         │
+│   277 │   │   self.tex_strings = self._break_up_tex_strings(tex_strings)                         │
+│   278 │   │   try:                                                                               │
+│ ❱ 279 │   │   │   super().__init__(                                                              │
+│   280 │   │   │   │   self.arg_separator.join(self.tex_strings),                                 │
+│   281 │   │   │   │   tex_environment=self.tex_environment,                                      │
+│   282 │   │   │   │   tex_template=self.tex_template,                                            │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:8 │
+│ 0 in __init__                                                                                    │
+│                                                                                                  │
+│    77 │   │   self.tex_template: TexTemplate = tex_template                                      │
+│    78 │   │                                                                                      │
+│    79 │   │   self.tex_string = tex_string                                                       │
+│ ❱  80 │   │   file_name = tex_to_svg_file(                                                       │
+│    81 │   │   │   self._get_modified_expression(tex_string),                                     │
+│    82 │   │   │   environment=self.tex_environment,                                              │
+│    83 │   │   │   tex_template=self.tex_template,                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:65  │
+│ in tex_to_svg_file                                                                               │
+│                                                                                                  │
+│    62 │   if svg_file.exists():                                                                  │
+│    63 │   │   return svg_file                                                                    │
+│    64 │                                                                                          │
+│ ❱  65 │   dvi_file = compile_tex(                                                                │
+│    66 │   │   tex_file,                                                                          │
+│    67 │   │   tex_template.tex_compiler,                                                         │
+│    68 │   │   tex_template.output_format,                                                        │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:212 │
+│ in compile_tex                                                                                   │
+│                                                                                                  │
+│   209 │   │   if cp.returncode != 0:                                                             │
+│   210 │   │   │   log_file = tex_file.with_suffix(".log")                                        │
+│   211 │   │   │   print_all_tex_errors(log_file, tex_compiler, tex_file)                         │
+│ ❱ 212 │   │   │   raise ValueError(                                                              │
+│   213 │   │   │   │   f"{tex_compiler} error converting to"                                      │
+│   214 │   │   │   │   f" {output_format[1:]}. See log output above or"                           │
+│   215 │   │   │   │   f" the log file: {log_file}",                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+ValueError: latex error converting to dvi. See log output above or the log file: 
+/root/hui-yan-wan-xiang/runs_video/3e84cad384a64479aa495045ba7632d8/20260301_144151/media/Tex/e9b73bc32b0331c3.log

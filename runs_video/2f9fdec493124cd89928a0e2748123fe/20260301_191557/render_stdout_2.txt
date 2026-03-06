@@ -1,0 +1,95 @@
+Manim Community v0.19.1
+
+[03/01/26 19:18:59] INFO     Animation 0 : Using cached data (hash : 1292736442_2577356618_223132457)                                     cairo_renderer.py:94
+                    INFO     Animation 1 : Using cached data (hash : 2827983349_4217549388_782350100)                                     cairo_renderer.py:94
+[03/01/26 19:19:00] INFO     Animation 2 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3622382904_931195662.mp4'                                         
+[03/01/26 19:19:01] INFO     Animation 3 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2511924240_3905064918.mp4'                                        
+                    INFO     Animation 4 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2924579097_1297852924.mp4'                                        
+[03/01/26 19:19:02] INFO     Animation 5 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_930924792_707673604.mp4'                                          
+[03/01/26 19:19:03] INFO     Animation 6 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_1097335516_1581252691.mp4'                                        
+                    INFO     Animation 7 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3283971539_411455274.mp4'                                         
+[03/01/26 19:19:04] INFO     Animation 8 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_3918778064.mp4'                                        
+[03/01/26 19:19:06] INFO     Animation 9 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3003215629_2472531443.mp4'                                        
+                    INFO     Animation 10 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4217549388_3122206686.mp4'                                        
+[03/01/26 19:19:07] INFO     Animation 11 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4138803541_931353061.mp4'                                         
+[03/01/26 19:19:08] INFO     Animation 12 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_118293258_502576888.mp4'                                          
+[03/01/26 19:19:09] INFO     Animation 13 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_3759563014.mp4'                                        
+                    INFO     Writing FQ to                                                                                             tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/Tex/95c53ddcb7c                        
+                             c22a2.tex                                                                                                                        
+[03/01/26 19:19:11] INFO     Animation 14 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_1339167208_206299485.mp4'                                         
+                    INFO     Animation 15 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4217549388_747856958.mp4'                                         
+[03/01/26 19:19:12] INFO     Animation 16 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4081341103_3947149281.mp4'                                        
+[03/01/26 19:19:13] INFO     Animation 17 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4126236216_2760248843.mp4'                                        
+[03/01/26 19:19:14] INFO     Animation 18 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2584721225_4166422414.mp4'                                        
+[03/01/26 19:19:16] INFO     Animation 19 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_35328867_3003060854.mp4'                                          
+[03/01/26 19:19:17] INFO     Animation 20 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_1754110268.mp4'                                        
+[03/01/26 19:19:18] INFO     Animation 21 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_789667637_2811364802.mp4'                                         
+[03/01/26 19:19:19] INFO     Animation 22 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_2725018990.mp4'                                        
+[03/01/26 19:19:23] INFO     Animation 23 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_384474939_1462809666.mp4'                                         
+[03/01/26 19:19:24] INFO     Animation 24 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_3636780295.mp4'                                        
+[03/01/26 19:19:26] INFO     Animation 25 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3163237610_2044583939.mp4'                                        
+[03/01/26 19:19:27] INFO     Animation 26 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_339029486.mp4'                                         
+[03/01/26 19:19:31] INFO     Animation 27 : Partial movie file written in                                                             scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3890860909_3481821075.mp4'                                        
+                    INFO     Combining to Movie file.                                                                                 scene_file_writer.py:740
+[03/01/26 19:19:32] INFO                                                                                                              scene_file_writer.py:887
+                             File ready at                                                                                                                    
+                             '/root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/media/videos/genera                         
+                             ted_scene/720p30/GeneratedScene.mp4'                                                                                             
+                                                                                                                                                              
+                    INFO     Rendered GeneratedScene                                                                                              scene.py:279
+                             Played 28 animations                                                                                                             
+You are using manim version v0.19.1, but version v0.20.1 is available.
+You should consider upgrading via pip install -U manim

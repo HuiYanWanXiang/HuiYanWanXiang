@@ -1,0 +1,154 @@
+
+Animation 0: Write(Text('积分的几何意义')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 0: Write(Text('积分的几何意义')):  13%|█▎        | 4/30 [00:00<00:00, 29.95it/s]
+Animation 0: Write(Text('积分的几何意义')):  23%|██▎       | 7/30 [00:00<00:00, 29.75it/s]
+Animation 0: Write(Text('积分的几何意义')):  37%|███▋      | 11/30 [00:00<00:00, 30.19it/s]
+Animation 0: Write(Text('积分的几何意义')):  50%|█████     | 15/30 [00:00<00:00, 30.11it/s]
+Animation 0: Write(Text('积分的几何意义')):  63%|██████▎   | 19/30 [00:00<00:00, 29.07it/s]
+Animation 0: Write(Text('积分的几何意义')):  73%|███████▎  | 22/30 [00:00<00:00, 28.91it/s]
+Animation 0: Write(Text('积分的几何意义')):  83%|████████▎ | 25/30 [00:00<00:00, 28.07it/s]
+Animation 0: Write(Text('积分的几何意义')):  93%|█████████▎| 28/30 [00:00<00:00, 27.09it/s]
+                                                                                           
+
+Animation 2: Write(Text('积分就是求面积')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 2: Write(Text('积分就是求面积')):  17%|█▋        | 5/30 [00:00<00:00, 40.80it/s]
+Animation 2: Write(Text('积分就是求面积')):  33%|███▎      | 10/30 [00:00<00:00, 38.69it/s]
+Animation 2: Write(Text('积分就是求面积')):  47%|████▋     | 14/30 [00:00<00:00, 33.97it/s]
+Animation 2: Write(Text('积分就是求面积')):  60%|██████    | 18/30 [00:00<00:00, 32.78it/s]
+Animation 2: Write(Text('积分就是求面积')):  73%|███████▎  | 22/30 [00:00<00:00, 33.45it/s]
+Animation 2: Write(Text('积分就是求面积')):  87%|████████▋ | 26/30 [00:00<00:00, 31.34it/s]
+Animation 2: Write(Text('积分就是求面积')): 100%|██████████| 30/30 [00:00<00:00, 29.93it/s]
+                                                                                           
+
+Animation 4: Write(Text('曲线下的总面积')):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 4: Write(Text('曲线下的总面积')):  13%|█▎        | 4/30 [00:00<00:00, 36.54it/s]
+Animation 4: Write(Text('曲线下的总面积')):  30%|███       | 9/30 [00:00<00:00, 42.17it/s]
+Animation 4: Write(Text('曲线下的总面积')):  47%|████▋     | 14/30 [00:00<00:00, 37.66it/s]
+Animation 4: Write(Text('曲线下的总面积')):  60%|██████    | 18/30 [00:00<00:00, 38.20it/s]
+Animation 4: Write(Text('曲线下的总面积')):  73%|███████▎  | 22/30 [00:00<00:00, 34.72it/s]
+Animation 4: Write(Text('曲线下的总面积')):  87%|████████▋ | 26/30 [00:00<00:00, 33.00it/s]
+Animation 4: Write(Text('曲线下的总面积')): 100%|██████████| 30/30 [00:00<00:00, 29.83it/s]
+                                                                                           
+
+Animation 6: Create(Line), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 6: Create(Line), etc.:  13%|█▎        | 4/30 [00:00<00:00, 34.12it/s]
+Animation 6: Create(Line), etc.:  27%|██▋       | 8/30 [00:00<00:00, 35.51it/s]
+Animation 6: Create(Line), etc.:  43%|████▎     | 13/30 [00:00<00:00, 39.43it/s]
+Animation 6: Create(Line), etc.:  57%|█████▋    | 17/30 [00:00<00:00, 38.13it/s]
+Animation 6: Create(Line), etc.:  70%|███████   | 21/30 [00:00<00:00, 35.69it/s]
+Animation 6: Create(Line), etc.:  83%|████████▎ | 25/30 [00:00<00:00, 34.17it/s]
+Animation 6: Create(Line), etc.:  97%|█████████▋| 29/30 [00:00<00:00, 34.69it/s]
+                                                                                
+
+Animation 7: Create(ParametricFunction):   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 7: Create(ParametricFunction):  11%|█         | 5/45 [00:00<00:00, 40.23it/s]
+Animation 7: Create(ParametricFunction):  22%|██▏       | 10/45 [00:00<00:00, 42.95it/s]
+Animation 7: Create(ParametricFunction):  33%|███▎      | 15/45 [00:00<00:00, 43.31it/s]
+Animation 7: Create(ParametricFunction):  44%|████▍     | 20/45 [00:00<00:00, 27.16it/s]
+Animation 7: Create(ParametricFunction):  56%|█████▌    | 25/45 [00:00<00:00, 31.00it/s]
+Animation 7: Create(ParametricFunction):  64%|██████▍   | 29/45 [00:00<00:00, 33.11it/s]
+Animation 7: Create(ParametricFunction):  73%|███████▎  | 33/45 [00:00<00:00, 33.47it/s]
+Animation 7: Create(ParametricFunction):  82%|████████▏ | 37/45 [00:01<00:00, 29.73it/s]
+Animation 7: Create(ParametricFunction):  91%|█████████ | 41/45 [00:01<00:00, 28.45it/s]
+Animation 7: Create(ParametricFunction): 100%|██████████| 45/45 [00:01<00:00, 27.86it/s]
+                                                                                        
+
+Animation 9: FadeIn(Polygon):   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 9: FadeIn(Polygon):  13%|█▎        | 6/45 [00:00<00:00, 46.60it/s]
+Animation 9: FadeIn(Polygon):  24%|██▍       | 11/45 [00:00<00:00, 46.16it/s]
+Animation 9: FadeIn(Polygon):  36%|███▌      | 16/45 [00:00<00:00, 46.28it/s]
+Animation 9: FadeIn(Polygon):  56%|█████▌    | 25/45 [00:00<00:00, 58.44it/s]
+Animation 9: FadeIn(Polygon):  69%|██████▉   | 31/45 [00:00<00:00, 51.96it/s]
+Animation 9: FadeIn(Polygon):  82%|████████▏ | 37/45 [00:00<00:00, 51.11it/s]
+Animation 9: FadeIn(Polygon):  96%|█████████▌| 43/45 [00:00<00:00, 52.89it/s]
+                                                                             
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/cli/render/commands.py:125 in │
+│ render                                                                                           │
+│                                                                                                  │
+│   122 │   │   │   try:                                                                           │
+│   123 │   │   │   │   with tempconfig({}):                                                       │
+│   124 │   │   │   │   │   scene = SceneClass()                                                   │
+│ ❱ 125 │   │   │   │   │   scene.render()                                                         │
+│   126 │   │   │   except Exception:                                                              │
+│   127 │   │   │   │   error_console.print_exception()                                            │
+│   128 │   │   │   │   sys.exit(1)                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/scene/scene.py:260 in render  │
+│                                                                                                  │
+│    257 │   │   """                                                                               │
+│    258 │   │   self.setup()                                                                      │
+│    259 │   │   try:                                                                              │
+│ ❱  260 │   │   │   self.construct()                                                              │
+│    261 │   │   except EndSceneEarlyException:                                                    │
+│    262 │   │   │   pass                                                                          │
+│    263 │   │   except RerunSceneException:                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/generated_sc │
+│ ene.py:69 in construct                                                                           │
+│                                                                                                  │
+│    66 │   │   self.play(FadeIn(area), run_time=1.5)                                              │
+│    67 │   │                                                                                      │
+│    68 │   │   # Label the area                                                                   │
+│ ❱  69 │   │   area_label = MathTex(r"\int_a^b f(x)dx", font_size=36, color=YELLOW)               │
+│    70 │   │   area_label.move_to(area.get_center() + UP * 0.5)                                   │
+│    71 │   │                                                                                      │
+│    72 │   │   self.play(Write(area_label))                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:3 │
+│ 00 in __init__                                                                                   │
+│                                                                                                  │
+│   297 │   │   │   │   │   │   """,                                                               │
+│   298 │   │   │   │   │   ),                                                                     │
+│   299 │   │   │   │   )                                                                          │
+│ ❱ 300 │   │   │   raise compilation_error                                                        │
+│   301 │   │   self.set_color_by_tex_to_color_map(self.tex_to_color_map)                          │
+│   302 │   │                                                                                      │
+│   303 │   │   if self.organize_left_to_right:                                                    │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:2 │
+│ 79 in __init__                                                                                   │
+│                                                                                                  │
+│   276 │   │   self.brace_notation_split_occurred = False                                         │
+│   277 │   │   self.tex_strings = self._break_up_tex_strings(tex_strings)                         │
+│   278 │   │   try:                                                                               │
+│ ❱ 279 │   │   │   super().__init__(                                                              │
+│   280 │   │   │   │   self.arg_separator.join(self.tex_strings),                                 │
+│   281 │   │   │   │   tex_environment=self.tex_environment,                                      │
+│   282 │   │   │   │   tex_template=self.tex_template,                                            │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:8 │
+│ 0 in __init__                                                                                    │
+│                                                                                                  │
+│    77 │   │   self.tex_template: TexTemplate = tex_template                                      │
+│    78 │   │                                                                                      │
+│    79 │   │   self.tex_string = tex_string                                                       │
+│ ❱  80 │   │   file_name = tex_to_svg_file(                                                       │
+│    81 │   │   │   self._get_modified_expression(tex_string),                                     │
+│    82 │   │   │   environment=self.tex_environment,                                              │
+│    83 │   │   │   tex_template=self.tex_template,                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:65  │
+│ in tex_to_svg_file                                                                               │
+│                                                                                                  │
+│    62 │   if svg_file.exists():                                                                  │
+│    63 │   │   return svg_file                                                                    │
+│    64 │                                                                                          │
+│ ❱  65 │   dvi_file = compile_tex(                                                                │
+│    66 │   │   tex_file,                                                                          │
+│    67 │   │   tex_template.tex_compiler,                                                         │
+│    68 │   │   tex_template.output_format,                                                        │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:212 │
+│ in compile_tex                                                                                   │
+│                                                                                                  │
+│   209 │   │   if cp.returncode != 0:                                                             │
+│   210 │   │   │   log_file = tex_file.with_suffix(".log")                                        │
+│   211 │   │   │   print_all_tex_errors(log_file, tex_compiler, tex_file)                         │
+│ ❱ 212 │   │   │   raise ValueError(                                                              │
+│   213 │   │   │   │   f"{tex_compiler} error converting to"                                      │
+│   214 │   │   │   │   f" {output_format[1:]}. See log output above or"                           │
+│   215 │   │   │   │   f" the log file: {log_file}",                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+ValueError: latex error converting to dvi. See log output above or the log file: 
+/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/Tex/7b14223fbb0838dc.log

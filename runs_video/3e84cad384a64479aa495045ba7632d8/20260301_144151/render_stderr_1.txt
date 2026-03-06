@@ -1,0 +1,101 @@
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/cli/render/commands.py:125 in │
+│ render                                                                                           │
+│                                                                                                  │
+│   122 │   │   │   try:                                                                           │
+│   123 │   │   │   │   with tempconfig({}):                                                       │
+│   124 │   │   │   │   │   scene = SceneClass()                                                   │
+│ ❱ 125 │   │   │   │   │   scene.render()                                                         │
+│   126 │   │   │   except Exception:                                                              │
+│   127 │   │   │   │   error_console.print_exception()                                            │
+│   128 │   │   │   │   sys.exit(1)                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/scene/scene.py:260 in render  │
+│                                                                                                  │
+│    257 │   │   """                                                                               │
+│    258 │   │   self.setup()                                                                      │
+│    259 │   │   try:                                                                              │
+│ ❱  260 │   │   │   self.construct()                                                              │
+│    261 │   │   except EndSceneEarlyException:                                                    │
+│    262 │   │   │   pass                                                                          │
+│    263 │   │   except RerunSceneException:                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/3e84cad384a64479aa495045ba7632d8/20260301_144151/generated_sc │
+│ ene.py:47 in construct                                                                           │
+│                                                                                                  │
+│    44 │   │   )                                                                                  │
+│    45 │   │                                                                                      │
+│    46 │   │   # Labels - using Tex with raw strings                                              │
+│ ❱  47 │   │   title = Tex(r"受迫振动", font_size=48, color=YELLOW)                               │
+│    48 │   │   title.to_edge(UP, buff=0.5)                                                        │
+│    49 │   │                                                                                      │
+│    50 │   │   mass_label = Tex(r"质量 m", color=TEXT_COLOR, font_size=24)                        │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:4 │
+│ 72 in __init__                                                                                   │
+│                                                                                                  │
+│   469 │   │   tex_environment: str | None = "center",                                            │
+│   470 │   │   **kwargs: Any,                                                                     │
+│   471 │   ):                                                                                     │
+│ ❱ 472 │   │   super().__init__(                                                                  │
+│   473 │   │   │   *tex_strings,                                                                  │
+│   474 │   │   │   arg_separator=arg_separator,                                                   │
+│   475 │   │   │   tex_environment=tex_environment,                                               │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:3 │
+│ 00 in __init__                                                                                   │
+│                                                                                                  │
+│   297 │   │   │   │   │   │   """,                                                               │
+│   298 │   │   │   │   │   ),                                                                     │
+│   299 │   │   │   │   )                                                                          │
+│ ❱ 300 │   │   │   raise compilation_error                                                        │
+│   301 │   │   self.set_color_by_tex_to_color_map(self.tex_to_color_map)                          │
+│   302 │   │                                                                                      │
+│   303 │   │   if self.organize_left_to_right:                                                    │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:2 │
+│ 79 in __init__                                                                                   │
+│                                                                                                  │
+│   276 │   │   self.brace_notation_split_occurred = False                                         │
+│   277 │   │   self.tex_strings = self._break_up_tex_strings(tex_strings)                         │
+│   278 │   │   try:                                                                               │
+│ ❱ 279 │   │   │   super().__init__(                                                              │
+│   280 │   │   │   │   self.arg_separator.join(self.tex_strings),                                 │
+│   281 │   │   │   │   tex_environment=self.tex_environment,                                      │
+│   282 │   │   │   │   tex_template=self.tex_template,                                            │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/text/tex_mobject.py:8 │
+│ 0 in __init__                                                                                    │
+│                                                                                                  │
+│    77 │   │   self.tex_template: TexTemplate = tex_template                                      │
+│    78 │   │                                                                                      │
+│    79 │   │   self.tex_string = tex_string                                                       │
+│ ❱  80 │   │   file_name = tex_to_svg_file(                                                       │
+│    81 │   │   │   self._get_modified_expression(tex_string),                                     │
+│    82 │   │   │   environment=self.tex_environment,                                              │
+│    83 │   │   │   tex_template=self.tex_template,                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:65  │
+│ in tex_to_svg_file                                                                               │
+│                                                                                                  │
+│    62 │   if svg_file.exists():                                                                  │
+│    63 │   │   return svg_file                                                                    │
+│    64 │                                                                                          │
+│ ❱  65 │   dvi_file = compile_tex(                                                                │
+│    66 │   │   tex_file,                                                                          │
+│    67 │   │   tex_template.tex_compiler,                                                         │
+│    68 │   │   tex_template.output_format,                                                        │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/utils/tex_file_writing.py:212 │
+│ in compile_tex                                                                                   │
+│                                                                                                  │
+│   209 │   │   if cp.returncode != 0:                                                             │
+│   210 │   │   │   log_file = tex_file.with_suffix(".log")                                        │
+│   211 │   │   │   print_all_tex_errors(log_file, tex_compiler, tex_file)                         │
+│ ❱ 212 │   │   │   raise ValueError(                                                              │
+│   213 │   │   │   │   f"{tex_compiler} error converting to"                                      │
+│   214 │   │   │   │   f" {output_format[1:]}. See log output above or"                           │
+│   215 │   │   │   │   f" the log file: {log_file}",                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+ValueError: latex error converting to dvi. See log output above or the log file: 
+/root/hui-yan-wan-xiang/runs_video/3e84cad384a64479aa495045ba7632d8/20260301_144151/media/Tex/1090b6e2cfd2a8e6.log

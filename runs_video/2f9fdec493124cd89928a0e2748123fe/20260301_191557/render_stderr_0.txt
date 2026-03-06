@@ -1,0 +1,98 @@
+
+Animation 0: Create(Axes of 2 submobjects):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 0: Create(Axes of 2 submobjects):  20%|██        | 6/30 [00:00<00:00, 55.65it/s]
+Animation 0: Create(Axes of 2 submobjects):  40%|████      | 12/30 [00:00<00:00, 52.93it/s]
+Animation 0: Create(Axes of 2 submobjects):  60%|██████    | 18/30 [00:00<00:00, 53.28it/s]
+Animation 0: Create(Axes of 2 submobjects):  80%|████████  | 24/30 [00:00<00:00, 53.01it/s]
+Animation 0: Create(Axes of 2 submobjects): 100%|██████████| 30/30 [00:00<00:00, 54.00it/s]
+                                                                                           
+
+Animation 2: Create(ImplicitFunction):   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 2: Create(ImplicitFunction):  23%|██▎       | 7/30 [00:00<00:00, 66.81it/s]
+Animation 2: Create(ImplicitFunction):  47%|████▋     | 14/30 [00:00<00:00, 47.81it/s]
+Animation 2: Create(ImplicitFunction):  67%|██████▋   | 20/30 [00:00<00:00, 44.47it/s]
+Animation 2: Create(ImplicitFunction):  83%|████████▎ | 25/30 [00:00<00:00, 42.79it/s]
+Animation 2: Create(ImplicitFunction): 100%|██████████| 30/30 [00:00<00:00, 40.10it/s]
+                                                                                      
+
+Animation 3: Write(Text('Parabola')):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 3: Write(Text('Parabola')):  27%|██▋       | 4/15 [00:00<00:00, 38.46it/s]
+Animation 3: Write(Text('Parabola')):  53%|█████▎    | 8/15 [00:00<00:00, 31.86it/s]
+Animation 3: Write(Text('Parabola')):  87%|████████▋ | 13/15 [00:00<00:00, 36.89it/s]
+                                                                                     
+
+Animation 5: FadeIn(Dot), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 5: FadeIn(Dot), etc.:  53%|█████▎    | 8/15 [00:00<00:00, 74.17it/s]
+                                                                              
+
+Animation 6: FadeIn(Dot), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 6: FadeIn(Dot), etc.:  53%|█████▎    | 8/15 [00:00<00:00, 76.59it/s]
+                                                                              
+
+Animation 7: Create(DashedLine), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 7: Create(DashedLine), etc.:  33%|███▎      | 5/15 [00:00<00:00, 47.32it/s]
+Animation 7: Create(DashedLine), etc.:  67%|██████▋   | 10/15 [00:00<00:00, 47.63it/s]
+Animation 7: Create(DashedLine), etc.: 100%|██████████| 15/15 [00:00<00:00, 47.68it/s]
+                                                                                      
+
+Animation 9: Create(Line), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 9: Create(Line), etc.:  27%|██▋       | 8/30 [00:00<00:00, 78.25it/s]
+Animation 9: Create(Line), etc.:  53%|█████▎    | 16/30 [00:00<00:00, 74.45it/s]
+Animation 9: Create(Line), etc.:  80%|████████  | 24/30 [00:00<00:00, 68.14it/s]
+                                                                                
+╭─────────────────────────────── Traceback (most recent call last) ────────────────────────────────╮
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/cli/render/commands.py:125 in │
+│ render                                                                                           │
+│                                                                                                  │
+│   122 │   │   │   try:                                                                           │
+│   123 │   │   │   │   with tempconfig({}):                                                       │
+│   124 │   │   │   │   │   scene = SceneClass()                                                   │
+│ ❱ 125 │   │   │   │   │   scene.render()                                                         │
+│   126 │   │   │   except Exception:                                                              │
+│   127 │   │   │   │   error_console.print_exception()                                            │
+│   128 │   │   │   │   sys.exit(1)                                                                │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/scene/scene.py:260 in render  │
+│                                                                                                  │
+│    257 │   │   """                                                                               │
+│    258 │   │   self.setup()                                                                      │
+│    259 │   │   try:                                                                              │
+│ ❱  260 │   │   │   self.construct()                                                              │
+│    261 │   │   except EndSceneEarlyException:                                                    │
+│    262 │   │   │   pass                                                                          │
+│    263 │   │   except RerunSceneException:                                                       │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/runs_video/2f9fdec493124cd89928a0e2748123fe/20260301_191557/generated_sc │
+│ ene.py:73 in construct                                                                           │
+│                                                                                                  │
+│    70 │   │   # Line from P perpendicular to directrix                                           │
+│    71 │   │   PQ = DashedLine(P.get_center(), Q_point, color=ORANGE, stroke_width=2.5)           │
+│    72 │   │   PQ_label = MathTex(r"PQ", color=ORANGE).scale(0.7).next_to(                        │
+│ ❱  73 │   │   │   PQ.point_from_proportion(0.5), UP, buff=0.1                                    │
+│    74 │   │   )                                                                                  │
+│    75 │   │                                                                                      │
+│    76 │   │   self.play(Create(PQ), Write(PQ_label), run_time=0.8)                               │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/types/vectorized_mobj │
+│ ect.py:1563 in point_from_proportion                                                             │
+│                                                                                                  │
+│   1560 │   │   if alpha < 0 or alpha > 1:                                                        │
+│   1561 │   │   │   raise ValueError(f"Alpha {alpha} not between 0 and 1.")                       │
+│   1562 │   │                                                                                     │
+│ ❱ 1563 │   │   self.throw_error_if_no_points()                                                   │
+│   1564 │   │   if alpha == 1:                                                                    │
+│   1565 │   │   │   return self.points[-1]                                                        │
+│   1566                                                                                           │
+│                                                                                                  │
+│ /root/hui-yan-wan-xiang/.huiyan/lib/python3.10/site-packages/manim/mobject/mobject.py:3203 in    │
+│ throw_error_if_no_points                                                                         │
+│                                                                                                  │
+│   3200 │   def throw_error_if_no_points(self) -> None:                                           │
+│   3201 │   │   if self.has_no_points():                                                          │
+│   3202 │   │   │   caller_name = sys._getframe(1).f_code.co_name                                 │
+│ ❱ 3203 │   │   │   raise Exception(                                                              │
+│   3204 │   │   │   │   f"Cannot call Mobject.{caller_name} for a Mobject with no points",        │
+│   3205 │   │   │   )                                                                             │
+│   3206                                                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
+Exception: Cannot call Mobject.point_from_proportion for a Mobject with no points

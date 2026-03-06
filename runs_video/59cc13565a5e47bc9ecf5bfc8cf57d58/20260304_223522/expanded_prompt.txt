@@ -1,0 +1,54 @@
+**Animation Plan: Forced Oscillations (Forced Vibration)**
+
+**Core Concept:** A simple harmonic oscillator (e.g., mass on a spring) is initially in free oscillation. An external periodic driving force is then applied, causing the system's amplitude to grow until it reaches a steady state of "forced vibration" at the driving frequency.
+
+**Total Target Duration:** ~12 seconds.
+
+**Strict Layout & Constraint Rules:**
+1.  **Frame Boundaries:** All objects (mass, springs, axes, labels, equations) must remain within the visible frame at all times. No part of any object should be cut off.
+2.  **Static Text/Equations:** All labels and equations must be positioned at fixed, pre-defined locations. They must not move, drift, or transform in a way that causes them to leave their assigned area. Use `always_redraw` or similar techniques only for objects that inherently change (like the mass position).
+3.  **Zoning:** Divide the frame into two primary zones:
+    *   **Left 2/3:** Animation Zone (for the physical system).
+    *   **Right 1/3:** Information Zone (for labels and equations). Maintain a clear margin between zones.
+4.  **Overlap Prevention:** The moving mass and spring must not pass through any text or axes. The axes in the Information Zone must be positioned to avoid collision with the main animation.
+
+---
+
+**Scene Breakdown:**
+
+**Scene 1: Free Oscillation Setup (0.0s - 3.0s)**
+*   **Objects:**
+    *   **Left Zone:** A wall anchor on the left, a horizontal spring attached to it, and a mass (circle) attached to the spring's end. A horizontal dashed line represents the equilibrium position.
+    *   **Right Zone (Static Text):** Title "Forced Oscillations" at top. Below it, label: `System: Mass-Spring Oscillator`.
+*   **Action:**
+    *   Animate the construction of the system: wall, spring, mass, equilibrium line.
+    *   The mass starts slightly displaced from equilibrium and oscillates with a constant, moderate amplitude and a natural frequency `ω₀`.
+*   **Timing:** 3 seconds of free oscillation to establish the baseline.
+
+**Scene 2: Introduce Driving Force (3.0s - 6.0s)**
+*   **Objects:**
+    *   **Left Zone:** A new graphical element appears: an arrow originating from the right side of the frame, pointing left towards the mass. Label this arrow `F_d(t)`.
+    *   **Right Zone:** Update text. Add the equation for the driving force: `F_d(t) = F₀ cos(ωt)`. Below it, add the equation of motion: `m ẍ + b ẋ + kx = F₀ cos(ωt)`.
+*   **Action:**
+    *   The `F_d(t)` arrow pulses in sync with a new, slower frequency `ω` (where `ω < ω₀` for clarity).
+    *   The mass's oscillation begins to show a slight, slow modulation as the driving force starts to influence it.
+*   **Constraint:** The driving force arrow must be sized and positioned so its pulsing motion never touches the mass or extends beyond the frame.
+
+**Scene 3: Transient Growth & Resonance (6.0s - 9.5s)**
+*   **Objects:**
+    *   **Left Zone:** The oscillating mass and the pulsing driving force arrow.
+    *   **Right Zone:** Add a new coordinate axes below the equations with labels `Amplitude (A)` and `Driving Frequency (ω)`. Plot a static resonance curve (a peaked graph centered at `ω₀`). Add a vertical dashed line at the current `ω` and a dot on the curve showing the growing amplitude `A(ω)`.
+*   **Action:**
+    *   The amplitude of the mass's oscillation visibly **grows** over time.
+    *   Simultaneously, in the Information Zone, the dot on the resonance curve moves vertically upward along the dashed line, tracking the increasing amplitude.
+    *   The mass's motion becomes a clear superposition of its natural oscillation and the forced response.
+*   **Constraint:** The amplitude growth in the animation must be smooth and the dot on the graph must move precisely to avoid visual clutter.
+
+**Scene 4: Steady State Forced Vibration (9.5s - 12.0s)**
+*   **Objects:** All previous objects remain.
+*   **Action:**
+    *   The mass's oscillation amplitude stabilizes at a new, larger constant value.
+    *   Its oscillation is now perfectly synchronized (in phase/locked) with the pulsing driving force `F_d(t)`.
+    *   The dot on the resonance curve stops at its final position.
+    *   In the Right Zone, highlight the term `cos(ωt)` in the equation of motion and the title "FORCED VIBRATION" pulses once for emphasis.
+*   **Timing:** Hold for ~2.5 seconds to clearly show the steady-state condition.

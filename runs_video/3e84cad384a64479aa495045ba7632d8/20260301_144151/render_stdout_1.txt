@@ -1,0 +1,15 @@
+Manim Community v0.19.1
+
+[03/01/26 14:45:13] INFO     Writing 受迫振动 to                                                                         tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/3e84cad384a64479aa495045ba7632d8/20260301_144151/media/T                        
+                             ex/1090b6e2cfd2a8e6.tex                                                                                            
+                    ERROR    LaTeX compilation error: LaTeX Error: There's no line here to end.                          tex_file_writing.py:314
+                                                                                                                                                
+                    ERROR    Context of error:                                                                           tex_file_writing.py:348
+                             \usepackage[english]{babel}                                                                                        
+                             \usepackage{amsmath}                                                                                               
+                             -> \usepackage{amssymb}                                                                                            
+                             \\usepackage{ctex}                                                                                                 
+                             \begin{document}                                                                                                   
+                             \begin{center}                                                                                                     
+                                                                                                                                                

@@ -1,0 +1,135 @@
+
+Animation 0: Write(Text('Forced Vibration')):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 0: Write(Text('Forced Vibration')):  40%|████      | 6/15 [00:00<00:00, 52.46it/s]
+Animation 0: Write(Text('Forced Vibration')):  80%|████████  | 12/15 [00:00<00:00, 47.60it/s]
+                                                                                             
+
+Animation 1: Create(Line):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 1: Create(Line):  33%|███▎      | 5/15 [00:00<00:00, 46.37it/s]
+Animation 1: Create(Line):  67%|██████▋   | 10/15 [00:00<00:00, 45.59it/s]
+                                                                          
+
+Animation 2: Create(ParametricFunction):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 2: Create(ParametricFunction):  40%|████      | 6/15 [00:00<00:00, 56.17it/s]
+Animation 2: Create(ParametricFunction):  80%|████████  | 12/15 [00:00<00:00, 47.20it/s]
+                                                                                        
+
+Animation 3: Create(Square):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 3: Create(Square):  33%|███▎      | 5/15 [00:00<00:00, 43.98it/s]
+Animation 3: Create(Square):  67%|██████▋   | 10/15 [00:00<00:00, 35.66it/s]
+Animation 3: Create(Square):  93%|█████████▎| 14/15 [00:00<00:00, 33.31it/s]
+                                                                            
+
+Animation 4: Create(DashedLine):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 4: Create(DashedLine):  33%|███▎      | 5/15 [00:00<00:00, 44.31it/s]
+Animation 4: Create(DashedLine):  67%|██████▋   | 10/15 [00:00<00:00, 37.66it/s]
+Animation 4: Create(DashedLine):  93%|█████████▎| 14/15 [00:00<00:00, 38.20it/s]
+                                                                                
+
+Animation 5: Write(MathTex('\\omega_0 \\text{ (Natural Frequency)}')):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 5: Write(MathTex('\\omega_0 \\text{ (Natural Frequency)}')):  27%|██▋       | 4/15 [00:00<00:00, 36.01it/s]
+Animation 5: Write(MathTex('\\omega_0 \\text{ (Natural Frequency)}')):  53%|█████▎    | 8/15 [00:00<00:00, 34.26it/s]
+Animation 5: Write(MathTex('\\omega_0 \\text{ (Natural Frequency)}')):  80%|████████  | 12/15 [00:00<00:00, 32.39it/s]
+                                                                                                                      
+
+Animation 7: Write(MathTex('F(t) = F_0 \\cos(\\omega t)')):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 7: Write(MathTex('F(t) = F_0 \\cos(\\omega t)')):  27%|██▋       | 4/15 [00:00<00:00, 29.45it/s]
+Animation 7: Write(MathTex('F(t) = F_0 \\cos(\\omega t)')):  47%|████▋     | 7/15 [00:00<00:00, 29.35it/s]
+Animation 7: Write(MathTex('F(t) = F_0 \\cos(\\omega t)')):  67%|██████▋   | 10/15 [00:00<00:00, 29.13it/s]
+Animation 7: Write(MathTex('F(t) = F_0 \\cos(\\omega t)')):  87%|████████▋ | 13/15 [00:00<00:00, 29.08it/s]
+                                                                                                           
+
+Animation 8: Create(Arrow):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 8: Create(Arrow):  20%|██        | 3/15 [00:00<00:00, 29.16it/s]
+Animation 8: Create(Arrow):  40%|████      | 6/15 [00:00<00:00, 23.95it/s]
+Animation 8: Create(Arrow):  67%|██████▋   | 10/15 [00:00<00:00, 27.21it/s]
+Animation 8: Create(Arrow):  87%|████████▋ | 13/15 [00:00<00:00, 27.90it/s]
+                                                                           
+
+Animation 9: _MethodAnimation(Arrow):   0%|          | 0/9 [00:00<?, ?it/s]
+Animation 9: _MethodAnimation(Arrow):  44%|████▍     | 4/9 [00:00<00:00, 31.66it/s]
+Animation 9: _MethodAnimation(Arrow):  89%|████████▉ | 8/9 [00:00<00:00, 24.77it/s]
+                                                                                   
+
+Animation 10: _MethodAnimation(Arrow):   0%|          | 0/9 [00:00<?, ?it/s]
+Animation 10: _MethodAnimation(Arrow):  44%|████▍     | 4/9 [00:00<00:00, 33.60it/s]
+Animation 10: _MethodAnimation(Arrow):  89%|████████▉ | 8/9 [00:00<00:00, 30.89it/s]
+                                                                                    
+
+Animation 11: _MethodAnimation(Arrow):   0%|          | 0/9 [00:00<?, ?it/s]
+Animation 11: _MethodAnimation(Arrow):  44%|████▍     | 4/9 [00:00<00:00, 32.21it/s]
+Animation 11: _MethodAnimation(Arrow):  89%|████████▉ | 8/9 [00:00<00:00, 30.69it/s]
+                                                                                    
+
+Animation 12: _MethodAnimation(Arrow):   0%|          | 0/9 [00:00<?, ?it/s]
+Animation 12: _MethodAnimation(Arrow):  44%|████▍     | 4/9 [00:00<00:00, 31.34it/s]
+Animation 12: _MethodAnimation(Arrow):  89%|████████▉ | 8/9 [00:00<00:00, 26.08it/s]
+                                                                                    
+
+Animation 13: _MethodAnimation(Arrow):   0%|          | 0/9 [00:00<?, ?it/s]
+Animation 13: _MethodAnimation(Arrow):  44%|████▍     | 4/9 [00:00<00:00, 32.48it/s]
+Animation 13: _MethodAnimation(Arrow):  89%|████████▉ | 8/9 [00:00<00:00, 31.22it/s]
+                                                                                    
+
+Animation 14: _MethodAnimation(Arrow):   0%|          | 0/9 [00:00<?, ?it/s]
+Animation 14: _MethodAnimation(Arrow):  44%|████▍     | 4/9 [00:00<00:00, 31.90it/s]
+Animation 14: _MethodAnimation(Arrow):  89%|████████▉ | 8/9 [00:00<00:00, 30.82it/s]
+                                                                                    
+
+Animation 15: Create(Line), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 15: Create(Line), etc.:  10%|█         | 3/30 [00:00<00:01, 25.09it/s]
+Animation 15: Create(Line), etc.:  20%|██        | 6/30 [00:00<00:00, 25.66it/s]
+Animation 15: Create(Line), etc.:  30%|███       | 9/30 [00:00<00:00, 26.62it/s]
+Animation 15: Create(Line), etc.:  40%|████      | 12/30 [00:00<00:00, 27.52it/s]
+Animation 15: Create(Line), etc.:  50%|█████     | 15/30 [00:00<00:00, 25.08it/s]
+Animation 15: Create(Line), etc.:  60%|██████    | 18/30 [00:00<00:00, 20.82it/s]
+Animation 15: Create(Line), etc.:  70%|███████   | 21/30 [00:00<00:00, 22.60it/s]
+Animation 15: Create(Line), etc.:  80%|████████  | 24/30 [00:00<00:00, 24.02it/s]
+Animation 15: Create(Line), etc.:  90%|█████████ | 27/30 [00:01<00:00, 24.92it/s]
+Animation 15: Create(Line), etc.: 100%|██████████| 30/30 [00:01<00:00, 24.63it/s]
+                                                                                 
+
+Animation 17: Write(Text('Transient')):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 17: Write(Text('Transient')):  20%|██        | 3/15 [00:00<00:00, 28.67it/s]
+Animation 17: Write(Text('Transient')):  40%|████      | 6/15 [00:00<00:00, 26.65it/s]
+Animation 17: Write(Text('Transient')):  60%|██████    | 9/15 [00:00<00:00, 26.49it/s]
+Animation 17: Write(Text('Transient')):  80%|████████  | 12/15 [00:00<00:00, 23.72it/s]
+Animation 17: Write(Text('Transient')): 100%|██████████| 15/15 [00:00<00:00, 24.69it/s]
+                                                                                       
+
+Animation 19: ReplacementTransform(Text('Transient')), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  10%|█         | 3/30 [00:00<00:01, 22.35it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  20%|██        | 6/30 [00:00<00:01, 22.73it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  30%|███       | 9/30 [00:00<00:00, 22.99it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  40%|████      | 12/30 [00:00<00:00, 20.01it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  50%|█████     | 15/30 [00:00<00:00, 20.89it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  60%|██████    | 18/30 [00:00<00:00, 20.86it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  70%|███████   | 21/30 [00:00<00:00, 21.64it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  80%|████████  | 24/30 [00:01<00:00, 21.64it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.:  90%|█████████ | 27/30 [00:01<00:00, 22.31it/s]
+Animation 19: ReplacementTransform(Text('Transient')), etc.: 100%|██████████| 30/30 [00:01<00:00, 22.52it/s]
+                                                                                                            
+
+Animation 21: _MethodAnimation(Triangle), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  10%|█         | 3/30 [00:00<00:01, 25.30it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  20%|██        | 6/30 [00:00<00:00, 25.10it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  30%|███       | 9/30 [00:00<00:00, 25.28it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  40%|████      | 12/30 [00:00<00:00, 24.56it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  50%|█████     | 15/30 [00:00<00:00, 24.47it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  60%|██████    | 18/30 [00:00<00:00, 23.56it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  70%|███████   | 21/30 [00:00<00:00, 21.10it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  80%|████████  | 24/30 [00:01<00:00, 22.18it/s]
+Animation 21: _MethodAnimation(Triangle), etc.:  90%|█████████ | 27/30 [00:01<00:00, 22.40it/s]
+Animation 21: _MethodAnimation(Triangle), etc.: 100%|██████████| 30/30 [00:01<00:00, 23.41it/s]
+                                                                                               
+
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):   7%|▋         | 1/15 [00:00<00:08,  1.62it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):  20%|██        | 3/15 [00:00<00:02,  4.87it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):  33%|███▎      | 5/15 [00:00<00:01,  7.77it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):  47%|████▋     | 7/15 [00:00<00:00, 10.10it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):  60%|██████    | 9/15 [00:01<00:00, 11.56it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):  73%|███████▎  | 11/15 [00:01<00:00,  7.23it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')):  87%|████████▋ | 13/15 [00:01<00:00,  8.52it/s]
+Animation 22: Write(Text('Maximum at Resonance ω = ω₀')): 100%|██████████| 15/15 [00:01<00:00, 10.01it/s]
+                                                                                                         

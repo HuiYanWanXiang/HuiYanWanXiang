@@ -1,0 +1,45 @@
+Manim Community v0.19.1
+
+[03/01/26 19:25:48] INFO     Animation 0 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/1292736442_1606162607_223132457.mp4'                                         
+[03/01/26 19:25:49] INFO     Animation 1 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_1930776000.mp4'                                        
+[03/01/26 19:25:51] INFO     Animation 2 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2171580712_1084649251.mp4'                                        
+[03/01/26 19:25:52] INFO     Animation 3 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_4159500656.mp4'                                        
+[03/01/26 19:25:54] INFO     Animation 4 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3842261733_2331956942.mp4'                                        
+[03/01/26 19:25:55] INFO     Animation 5 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4071516364_402144503.mp4'                                         
+[03/01/26 19:25:58] INFO     Animation 6 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_343401100_3246776896.mp4'                                         
+[03/01/26 19:26:00] INFO     Animation 7 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3943088540_4055256166.mp4'                                        
+[03/01/26 19:26:01] INFO     Animation 8 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2341082278_831392032.mp4'                                         
+[03/01/26 19:26:04] INFO     Animation 9 : Partial movie file written in                                                              scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/videos/genera                         
+                             ted_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2812093871_3575266157.mp4'                                        
+                    INFO     Writing \int_a^b f(x)dx to                                                                                tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/aad28700662c4064a048b9f92aa8cc04/20260301_192410/media/Tex/7b14223fbb0                        
+                             838dc.tex                                                                                                                        
+[03/01/26 19:26:05] ERROR    LaTeX compilation error: LaTeX Error: There's no line here to end.                                        tex_file_writing.py:314
+                                                                                                                                                              
+                    ERROR    Context of error:                                                                                         tex_file_writing.py:348
+                             \usepackage[english]{babel}                                                                                                      
+                             \usepackage{amsmath}                                                                                                             
+                             -> \usepackage{amssymb}                                                                                                          
+                             \\usepackage{ctex}                                                                                                               
+                             \begin{document}                                                                                                                 
+                             \begin{align*}                                                                                                                   
+                                                                                                                                                              

@@ -1,0 +1,8 @@
+Manim Community v0.19.1
+
+[03/01/26 19:22:03] INFO     Writing F_1 to                                                                                            tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/50769ac87f4e4d81b04912dd6bffd703/20260301_192043/media/Tex/d1b6174e9ec                        
+                             5958d.tex                                                                                                                        
+                    INFO     Writing F_2 to                                                                                            tex_file_writing.py:111
+                             /root/hui-yan-wan-xiang/runs_video/50769ac87f4e4d81b04912dd6bffd703/20260301_192043/media/Tex/b3974717080                        
+                             e1196.tex                                                                                                                        

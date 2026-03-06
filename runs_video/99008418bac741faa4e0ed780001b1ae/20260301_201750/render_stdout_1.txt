@@ -1,0 +1,20 @@
+Manim Community v0.19.1
+
+[03/01/26 20:21:07] INFO     Animation 0 : Using cached data (hash : 1292736442_1076908778_223132457)                                            cairo_renderer.py:94
+                    INFO     Animation 1 : Using cached data (hash : 2827983349_2341082278_3198094078)                                           cairo_renderer.py:94
+                    INFO     Animation 2 : Using cached data (hash : 2827983349_4115898423_3707998285)                                           cairo_renderer.py:94
+[03/01/26 20:21:08] INFO     Animation 3 : Using cached data (hash : 2827983349_4071516364_2519463333)                                           cairo_renderer.py:94
+                    INFO     Animation 4 : Using cached data (hash : 2827983349_3786712219_2347694755)                                           cairo_renderer.py:94
+[03/01/26 20:21:10] INFO     Animation 5 : Partial movie file written in                                                                     scene_file_writer.py:590
+                             '/root/hui-yan-wan-xiang/runs_video/99008418bac741faa4e0ed780001b1ae/20260301_201750/media/videos/generated_sce                         
+                             ne/720p30/partial_movie_files/GeneratedScene/2827983349_1086851347_1886895809.mp4'                                                      
+                    ERROR    LaTeX compilation error: LaTeX Error: There's no line here to end.                                               tex_file_writing.py:314
+                                                                                                                                                                     
+                    ERROR    Context of error:                                                                                                tex_file_writing.py:348
+                             \usepackage[english]{babel}                                                                                                             
+                             \usepackage{amsmath}                                                                                                                    
+                             -> \usepackage{amssymb}                                                                                                                 
+                             \\usepackage{ctex}                                                                                                                      
+                             \begin{document}                                                                                                                        
+                             \begin{align*}                                                                                                                          
+                                                                                                                                                                     

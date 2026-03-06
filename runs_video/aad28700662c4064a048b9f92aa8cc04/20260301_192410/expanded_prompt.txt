@@ -1,0 +1,74 @@
+**Animation Plan: Geometric Meaning of Integration**
+
+**Concept Breakdown:**
+- Integration as area under a curve
+- Connection between Riemann sums and definite integral
+- Visual progression: rectangles → more rectangles → smooth area
+
+**Total Duration:** 12 seconds (3 scenes)
+
+---
+
+**Scene 1: Setup & Function (0-3s)**
+- **Objects:**
+  - Coordinate axes (x: -1 to 5, y: -1 to 3) centered
+  - Function curve: f(x) = 0.5*sin(x) + 0.5*x + 0.5 (gentle upward curve)
+  - Vertical lines at x=1 and x=4 defining integration interval [1,4]
+  - Label: "∫ from a to b f(x) dx" below axes
+- **Actions:**
+  - Axes appear (0-1s)
+  - Curve draws (1-2s)
+  - Vertical lines appear (2-2.5s)
+  - Label appears (2.5-3s)
+- **Layout Constraints:**
+  - All objects fit within frame with 10% margin
+  - Label positioned 1 unit below x-axis, centered horizontally
+
+**Scene 2: Riemann Sum Approximation (3-8s)**
+- **Objects:**
+  - 4 rectangles under curve between x=1 and x=4 (width=0.75 each)
+  - Rectangle height = function value at left endpoint
+  - Area value display: "Approximation = sum of rectangle areas"
+- **Actions:**
+  - Rectangles appear sequentially left to right (3-5s)
+  - Each rectangle fills with light blue color as it appears
+  - Area value updates with each rectangle (5-6s)
+  - Rectangles subdivide into 8 thinner rectangles (6-7s)
+  - Area value updates: "Better approximation" (7-8s)
+- **Layout Constraints:**
+  - Rectangles stay within axes bounds
+  - Area text positioned right of axes, aligned vertically center
+  - Text remains fixed position during updates
+
+**Scene 3: Exact Area & Conclusion (8-12s)**
+- **Objects:**
+  - Smooth blue fill under curve between x=1 and x=4
+  - Integral symbol morphs from sigma (∑) to integral (∫)
+  - Final label: "∫ from a to b f(x) dx = Exact area under curve"
+- **Actions:**
+  - Blue fill expands smoothly under curve (8-10s)
+  - Symbol transformation (10-11s)
+  - Final label appears (11-12s)
+- **Layout Constraints:**
+  - Fill stays precisely within curve and vertical boundaries
+  - Labels remain in same position as Scene 1
+  - All text horizontally centered in lower third of frame
+
+**Key Equations/Text:**
+1. "∫ from a to b f(x) dx"
+2. "Approximation = sum of rectangle areas"
+3. "Better approximation with more rectangles"
+4. "∫ from a to b f(x) dx = Exact area under curve"
+
+**Timing Notes:**
+- Scene transitions: smooth crossfade
+- Object animations: 0.5-1s each
+- Pauses: 0.5s after key moments for comprehension
+- Total: 3s + 5s + 4s = 12s
+
+**Visual Guidelines:**
+- Curve: black, 3px thickness
+- Rectangles: light blue with 50% opacity
+- Final area fill: medium blue with 70% opacity
+- Text: black, sans-serif, large enough for readability
+- All elements maintain fixed positions after appearing

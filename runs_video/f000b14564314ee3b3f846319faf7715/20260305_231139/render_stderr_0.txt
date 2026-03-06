@@ -1,0 +1,131 @@
+
+Animation 0: Create(Polygon):   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 0: Create(Polygon):  11%|█         | 5/45 [00:00<00:00, 44.83it/s]
+Animation 0: Create(Polygon):  22%|██▏       | 10/45 [00:00<00:00, 36.43it/s]
+Animation 0: Create(Polygon):  31%|███       | 14/45 [00:00<00:00, 37.00it/s]
+Animation 0: Create(Polygon):  40%|████      | 18/45 [00:00<00:00, 37.02it/s]
+Animation 0: Create(Polygon):  49%|████▉     | 22/45 [00:00<00:00, 36.70it/s]
+Animation 0: Create(Polygon):  58%|█████▊    | 26/45 [00:00<00:00, 34.51it/s]
+Animation 0: Create(Polygon):  67%|██████▋   | 30/45 [00:00<00:00, 34.02it/s]
+Animation 0: Create(Polygon):  76%|███████▌  | 34/45 [00:00<00:00, 34.56it/s]
+Animation 0: Create(Polygon):  87%|████████▋ | 39/45 [00:01<00:00, 34.03it/s]
+Animation 0: Create(Polygon):  96%|█████████▌| 43/45 [00:01<00:00, 34.27it/s]
+                                                                             
+
+Animation 1: Create(RightAngle):   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 1: Create(RightAngle):  40%|████      | 6/15 [00:00<00:00, 54.43it/s]
+Animation 1: Create(RightAngle):  80%|████████  | 12/15 [00:00<00:00, 44.95it/s]
+                                                                                
+
+Animation 2: Write(MathTex('A')), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 2: Write(MathTex('A')), etc.:  17%|█▋        | 5/30 [00:00<00:00, 41.85it/s]
+Animation 2: Write(MathTex('A')), etc.:  33%|███▎      | 10/30 [00:00<00:00, 34.02it/s]
+Animation 2: Write(MathTex('A')), etc.:  47%|████▋     | 14/30 [00:00<00:00, 34.31it/s]
+Animation 2: Write(MathTex('A')), etc.:  60%|██████    | 18/30 [00:00<00:00, 35.30it/s]
+Animation 2: Write(MathTex('A')), etc.:  73%|███████▎  | 22/30 [00:00<00:00, 36.24it/s]
+Animation 2: Write(MathTex('A')), etc.:  87%|████████▋ | 26/30 [00:00<00:00, 32.55it/s]
+                                                                                       
+
+Animation 3: Write(MathTex('a')), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 3: Write(MathTex('a')), etc.:  17%|█▋        | 5/30 [00:00<00:00, 46.44it/s]
+Animation 3: Write(MathTex('a')), etc.:  33%|███▎      | 10/30 [00:00<00:00, 40.25it/s]
+Animation 3: Write(MathTex('a')), etc.:  50%|█████     | 15/30 [00:00<00:00, 37.63it/s]
+Animation 3: Write(MathTex('a')), etc.:  63%|██████▎   | 19/30 [00:00<00:00, 37.71it/s]
+Animation 3: Write(MathTex('a')), etc.:  77%|███████▋  | 23/30 [00:00<00:00, 37.74it/s]
+Animation 3: Write(MathTex('a')), etc.:  90%|█████████ | 27/30 [00:00<00:00, 37.67it/s]
+                                                                                       
+
+Animation 5: Create(Square), etc.:   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 5: Create(Square), etc.:  11%|█         | 5/45 [00:00<00:00, 44.53it/s]
+Animation 5: Create(Square), etc.:  22%|██▏       | 10/45 [00:00<00:00, 46.01it/s]
+Animation 5: Create(Square), etc.:  33%|███▎      | 15/45 [00:00<00:00, 41.53it/s]
+Animation 5: Create(Square), etc.:  44%|████▍     | 20/45 [00:00<00:00, 43.61it/s]
+Animation 5: Create(Square), etc.:  56%|█████▌    | 25/45 [00:00<00:00, 41.22it/s]
+Animation 5: Create(Square), etc.:  67%|██████▋   | 30/45 [00:00<00:00, 39.17it/s]
+Animation 5: Create(Square), etc.:  76%|███████▌  | 34/45 [00:00<00:00, 36.62it/s]
+Animation 5: Create(Square), etc.:  84%|████████▍ | 38/45 [00:00<00:00, 33.90it/s]
+Animation 5: Create(Square), etc.:  93%|█████████▎| 42/45 [00:01<00:00, 33.56it/s]
+                                                                                  
+
+Animation 6: Write(MathTex('a^2')), etc.:   0%|          | 0/30 [00:00<?, ?it/s]
+Animation 6: Write(MathTex('a^2')), etc.:  17%|█▋        | 5/30 [00:00<00:00, 41.27it/s]
+Animation 6: Write(MathTex('a^2')), etc.:  33%|███▎      | 10/30 [00:00<00:00, 38.82it/s]
+Animation 6: Write(MathTex('a^2')), etc.:  47%|████▋     | 14/30 [00:00<00:00, 33.56it/s]
+Animation 6: Write(MathTex('a^2')), etc.:  60%|██████    | 18/30 [00:00<00:00, 32.52it/s]
+Animation 6: Write(MathTex('a^2')), etc.:  73%|███████▎  | 22/30 [00:00<00:00, 31.57it/s]
+Animation 6: Write(MathTex('a^2')), etc.:  87%|████████▋ | 26/30 [00:00<00:00, 31.29it/s]
+Animation 6: Write(MathTex('a^2')), etc.: 100%|██████████| 30/30 [00:00<00:00, 30.79it/s]
+                                                                                         
+
+Animation 8: FadeOut(VGroup of 6 submobjects), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 8: FadeOut(VGroup of 6 submobjects), etc.:  27%|██▋       | 4/15 [00:00<00:00, 29.90it/s]
+Animation 8: FadeOut(VGroup of 6 submobjects), etc.:  47%|████▋     | 7/15 [00:00<00:00, 28.33it/s]
+Animation 8: FadeOut(VGroup of 6 submobjects), etc.:  67%|██████▋   | 10/15 [00:00<00:00, 27.32it/s]
+Animation 8: FadeOut(VGroup of 6 submobjects), etc.:  87%|████████▋ | 13/15 [00:00<00:00, 25.03it/s]
+                                                                                                    
+
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  11%|█         | 5/45 [00:00<00:00, 43.78it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  22%|██▏       | 10/45 [00:00<00:00, 40.31it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  33%|███▎      | 15/45 [00:00<00:00, 37.11it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  42%|████▏     | 19/45 [00:00<00:00, 33.39it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  51%|█████     | 23/45 [00:00<00:00, 32.86it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  60%|██████    | 27/45 [00:00<00:00, 32.01it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  69%|██████▉   | 31/45 [00:00<00:00, 31.50it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  78%|███████▊  | 35/45 [00:01<00:00, 30.17it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  87%|████████▋ | 39/45 [00:01<00:00, 29.55it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')):  93%|█████████▎| 42/45 [00:01<00:00, 29.01it/s]
+Animation 9: Write(MathTex('a^2 + b^2 = c^2')): 100%|██████████| 45/45 [00:01<00:00, 27.97it/s]
+                                                                                               
+
+Animation 11: FadeIn(VGroup of 6 submobjects), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 11: FadeIn(VGroup of 6 submobjects), etc.:  27%|██▋       | 4/15 [00:00<00:00, 29.61it/s]
+Animation 11: FadeIn(VGroup of 6 submobjects), etc.:  47%|████▋     | 7/15 [00:00<00:00, 28.01it/s]
+Animation 11: FadeIn(VGroup of 6 submobjects), etc.:  67%|██████▋   | 10/15 [00:00<00:00, 27.59it/s]
+Animation 11: FadeIn(VGroup of 6 submobjects), etc.:  87%|████████▋ | 13/15 [00:00<00:00, 27.78it/s]
+                                                                                                    
+
+Animation 12: _MethodAnimation(Square), etc.:   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 12: _MethodAnimation(Square), etc.:   9%|▉         | 4/45 [00:00<00:01, 32.53it/s]
+Animation 12: _MethodAnimation(Square), etc.:  18%|█▊        | 8/45 [00:00<00:01, 29.68it/s]
+Animation 12: _MethodAnimation(Square), etc.:  24%|██▍       | 11/45 [00:00<00:01, 29.58it/s]
+Animation 12: _MethodAnimation(Square), etc.:  33%|███▎      | 15/45 [00:00<00:01, 29.87it/s]
+Animation 12: _MethodAnimation(Square), etc.:  40%|████      | 18/45 [00:00<00:00, 29.22it/s]
+Animation 12: _MethodAnimation(Square), etc.:  47%|████▋     | 21/45 [00:00<00:00, 28.32it/s]
+Animation 12: _MethodAnimation(Square), etc.:  53%|█████▎    | 24/45 [00:00<00:00, 28.47it/s]
+Animation 12: _MethodAnimation(Square), etc.:  60%|██████    | 27/45 [00:00<00:00, 28.23it/s]
+Animation 12: _MethodAnimation(Square), etc.:  67%|██████▋   | 30/45 [00:01<00:00, 28.37it/s]
+Animation 12: _MethodAnimation(Square), etc.:  73%|███████▎  | 33/45 [00:01<00:00, 28.52it/s]
+Animation 12: _MethodAnimation(Square), etc.:  80%|████████  | 36/45 [00:01<00:00, 28.10it/s]
+Animation 12: _MethodAnimation(Square), etc.:  87%|████████▋ | 39/45 [00:01<00:00, 28.25it/s]
+Animation 12: _MethodAnimation(Square), etc.:  93%|█████████▎| 42/45 [00:01<00:00, 28.43it/s]
+                                                                                             
+
+Animation 13: Write(MathTex('+')), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 13: Write(MathTex('+')), etc.:  33%|███▎      | 5/15 [00:00<00:00, 49.08it/s]
+Animation 13: Write(MathTex('+')), etc.:  67%|██████▋   | 10/15 [00:00<00:00, 46.35it/s]
+Animation 13: Write(MathTex('+')), etc.: 100%|██████████| 15/15 [00:00<00:00, 36.30it/s]
+                                                                                        
+
+Animation 14: _MethodAnimation(Square), etc.:   0%|          | 0/45 [00:00<?, ?it/s]
+Animation 14: _MethodAnimation(Square), etc.:   9%|▉         | 4/45 [00:00<00:01, 31.92it/s]
+Animation 14: _MethodAnimation(Square), etc.:  18%|█▊        | 8/45 [00:00<00:01, 27.49it/s]
+Animation 14: _MethodAnimation(Square), etc.:  24%|██▍       | 11/45 [00:00<00:01, 27.96it/s]
+Animation 14: _MethodAnimation(Square), etc.:  33%|███▎      | 15/45 [00:00<00:01, 28.12it/s]
+Animation 14: _MethodAnimation(Square), etc.:  40%|████      | 18/45 [00:00<00:00, 28.27it/s]
+Animation 14: _MethodAnimation(Square), etc.:  47%|████▋     | 21/45 [00:00<00:00, 28.28it/s]
+Animation 14: _MethodAnimation(Square), etc.:  53%|█████▎    | 24/45 [00:00<00:00, 28.52it/s]
+Animation 14: _MethodAnimation(Square), etc.:  60%|██████    | 27/45 [00:00<00:00, 28.37it/s]
+Animation 14: _MethodAnimation(Square), etc.:  67%|██████▋   | 30/45 [00:01<00:00, 28.37it/s]
+Animation 14: _MethodAnimation(Square), etc.:  73%|███████▎  | 33/45 [00:01<00:00, 28.04it/s]
+Animation 14: _MethodAnimation(Square), etc.:  80%|████████  | 36/45 [00:01<00:00, 28.39it/s]
+Animation 14: _MethodAnimation(Square), etc.:  87%|████████▋ | 39/45 [00:01<00:00, 28.09it/s]
+Animation 14: _MethodAnimation(Square), etc.:  93%|█████████▎| 42/45 [00:01<00:00, 28.24it/s]
+Animation 14: _MethodAnimation(Square), etc.: 100%|██████████| 45/45 [00:01<00:00, 27.49it/s]
+                                                                                             
+
+Animation 15: _MethodAnimation(Square), etc.:   0%|          | 0/15 [00:00<?, ?it/s]
+Animation 15: _MethodAnimation(Square), etc.:  27%|██▋       | 4/15 [00:00<00:00, 35.13it/s]
+Animation 15: _MethodAnimation(Square), etc.:  53%|█████▎    | 8/15 [00:00<00:00, 31.82it/s]
+Animation 15: _MethodAnimation(Square), etc.:  80%|████████  | 12/15 [00:00<00:00, 31.88it/s]
+                                                                                             

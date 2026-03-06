@@ -1,0 +1,39 @@
+**Animation Plan: Forced Vibrations (12 seconds)**
+
+**Concept Breakdown:**
+- Show a simple harmonic oscillator (mass on spring) initially at rest.
+- Introduce an external periodic driving force.
+- Demonstrate the system's response: transient then steady-state.
+- Highlight the amplitude's dependence on driving frequency (resonance hinted).
+
+**Strict Layout Constraints:**
+- All objects must remain within the central 80% of frame width and height.
+- Text labels and equations are anchored to fixed positions (top, sides) and do not drift.
+- When objects move (mass, force arrow), their paths are contained to prevent exiting frame.
+- Overlap is avoided by using distinct vertical layers: system at center, labels at top/sides, equation at bottom.
+
+**Scene Steps & Timing:**
+
+**Scene 1: Initial System (0-2s)**
+- **Objects:** A horizontal spring attached to a wall on left, a block (mass) at its equilibrium position, resting on a fixed baseline.
+- **Labels:** "Mass m", "Spring constant k" placed near respective objects. "No damping" at top.
+- **Layout:** System centered. Labels are fixed in position relative to their objects.
+
+**Scene 2: Introduce Driving Force (2-4s)**
+- **Objects:** An arrow labeled "F(t)" appears above the mass, pointing right. It begins to oscillate in length (sinusoidally).
+- **Equation:** Appears at bottom center: `F_d(t) = F_0 \cos(\omega_d t)`. `\omega_d` is highlighted.
+- **Labels:** "Driving Frequency ω_d" appears near the arrow.
+- **Layout:** Force arrow's oscillation is small enough to stay within frame. Equation is fixed at bottom.
+
+**Scene 3: Transient Response (4-7s)**
+- **Objects:** The mass begins to vibrate. Its motion is initially irregular (superposition of natural and driven oscillation).
+- **Animation:** The mass's displacement is plotted in real-time as a growing wave above it.
+- **Label:** "Transient Response" appears near the plot.
+- **Layout:** The plot appears in the top-right quadrant, not overlapping the main system.
+
+**Scene 4: Steady-State Resonance (7-12s)**
+- **Objects:** The mass's motion becomes a clean, large-amplitude oscillation in sync with the driving force arrow.
+- **Equation:** Updates to `x(t) = A \cos(\omega_d t - \phi)` at bottom. `A` is highlighted and grows.
+- **Label:** "Steady State" replaces "Transient". "Amplitude A" points to the mass's peak displacement.
+- **Visual Hint:** A faint, vertical "Natural Frequency ω₀" label appears briefly on the side, suggesting `ω_d ≈ ω₀`.
+- **Layout:** The large oscillation amplitude is calibrated to use only 40% of frame width to prevent clipping. All text boxes remain fixed.
