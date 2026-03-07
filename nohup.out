@@ -442,3 +442,9 @@ INFO:     172.68.10.201:0 - "GET /wordpress/wp-admin/setup-config.php HTTP/1.0" 
 INFO:     172.69.151.28:0 - "GET /wp-admin/setup-config.php HTTP/1.1" 404 Not Found
 INFO:     172.69.221.153:0 - "GET /app HTTP/1.0" 200 OK
 INFO:     172.69.221.153:0 - "GET /api/auth/me HTTP/1.0" 200 OK
+INFO:     172.71.184.168:0 - "GET /wp-admin/setup-config.php HTTP/1.0" 404 Not Found
+INFO:     172.71.164.68:0 - "GET /wp-admin/setup-config.php HTTP/1.1" 404 Not Found
+INFO:     104.23.223.114:0 - "GET /wp-admin/setup-config.php HTTP/1.0" 404 Not Found
+INFO:     172.70.243.181:0 - "GET /wordpress/wp-admin/setup-config.php HTTP/1.1" 404 Not Found
+INFO:     172.71.164.68:0 - "GET /wordpress/wp-admin/setup-config.php HTTP/1.1" 404 Not Found
+INFO:     104.23.223.114:0 - "GET /wordpress/wp-admin/setup-config.php HTTP/1.0" 404 Not Found
