@@ -3,3 +3,7 @@ uvicorn
 openai
 pydantic
 manim
+sqlalchemy
+python-jose
+passlib[bcrypt]
+python-dotenv

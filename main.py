@@ -20,17 +20,27 @@ import uuid
 from typing import Dict, Any, Optional
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 from openai import AsyncOpenAI
+from sqlalchemy.orm import Session
 
 from prompts.loader import load_system_prompt
 from prompts.physics_knowledge import get_physics_prompt
 from utils.logger import setup_logger
 from utils.exceptions import HuiyanError
 
+from database import Base, engine, get_db
+from models import User
+from auth import (
+    hash_password,
+    verify_password,
+    create_access_token,
+    get_current_user,
+)
 from manim_engine.router import router as manim_router, mount_runs
 
 # ==============================================================================
@@ -38,11 +48,14 @@ from manim_engine.router import router as manim_router, mount_runs
 # ==============================================================================
 
 logger = setup_logger()
+load_dotenv()
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="绘演万象后端引擎",
     description="基于 LLM 的物理仿真网页生成服务",
-    version="1.0.0"
+    version="2.0.0"
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -54,6 +67,10 @@ app.include_router(manim_router)
 
 SAVE_DIR = "saved_projects"
 os.makedirs(SAVE_DIR, exist_ok=True)
+
+VIDEO_API_KEY = os.getenv("VIDEO_API_KEY", "").strip()
+VIDEO_BASE_URL = os.getenv("VIDEO_BASE_URL", "https://api.deepseek.com").strip()
+VIDEO_MODEL = os.getenv("VIDEO_MODEL", "deepseek-coder").strip()
 
 # 运行期错误记录（用于前端展示）
 ERROR_LOGS = []
@@ -75,11 +92,18 @@ def record_error(kind: str, message: str, detail: Optional[str] = None):
 # 2. 数据模型
 # ==============================================================================
 
+class RegisterRequest(BaseModel):
+    username: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+
 class GenRequest(BaseModel):
     prompt: str
-    api_key: str
-    base_url: str
-    model: str
 
 
 # ==============================================================================
@@ -87,15 +111,12 @@ class GenRequest(BaseModel):
 # ==============================================================================
 
 # job_id -> job_info
-# job_info: {status, created_at, prompt, model, saved_path, html, error}
+# job_info: {
+#   status, created_at, prompt, model, saved_path, html, error,
+#   username, charged
+# }
 html_jobs: Dict[str, Dict[str, Any]] = {}
 html_jobs_lock = asyncio.Lock()
-
-
-def _mask_key(k: str) -> str:
-    if not k:
-        return "***"
-    return k[:6] + "******" if len(k) > 6 else "***"
 
 
 def _now_ts() -> str:
@@ -134,19 +155,15 @@ def _build_system_prompt(user_prompt: str) -> str:
 def _normalize_html_footer(html: str) -> str:
     """
     统一把生成网页的页脚替换为：@ 绘演万象 版权所有
-    兼容：LLM 可能生成的各种 footer 文案（例如“受迫振动交互式演示 | 理论力学与Web可视化 ...”）
     """
     if not html:
         return html
 
-    # 1) 删除已有 footer（粗暴但有效：删掉 <footer ...>...</footer>）
     html = re.sub(r"<footer\b[^>]*>.*?</footer>", "", html, flags=re.IGNORECASE | re.DOTALL)
 
-    # 2) 删除你点名的遗留文案（即使不是 footer，也做兜底清理）
     html = html.replace("受迫振动交互式演示 | 理论力学与Web可视化 | 使用HTML5 Canvas构建", "")
     html = html.replace("受迫振动交互式演示|理论力学与Web可视化|使用HTML5 Canvas构建", "")
 
-    # 3) 注入统一 footer（尽量插到 </body> 前）
     footer_block = """
 <footer style="
   margin-top: 18px;
@@ -168,17 +185,44 @@ def _normalize_html_footer(html: str) -> str:
     return html
 
 
-async def _html_worker(job_id: str, req: GenRequest) -> None:
+def _check_user_quota(user: User):
+    if user.is_root:
+        return
+    if user.used_count >= user.free_quota:
+        raise HTTPException(status_code=403, detail="免费次数已用完")
+
+
+def _increase_user_quota(username: str):
+    """
+    HTML 后台异步任务成功后扣次数
+    """
+    from database import SessionLocal
+
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter(User.username == username).first()
+        if not user:
+            return
+        if user.is_root:
+            return
+        user.used_count += 1
+        db.commit()
+    except Exception as e:
+        logger.error(f"[HTML_QUOTA] failed to increase quota for {username}: {e}")
+    finally:
+        db.close()
+
+
+async def _html_worker(job_id: str, prompt: str, username: str, api_key: str, base_url: str, model: str) -> None:
     """
     后台执行 HTML 生成，写回 html_jobs[job_id]
+    成功后扣次数
     """
-    prompt = (req.prompt or "").strip()
-    masked_key = _mask_key(req.api_key)
-    logger.info(f"[HTML_JOB:{job_id}] start | prompt='{prompt}' | model={req.model} | key={masked_key}")
+    logger.info(f"[HTML_JOB:{job_id}] start | prompt='{prompt}' | model={model} | username={username}")
 
     await _set_job(job_id, {"status": "running"})
 
-    client = AsyncOpenAI(api_key=req.api_key, base_url=req.base_url, timeout=None)
+    client = AsyncOpenAI(api_key=api_key, base_url=base_url, timeout=None)
 
     try:
         final_system_prompt = _build_system_prompt(prompt)
@@ -187,7 +231,7 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
 
         logger.info(f"[HTML_JOB:{job_id}] calling LLM...")
         resp = await client.chat.completions.create(
-            model=req.model,
+            model=model,
             messages=[
                 {"role": "system", "content": final_system_prompt},
                 {"role": "user", "content": f"教学主题：{prompt}。请生成中文网页。"}
@@ -203,7 +247,6 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
             logger.warning(f"[HTML_JOB:{job_id}] html truncated, auto append </html>")
             clean_html += "\n\n</body></html>"
 
-        # ✅ 强制统一页脚
         clean_html = _normalize_html_footer(clean_html)
 
         ts = _now_ts()
@@ -214,12 +257,15 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(clean_html)
 
-        # ✅ 内部记录 saved_path（仅供服务端下载接口使用），但不回传前端
+        # 成功后扣次数
+        _increase_user_quota(username)
+
         await _set_job(job_id, {
             "status": "done",
             "html": clean_html,
             "saved_path": filename,
             "timestamp": ts,
+            "charged": True,
         })
 
         logger.info(f"[HTML_JOB:{job_id}] done | saved={file_path}")
@@ -227,13 +273,13 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
     except HuiyanError as e:
         await _set_job(job_id, {"status": "error", "error": str(e)})
         logger.error(f"[HTML_JOB:{job_id}] HuiyanError: {e}")
-        record_error("html", str(e), f"job_id={job_id} | prompt={prompt} | model={req.model} | base_url={req.base_url}")
+        record_error("html", str(e), f"job_id={job_id} | prompt={prompt} | model={model} | base_url={base_url}")
 
     except Exception as e:
         msg = str(e)
         await _set_job(job_id, {"status": "error", "error": msg})
         logger.error(f"[HTML_JOB:{job_id}] Exception: {msg}")
-        record_error("html", msg, f"job_id={job_id} | prompt={prompt} | model={req.model} | base_url={req.base_url}")
+        record_error("html", msg, f"job_id={job_id} | prompt={prompt} | model={model} | base_url={base_url}")
 
     finally:
         try:
@@ -243,7 +289,80 @@ async def _html_worker(job_id: str, req: GenRequest) -> None:
 
 
 # ==============================================================================
-# 4. 路由
+# 4. 认证路由
+# ==============================================================================
+
+@app.post("/api/auth/register")
+async def register(data: RegisterRequest, db: Session = Depends(get_db)):
+    username = (data.username or "").strip()
+    password = (data.password or "").strip()
+
+    if len(username) < 3:
+        raise HTTPException(status_code=400, detail="用户名至少 3 位")
+    if len(password) < 6:
+        raise HTTPException(status_code=400, detail="密码至少 6 位")
+
+    existing = db.query(User).filter(User.username == username).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="用户名已存在")
+
+    user = User(
+        username=username,
+        password_hash=hash_password(password),
+        is_root=False,
+        is_active=True,
+        used_count=0,
+        free_quota=3,
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token = create_access_token({"sub": user.username})
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "username": user.username,
+        "is_root": user.is_root,
+        "used_count": user.used_count,
+        "free_quota": user.free_quota,
+    }
+
+
+@app.post("/api/auth/login")
+async def login(data: LoginRequest, db: Session = Depends(get_db)):
+    username = (data.username or "").strip()
+    password = (data.password or "").strip()
+
+    user = db.query(User).filter(User.username == username).first()
+    if not user or not verify_password(password, user.password_hash):
+        raise HTTPException(status_code=400, detail="用户名或密码错误")
+
+    token = create_access_token({"sub": user.username})
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "username": user.username,
+        "is_root": user.is_root,
+        "used_count": user.used_count,
+        "free_quota": user.free_quota,
+    }
+
+
+@app.get("/api/auth/me")
+async def me(current_user: User = Depends(get_current_user)):
+    remaining = -1 if current_user.is_root else max(current_user.free_quota - current_user.used_count, 0)
+    return {
+        "username": current_user.username,
+        "is_root": current_user.is_root,
+        "used_count": current_user.used_count,
+        "free_quota": current_user.free_quota,
+        "remaining_count": remaining,
+    }
+
+
+# ==============================================================================
+# 5. 页面路由
 # ==============================================================================
 
 @app.get("/")
@@ -268,8 +387,15 @@ async def app_page():
     return FileResponse(index_path)
 
 
+# ==============================================================================
+# 6. HTML 生成相关路由
+# ==============================================================================
+
 @app.post("/api/generate-html")
-async def generate_html(request: GenRequest):
+async def generate_html(
+    request: GenRequest,
+    current_user: User = Depends(get_current_user),
+):
     """
     异步提交：秒回 job_id，后台生成
     """
@@ -277,39 +403,57 @@ async def generate_html(request: GenRequest):
     if not user_prompt:
         raise HTTPException(status_code=400, detail="Prompt 不能为空")
 
+    if not VIDEO_API_KEY:
+        raise HTTPException(status_code=500, detail="服务端未配置 VIDEO_API_KEY")
+
+    _check_user_quota(current_user)
+
     job_id = uuid.uuid4().hex[:12]
     async with html_jobs_lock:
         html_jobs[job_id] = {
             "status": "queued",
             "created_at": datetime.datetime.now().isoformat(),
             "prompt": user_prompt,
-            "model": request.model,
-            "saved_path": None,     # 内部字段，不回传前端
-            "timestamp": None,      # 可选内部字段
+            "model": VIDEO_MODEL,
+            "saved_path": None,
+            "timestamp": None,
             "html": None,
             "error": None,
+            "username": current_user.username,
+            "charged": False,
         }
 
-    masked_key = _mask_key(request.api_key)
-    logger.info(f"[HTML_JOB:{job_id}] queued | model={request.model} | key={masked_key}")
+    logger.info(f"[HTML_JOB:{job_id}] queued | model={VIDEO_MODEL} | username={current_user.username}")
 
-    asyncio.create_task(_html_worker(job_id, request))
+    asyncio.create_task(_html_worker(
+        job_id=job_id,
+        prompt=user_prompt,
+        username=current_user.username,
+        api_key=VIDEO_API_KEY,
+        base_url=VIDEO_BASE_URL,
+        model=VIDEO_MODEL,
+    ))
 
     return JSONResponse(content={"status": "queued", "job_id": job_id})
 
 
 @app.get("/api/html-status/{job_id}")
-async def html_status(job_id: str):
+async def html_status(
+    job_id: str,
+    current_user: User = Depends(get_current_user),
+):
     job = await _get_job(job_id)
     if not job:
         raise HTTPException(status_code=404, detail="job_id 不存在")
 
-    # ✅ 输出路径清理：前端永远拿不到 saved_path / timestamp
+    # 防止别人查别人的任务
+    if job.get("username") != current_user.username and not current_user.is_root:
+        raise HTTPException(status_code=403, detail="无权查看该任务")
+
     public_job = dict(job)
     public_job.pop("saved_path", None)
     public_job.pop("timestamp", None)
 
-    # ✅ 给专业下载链接（不暴露服务器路径）
     if job.get("status") == "done":
         public_job["download_url"] = f"/api/html-download/{job_id}"
 
@@ -317,10 +461,17 @@ async def html_status(job_id: str):
 
 
 @app.get("/api/html-download/{job_id}")
-async def html_download(job_id: str):
+async def html_download(
+    job_id: str,
+    current_user: User = Depends(get_current_user),
+):
     job = await _get_job(job_id)
     if not job:
         raise HTTPException(status_code=404, detail="job_id 不存在")
+
+    if job.get("username") != current_user.username and not current_user.is_root:
+        raise HTTPException(status_code=403, detail="无权下载该任务")
+
     if job.get("status") != "done":
         raise HTTPException(status_code=400, detail="任务未完成，无法下载")
 
@@ -332,18 +483,17 @@ async def html_download(job_id: str):
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="文件不存在")
 
-    # 下载名：更产品化，不泄露内部命名规则
     download_name = "huiyanwanxiang_generated.html"
     return FileResponse(file_path, media_type="text/html", filename=download_name)
 
 
 @app.get("/api/errors")
-async def get_errors():
+async def get_errors(current_user: User = Depends(get_current_user)):
     return {"items": ERROR_LOGS}
 
 
 # ==============================================================================
-# 5. 入口
+# 7. 入口
 # ==============================================================================
 
 if __name__ == "__main__":

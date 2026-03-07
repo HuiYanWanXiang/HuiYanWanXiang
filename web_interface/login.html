@@ -98,10 +98,10 @@
       </div>
 
       <!-- ✅ 只做跳转，不做真实鉴权 -->
-      <form id="loginForm" onsubmit="event.preventDefault(); window.location.href='/app';">
+      <form id="loginForm">
         <div class="form-group">
-          <label for="email">邮箱</label>
-          <input type="email" id="email" placeholder="name@example.com" autocomplete="off" required>
+          <label for="email">用户名</label>
+          <input type="text" id="username" placeholder="请输入用户名" autocomplete="off" required>
         </div>
         <div class="form-group">
           <label for="password">密码</label>
@@ -118,52 +118,139 @@
       </form>
 
       <div style="text-align: center; font-size: 0.875rem; color: var(--muted-foreground); margin-top: 2rem;">
-        还没有账号？ <a href="#" style="color: var(--foreground); font-weight: 500; text-decoration: none;">立即注册</a>
+        还没有账号？ <a href="#" id="registerLink" style="color: var(--foreground); font-weight: 500; text-decoration: none;">立即注册</a>
       </div>
     </div>
   </div>
 
   <script>
-    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
     const pwdInput = document.getElementById('password');
     const togglePwdBtn = document.getElementById('togglePwd');
-    const chars = { purple: document.getElementById('char-purple'), black: document.getElementById('char-black'), orange: document.getElementById('char-orange'), yellow: document.getElementById('char-yellow') };
-    const eyes = { purple: document.getElementById('eyes-purple'), black: document.getElementById('eyes-black'), orange: document.getElementById('eyes-orange'), yellow: document.getElementById('eyes-yellow') };
+    const loginForm = document.getElementById('loginForm');
+    const registerLink = document.getElementById('registerLink');
+  
+    const chars = {
+      purple: document.getElementById('char-purple'),
+      black: document.getElementById('char-black'),
+      orange: document.getElementById('char-orange'),
+      yellow: document.getElementById('char-yellow')
+    };
+    const eyes = {
+      purple: document.getElementById('eyes-purple'),
+      black: document.getElementById('eyes-black'),
+      orange: document.getElementById('eyes-orange'),
+      yellow: document.getElementById('eyes-yellow')
+    };
     const mouthYellow = document.getElementById('mouth-yellow');
     const allPupils = document.querySelectorAll('.pupil');
-
-    let mouseX = window.innerWidth / 2; let mouseY = window.innerHeight / 2;
-    let isTyping = false; let showPassword = false; let passwordLength = 0;
-
+  
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let isTyping = false;
+    let showPassword = false;
+    let passwordLength = 0;
+  
+    function showMsg(msg){
+      alert(msg);
+    }
+  
+    async function loginUser(){
+      const username = (usernameInput.value || '').trim();
+      const password = (pwdInput.value || '').trim();
+  
+      if(!username || !password){
+        showMsg('用户名和密码不能为空');
+        return;
+      }
+  
+      const resp = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+  
+      const data = await resp.json().catch(() => ({}));
+  
+      if(!resp.ok){
+        showMsg(data.detail || '登录失败');
+        return;
+      }
+  
+      localStorage.setItem('token', data.access_token);
+      window.location.href = '/app';
+    }
+  
+    async function registerUser(){
+      const username = (usernameInput.value || '').trim();
+      const password = (pwdInput.value || '').trim();
+  
+      if(!username || !password){
+        showMsg('用户名和密码不能为空');
+        return;
+      }
+  
+      const resp = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+  
+      const data = await resp.json().catch(() => ({}));
+  
+      if(!resp.ok){
+        showMsg(data.detail || '注册失败');
+        return;
+      }
+  
+      localStorage.setItem('token', data.access_token);
+      window.location.href = '/app';
+    }
+  
     togglePwdBtn.addEventListener('click', () => {
       showPassword = !showPassword;
       pwdInput.type = showPassword ? "text" : "password";
       togglePwdBtn.innerText = showPassword ? "隐藏" : "显示";
       updateCharactersState();
     });
-
-    emailInput.addEventListener('focus', () => { isTyping = true; updateCharactersState(); });
-    emailInput.addEventListener('blur', () => { isTyping = false; updateCharactersState(); });
+  
+    usernameInput.addEventListener('focus', () => { isTyping = true; updateCharactersState(); });
+    usernameInput.addEventListener('blur', () => { isTyping = false; updateCharactersState(); });
     pwdInput.addEventListener('focus', () => { isTyping = true; updateCharactersState(); });
     pwdInput.addEventListener('blur', () => { isTyping = false; updateCharactersState(); });
     pwdInput.addEventListener('input', (e) => { passwordLength = e.target.value.length; updateCharactersState(); });
-
+  
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-      updateEyePositions(); updateBodySkew();
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      updateEyePositions();
+      updateBodySkew();
     });
-
+  
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await loginUser();
+    });
+  
+    registerLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await registerUser();
+    });
+  
     function updateCharactersState() {
       if (passwordLength > 0 && showPassword) {
-        chars.purple.style.transform = `skewX(0deg)`; chars.black.style.transform = `skewX(0deg)`;
-        chars.orange.style.transform = `skewX(0deg)`; chars.yellow.style.transform = `skewX(0deg)`;
+        chars.purple.style.transform = `skewX(0deg)`;
+        chars.black.style.transform = `skewX(0deg)`;
+        chars.orange.style.transform = `skewX(0deg)`;
+        chars.yellow.style.transform = `skewX(0deg)`;
         eyes.purple.style.left = '20px'; eyes.purple.style.top = '35px';
         eyes.black.style.left = '10px'; eyes.black.style.top = '28px';
         eyes.orange.style.left = '50px'; eyes.orange.style.top = '85px';
         eyes.yellow.style.left = '25px'; eyes.yellow.style.top = '45px';
         mouthYellow.style.left = '15px'; mouthYellow.style.top = '90px';
       } else if (isTyping || (passwordLength > 0 && !showPassword)) {
-        const centerX = window.innerWidth / 4; const deltaX = mouseX - centerX;
+        const centerX = window.innerWidth / 4;
+        const deltaX = mouseX - centerX;
         const skew = Math.max(-6, Math.min(6, -deltaX / 120));
         chars.purple.style.transform = `skewX(${skew - 12}deg) translateX(40px)`;
         chars.black.style.transform = `skewX(${skew * 1.5}deg)`;
@@ -174,37 +261,46 @@
         mouthYellow.style.left = '45px'; mouthYellow.style.top = '95px';
       }
     }
-
+  
     function updateBodySkew() {
       if (passwordLength > 0 && showPassword) return;
-      const centerX = window.innerWidth / 4; const deltaX = mouseX - centerX;
+      const centerX = window.innerWidth / 4;
+      const deltaX = mouseX - centerX;
       const skew = Math.max(-6, Math.min(6, -deltaX / 120));
       if (!isTyping) {
-        chars.purple.style.transform = `skewX(${skew}deg)`; chars.black.style.transform = `skewX(${skew}deg)`;
-        chars.orange.style.transform = `skewX(${skew}deg)`; chars.yellow.style.transform = `skewX(${skew}deg)`;
-      } else { updateCharactersState(); }
+        chars.purple.style.transform = `skewX(${skew}deg)`;
+        chars.black.style.transform = `skewX(${skew}deg)`;
+        chars.orange.style.transform = `skewX(${skew}deg)`;
+        chars.yellow.style.transform = `skewX(${skew}deg)`;
+      } else {
+        updateCharactersState();
+      }
     }
-
+  
     function updateEyePositions() {
       allPupils.forEach(pupil => {
         const rect = pupil.parentElement.getBoundingClientRect();
-        const eyeCenterX = rect.left + rect.width / 2; const eyeCenterY = rect.top + rect.height / 2;
-        const deltaX = mouseX - eyeCenterX; const deltaY = mouseY - eyeCenterY;
+        const eyeCenterX = rect.left + rect.width / 2;
+        const eyeCenterY = rect.top + rect.height / 2;
+        const deltaX = mouseX - eyeCenterX;
+        const deltaY = mouseY - eyeCenterY;
         const maxDist = parseInt(pupil.getAttribute('data-max')) || 5;
         const distance = Math.min(Math.sqrt(deltaX ** 2 + deltaY ** 2), maxDist);
         const angle = Math.atan2(deltaY, deltaX);
-        let x = Math.cos(angle) * distance; let y = Math.sin(angle) * distance;
+        let x = Math.cos(angle) * distance;
+        let y = Math.sin(angle) * distance;
         if (passwordLength > 0 && showPassword) { x = -4; y = -4; }
         pupil.style.transform = `translate(${x}px, ${y}px)`;
       });
     }
-
+  
     function blinkRandomly(element) {
       setInterval(() => {
         element.style.height = '2px';
         setTimeout(() => { element.style.height = ''; }, 150);
       }, Math.random() * 4000 + 3000);
     }
+  
     document.querySelectorAll('.char-purple .eye-white, .char-black .eye-white').forEach(blinkRandomly);
   </script>
 </body>

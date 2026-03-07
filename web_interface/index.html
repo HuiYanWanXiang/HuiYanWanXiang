@@ -13,13 +13,17 @@
       <a class="brand" href="#">
         绘演万象<span class="brand-dot">.</span>
       </a>
+
       <nav class="nav">
         <a href="#console">控制台</a>
         <a href="#video">视频</a>
         <a href="#embed">嵌入预览</a>
       </nav>
-      <div class="topbar-actions">
+
+      <div class="topbar-actions" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <span id="userInfoText" class="muted">未登录</span>
         <button class="btn ghost" id="btnFillDemo" type="button">填充示例</button>
+        <button class="btn ghost" id="logoutBtn" type="button">退出登录</button>
         <button class="btn primary" type="button" onclick="document.querySelector('#console').scrollIntoView({behavior:'smooth'})">
           开始生成 →
         </button>
@@ -48,7 +52,7 @@
     <div class="container">
       <div class="section-head">
         <h2 class="section-title">Web 控制台</h2>
-        <p class="section-sub">引擎配置 → 输入 Prompt → 生成 HTML / Manim 视频 → 预览。</p>
+        <p class="section-sub">输入 Prompt → 生成 HTML / Manim 视频 → 预览。</p>
       </div>
 
       <div class="grid">
@@ -56,47 +60,22 @@
         <div class="card">
           <div class="card-head">
             <div class="card-title">提示词输入</div>
-            <div class="tag ok">API Ready</div>
+            <div class="tag ok">已登录</div>
           </div>
 
           <div class="card-body">
-            <!-- UI 不显示 BaseURL/Model，但后端需要，保留隐藏值 -->
-            <input type="hidden" id="baseUrlInput" />
-            <input type="hidden" id="modelNameInput" />
-
-            <div class="form-grid">
-              <div class="field">
-                <div class="label">Provider</div>
-                <select class="input" id="providerSelect">
-                  <option value="deepseek">DeepSeek</option>
-                  <option value="openai">ChatGPT</option>
-                  <option value="moonshot">Kimi</option>
-                  <option value="aliyun">通义千问</option>
-                  <option value="custom">Gemini</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <div class="label">API Key</div>
-                <input class="input" type="password" id="apiKeyInput" placeholder="sk-xxxxxxxx..." />
-              </div>
-            </div>
-
-            <!-- 仅当 custom 才显示 -->
-            <div class="form-grid" id="customRows" style="display:none; margin-top:12px;">
-              <div class="field">
-                <div class="label">Base URL（Custom）</div>
-                <input class="input" id="baseUrlInputVisible" placeholder="https://api.xxx.com/v1" />
-              </div>
-              <div class="field">
-                <div class="label">Model（Custom）</div>
-                <input class="input" id="modelNameInputVisible" placeholder="model-name" />
-              </div>
+            <div class="field">
+              <div class="label">当前账户</div>
+              <div class="hint" id="quotaText">请先登录</div>
             </div>
 
             <div class="field" style="margin-top:12px;">
               <div class="label">Prompt</div>
-              <textarea class="textarea" id="userPrompt" placeholder="例如：生成一个受迫振动交互式演示页面，包含参数滑条、相图、位移-时间曲线，并有小测验。"></textarea>
+              <textarea
+                class="textarea"
+                id="userPrompt"
+                placeholder="例如：生成一个受迫振动交互式演示页面，包含参数滑条、相图、位移-时间曲线，并有小测验。"
+              ></textarea>
               <div class="hint">建议写清：知识点 / 目标 / 互动组件 / 输出风格。</div>
             </div>
 
@@ -111,7 +90,7 @@
                 <div class="toggle-row">
                   <div>
                     <div class="toggle-main">启用提示词优化</div>
-                    <div class="toggle-sub">展开后可选择是否进行结构化增强（当前透传字段，后端可按需接入优化流程）</div>
+                    <div class="toggle-sub">可选择是否进行结构化增强。</div>
                   </div>
                   <button class="switch" id="optSwitch" type="button" aria-checked="false">
                     <span class="knob"></span>
@@ -120,7 +99,11 @@
 
                 <div class="field" style="margin-top:10px;">
                   <div class="label">优化偏好 / 约束（可选）</div>
-                  <textarea class="textarea small" id="optHint" placeholder="例如：输出必须包含：1) 概念解释 2) 公式推导 3) 互动控件 4) 例题 5) 小测验（答案折叠）；整体风格简洁、信息密度高。"></textarea>
+                  <textarea
+                    class="textarea small"
+                    id="optHint"
+                    placeholder="例如：输出必须包含：1) 概念解释 2) 公式推导 3) 互动控件 4) 例题 5) 小测验（答案折叠）；整体风格简洁、信息密度高。"
+                  ></textarea>
                 </div>
               </div>
             </details>
@@ -148,7 +131,12 @@
                 <div class="editor-title">源码编辑器</div>
                 <div class="editor-sub">生成后可手动修改并运行（不会影响后端保存的原始生成文件）。</div>
               </div>
-              <textarea id="codeEditor" class="code" spellcheck="false" placeholder="// 等待生成..."></textarea>
+              <textarea
+                id="codeEditor"
+                class="code"
+                spellcheck="false"
+                placeholder="// 等待生成..."
+              ></textarea>
             </div>
           </div>
         </div>
@@ -156,7 +144,7 @@
     </div>
   </section>
 
-  <!-- Video (wider: 2 columns) -->
+  <!-- Video -->
   <section class="section alt" id="video">
     <div class="container">
       <div class="section-head">
@@ -180,14 +168,13 @@
             <div class="video-pane">
               <video id="videoPlayer" controls class="video big"></video>
             </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Embedded HTML (keep) -->
+  <!-- Embedded HTML -->
   <section class="section" id="embed">
     <div class="container">
       <div class="card">
@@ -207,44 +194,39 @@
     </div>
   </section>
 
-  <!-- ====== NEW: Get more value section (your content) ====== -->
+  <!-- 我们的优势 -->
   <section class="section-padding text-center">
     <div class="container">
       <h2 class="mb-4" style="font-size: 2rem;">我们的优势</h2>
       <p class="subtitle mb-4">对枯燥的课本知识说不，使用更生动的方式学习任何知识！</p>
-      <p>
-
-        
-      </p>
-      <p></p>
-      <p></p>
-      <a href="#" class="btn-primary mb-4">开始使用 →</a>
+      <a href="#console" class="btn-primary mb-4">开始使用 →</a>
 
       <div class="grid-3" style="text-align: left; margin-top: 60px;">
         <div class="mini-card">
           <h3>⚡ 调用最先进的模型</h3>
-          <p>我们提供了各种大语言模型供您使用,包括但不限于ChatGPT,Deepseek.</p>
+          <p>我们提供强大的大语言模型与生成引擎支持，帮助用户高效完成教学网页与视频内容生成。</p>
         </div>
         <div class="mini-card">
           <h3>🎓 使用内置知识库增强输出</h3>
-          <p>绘演万象内置知识库涵盖了物理,数学等学科知识资料库来严格限制输出,保证您得到的输出完全贴合要求</p>
+          <p>绘演万象内置知识库涵盖物理、数学等学科内容，可增强输出的专业性与教学适配性。</p>
         </div>
         <div class="mini-card">
           <h3>💻 更生动地理解任何知识</h3>
-          <p>您不仅可以观看由manim驱动的演示视频,还可以调整各个参数直观理解变量之间的关系</p>
+          <p>您不仅可以观看由 Manim 驱动的演示视频，还可以通过交互组件直观理解变量之间的关系。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ====== NEW: Testimonials section (your content) ====== -->
+  <!-- 团队成员 -->
   <section class="section-padding">
     <div class="container">
       <h2 class="text-center mb-4" style="font-size: 2rem;">团队成员奉上</h2>
       <p class="subtitle mb-4">具体排名不分先后</p>
+
       <div class="testimonial-grid">
         <div class="testimonial-card">
-          <p class="t-quote">"我们提出的使用大语言模型生成可操作性网页对学生非常友好,通过拖拽按钮即可直观感受各个变量之间的关系.无论是谁,现在都可以通过这项技术接触到复杂的数学问题."</p>
+          <p class="t-quote">"我们提出的使用大语言模型生成可操作性网页对学生非常友好，通过拖拽按钮即可直观感受各个变量之间的关系。"</p>
           <div class="user-info">
             <img src="/static/avatars/zhangyiyan.jpg" alt="张艺严的头像" class="avatar" />
             <div>
@@ -255,9 +237,9 @@
         </div>
 
         <div class="testimonial-card">
-          <p class="t-quote">"我们在现有AI工具生成视频不准确的缺陷下,创新性地提出了使用manim生成数理视频的思路,解决了专业数理视频的生成问题,希望我们的产品可以帮助更多中小学生学习."</p>
+          <p class="t-quote">"我们在现有 AI 工具生成视频不准确的缺陷下，创新性提出了使用 Manim 生成数理视频的思路。"</p>
           <div class="user-info">
-            <img src="/static/avatars/xiangyuw.jpg" alt="xiangyuwang的头像" class="avatar" />
+            <img src="/static/avatars/xiangyuw.jpg" alt="王翔宇的头像" class="avatar" />
             <div>
               <div class="t-name">王翔宇</div>
               <div class="t-role">技术总负责人</div>
@@ -266,9 +248,9 @@
         </div>
 
         <div class="testimonial-card">
-          <p class="t-quote">"绘演万象这款工具的整体表现十分出色,只需输入一段简洁的提示词,就能快速自动生成高质量视频与可直接交互操作的网页,功能直观且稳定,大幅降低了内容创作与知识展示的门槛."</p>
+          <p class="t-quote">"绘演万象只需输入一段简洁的提示词，就能快速自动生成高质量视频与可直接交互操作的网页。"</p>
           <div class="user-info">
-            <img src="/static/avatars/kanghanyu.jpg" alt="kanghanyu的头像" class="avatar" />
+            <img src="/static/avatars/kanghanyu.jpg" alt="康涵禹的头像" class="avatar" />
             <div>
               <div class="t-name">康涵禹</div>
               <div class="t-role">产品总经理</div>
@@ -277,9 +259,9 @@
         </div>
 
         <div class="testimonial-card">
-          <p class="t-quote">"我们想让绘演万象成为更多学生的学习助手,帮助更多学生深刻理解各种原理和公式."</p>
+          <p class="t-quote">"我们想让绘演万象成为更多学生的学习助手，帮助更多学生深刻理解各种原理和公式。"</p>
           <div class="user-info">
-            <img src="/static/avatars/lvboyang.jpg" alt="lvboyang的头像" class="avatar" />
+            <img src="/static/avatars/lvboyang.jpg" alt="吕博洋的头像" class="avatar" />
             <div>
               <div class="t-name">吕博洋</div>
               <div class="t-role">算法负责人</div>
@@ -288,9 +270,9 @@
         </div>
 
         <div class="testimonial-card">
-          <p class="t-quote">"希望我们的交互式平台可以帮助大家更好理解物理知识."</p>
+          <p class="t-quote">"希望我们的交互式平台可以帮助大家更好理解物理知识。"</p>
           <div class="user-info">
-            <img src="/static/avatars/zhangweijie.jpg" alt="zhangweijie的头像" class="avatar" />
+            <img src="/static/avatars/zhangweijie.jpg" alt="张炜杰的头像" class="avatar" />
             <div>
               <div class="t-name">张炜杰</div>
               <div class="t-role">算法工程师</div>
@@ -299,87 +281,95 @@
         </div>
 
         <div class="testimonial-card">
-          <p class="t-quote">"知识库的存在使我们的输出减轻了幻觉现象,可以很好的辅助教学."</p>
+          <p class="t-quote">"知识库的存在使我们的输出减轻了幻觉现象，可以很好地辅助教学。"</p>
           <div class="user-info">
-            <img src="/static/avatars/jinyuxuan.jpg" alt="jinyuxuan的头像" class="avatar" />
+            <img src="/static/avatars/jinyuxuan.jpg" alt="金雨轩的头像" class="avatar" />
             <div>
               <div class="t-name">金雨轩</div>
               <div class="t-role">后端负责人</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"将大模型生成能力与教学设计（概念交互+讲解视频）深度耦合,形成差异化竞争优势."</p>
+          <p class="t-quote">"将大模型生成能力与教学设计深度耦合，形成差异化竞争优势。"</p>
           <div class="user-info">
-            <img src="/static/avatars/sunhanning.jpg" alt="sunhanning的头像" class="avatar" />
+            <img src="/static/avatars/sunhanning.jpg" alt="孙晗宁的头像" class="avatar" />
             <div>
               <div class="t-name">孙晗宁</div>
               <div class="t-role">前端负责人</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"不是炫技式生成,而是围绕“可讲、可练、可验证”的教学流程设计,落地场景明确."</p>
+          <p class="t-quote">"不是炫技式生成，而是围绕‘可讲、可练、可验证’的教学流程设计。"</p>
           <div class="user-info">
-            <img src="/static/avatars/zhengquan.jpg" alt="zhengquan的头像" class="avatar" />
+            <img src="/static/avatars/zhengquan.jpg" alt="郑权的头像" class="avatar" />
             <div>
               <div class="t-name">郑权</div>
               <div class="t-role">视频生成负责人</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"把“看懂”升级成“动手验证”,交互式概念解读让知识点可操作、可探索."</p>
+          <p class="t-quote">"把‘看懂’升级成‘动手验证’，交互式概念解读让知识点可操作、可探索。"</p>
           <div class="user-info">
-            <img src="/static/avatars/liujianpeng.jpg" alt="liujianpeng的头像" class="avatar" />
+            <img src="/static/avatars/liujianpeng.jpg" alt="刘简鹏的头像" class="avatar" />
             <div>
               <div class="t-name">刘简鹏</div>
               <div class="t-role">交互内容工程师</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"通过控制台参数化配置与即时预览,降低“AI 输出不可控”的风险,适合教学场景稳定使用."</p>
+          <p class="t-quote">"通过控制台参数化配置与即时预览，降低 AI 输出不可控的风险，适合教学场景稳定使用。"</p>
           <div class="user-info">
-            <img src="/static/avatars/lisiyu.jpg" alt="lisiyu的头像" class="avatar" />
+            <img src="/static/avatars/lisiyu.jpg" alt="李思雨的头像" class="avatar" />
             <div>
               <div class="t-name">李思雨</div>
               <div class="t-role">后端开发</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"能按学段、难度、题型组织输出,适配初高中与竞赛/拓展教学的不同表达方式."</p>
+          <p class="t-quote">"能按学段、难度、题型组织输出，适配初高中与竞赛拓展教学的不同表达方式。"</p>
           <div class="user-info">
-            <img src="/static/avatars/lihanqing.jpg" alt="lihanqing的头像" class="avatar" />
+            <img src="/static/avatars/lihanqing.jpg" alt="李瀚卿的头像" class="avatar" />
             <div>
               <div class="t-name">李瀚卿</div>
               <div class="t-role">后端开发</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"把教师的备课劳动从“制作”转为“审核与微调”,明显缩短内容生产周期."</p>
+          <p class="t-quote">"把教师的备课劳动从‘制作’转为‘审核与微调’，明显缩短内容生产周期。"</p>
           <div class="user-info">
-            <img src="/static/avatars/heguanxian.jpg" alt="heguanxian的头像" class="avatar" />
+            <img src="/static/avatars/heguanxian.jpg" alt="何冠贤的头像" class="avatar" />
             <div>
-              <div class="t-name">何冠賢</div>
+              <div class="t-name">何冠贤</div>
               <div class="t-role">前端开发</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"不仅有算法/模型,还具备可访问的线上系统与规范化的运行方式,呈现“产品级”成果."</p>
+          <p class="t-quote">"不仅有算法和模型，还具备可访问的线上系统与规范化运行方式，呈现产品级成果。"</p>
           <div class="user-info">
-            <img src="/static/avatars/lisiying.jpg" alt="lisiying的头像" class="avatar" />
+            <img src="/static/avatars/lisiying.jpg" alt="李思莹的头像" class="avatar" />
             <div>
               <div class="t-name">李思莹</div>
               <div class="t-role">前端开发</div>
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"模块化的网页/视频生成机制,便于后续接入更多学科模板、题库与多媒体资源."</p>
+          <p class="t-quote">"模块化的网页与视频生成机制，便于后续接入更多学科模板、题库与多媒体资源。"</p>
           <div class="user-info">
             <div class="avatar"></div>
             <div>
@@ -388,8 +378,9 @@
             </div>
           </div>
         </div>
+
         <div class="testimonial-card">
-          <p class="t-quote">"同一知识点可用“文字—动画—交互”多模态呈现，演示直观、冲击力足。"</p>
+          <p class="t-quote">"同一知识点可用文字、动画、交互多模态呈现，演示直观、冲击力足。"</p>
           <div class="user-info">
             <div class="avatar"></div>
             <div>
@@ -397,7 +388,7 @@
               <div class="t-role">测试</div>
             </div>
           </div>
-
+        </div>
       </div>
     </div>
   </section>

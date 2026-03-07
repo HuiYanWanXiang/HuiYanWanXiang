@@ -6,36 +6,47 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Any, Optional
 
-from fastapi import APIRouter
+from dotenv import load_dotenv
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from database import get_db, SessionLocal
+from models import User
+from auth import get_current_user
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
 RENDER_PY = BASE_DIR / "render.py"
 RUNS_DIR = (BASE_DIR.parent / "runs_video")
 RUNS_DIR.mkdir(parents=True, exist_ok=True)
 
+VIDEO_API_KEY = os.getenv("VIDEO_API_KEY", "").strip()
+VIDEO_BASE_URL = os.getenv("VIDEO_BASE_URL", "https://api.deepseek.com").strip()
+VIDEO_MODEL = os.getenv("VIDEO_MODEL", "deepseek-coder").strip()
+
 router = APIRouter(prefix="/api", tags=["manim"])
+
 
 # --------------- models ---------------
 class VideoRequest(BaseModel):
     prompt: str
-    api_key: str
-    base_url: str = "https://api.openai.com/v1"  # DeepSeek 用 https://api.deepseek.com
-    model: str = "gpt-4o-mini"
     duration: float = 12.0
     quality: str = "m"             # l/m/h/k
     fps: int = 30
     resolution: str = "1920,1080"  # width,height
 
+
 # --------------- in-memory jobs ---------------
 jobs_lock = threading.Lock()
 jobs: Dict[str, Dict[str, Any]] = {}
 
-# 运行期视频错误记录（用于前端展示）
 VIDEO_ERROR_LOGS = []
 MAX_VIDEO_ERROR_LOGS = 200
+
 
 def record_video_error(message: str, detail: Optional[str] = None):
     VIDEO_ERROR_LOGS.append({
@@ -46,8 +57,10 @@ def record_video_error(message: str, detail: Optional[str] = None):
     if len(VIDEO_ERROR_LOGS) > MAX_VIDEO_ERROR_LOGS:
         del VIDEO_ERROR_LOGS[: len(VIDEO_ERROR_LOGS) - MAX_VIDEO_ERROR_LOGS]
 
+
 def _tail(text: str, n: int = 4000) -> str:
     return (text or "")[-n:]
+
 
 def _extract_video_path(stdout: str) -> Optional[Path]:
     if not stdout:
@@ -59,6 +72,7 @@ def _extract_video_path(stdout: str) -> Optional[Path]:
                 return Path(p)
     return None
 
+
 def _find_latest_mp4(root: Path) -> Optional[Path]:
     if not root.exists():
         return None
@@ -68,7 +82,31 @@ def _find_latest_mp4(root: Path) -> Optional[Path]:
     mp4s.sort(key=lambda p: p.stat().st_mtime, reverse=True)
     return mp4s[0]
 
-def _run_job(job_id: str, payload: VideoRequest) -> None:
+
+def _check_user_quota(user: User):
+    if user.is_root:
+        return
+    if user.used_count >= user.free_quota:
+        raise HTTPException(status_code=403, detail="免费次数已用完")
+
+
+def _increase_user_quota(username: str):
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter(User.username == username).first()
+        if not user:
+            return
+        if user.is_root:
+            return
+        user.used_count += 1
+        db.commit()
+    except Exception as e:
+        print(f"[VIDEO_QUOTA] failed to increase quota for {username}: {e}")
+    finally:
+        db.close()
+
+
+def _run_job(job_id: str, username: str, payload: VideoRequest) -> None:
     outdir = RUNS_DIR / job_id
     outdir.mkdir(parents=True, exist_ok=True)
 
@@ -83,9 +121,9 @@ def _run_job(job_id: str, payload: VideoRequest) -> None:
     ]
 
     env = dict(os.environ)
-    env["OPENAI_API_KEY"] = payload.api_key
-    env["OPENAI_BASE_URL"] = payload.base_url or env.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
-    env["OPENAI_MODEL"] = payload.model or env.get("OPENAI_MODEL", "gpt-4o-mini")
+    env["OPENAI_API_KEY"] = VIDEO_API_KEY
+    env["OPENAI_BASE_URL"] = VIDEO_BASE_URL
+    env["OPENAI_MODEL"] = VIDEO_MODEL
 
     with jobs_lock:
         jobs[job_id]["status"] = "running"
@@ -103,8 +141,8 @@ def _run_job(job_id: str, payload: VideoRequest) -> None:
     stdout = proc.stdout or ""
     stderr = proc.stderr or ""
     video_path = _extract_video_path(stdout)
+
     if proc.returncode == 0 and (not video_path or not video_path.exists()):
-        # 兜底：渲染成功但 stdout 没有 Video: 行时，直接扫描输出目录
         fallback_mp4 = _find_latest_mp4(outdir)
         if fallback_mp4:
             video_path = fallback_mp4
@@ -123,6 +161,10 @@ def _run_job(job_id: str, payload: VideoRequest) -> None:
 
             jobs[job_id]["status"] = "done"
             jobs[job_id]["video_url"] = video_url
+
+            # 成功后扣次数
+            _increase_user_quota(username)
+
         else:
             jobs[job_id]["status"] = "error"
             jobs[job_id]["video_url"] = None
@@ -132,14 +174,24 @@ def _run_job(job_id: str, payload: VideoRequest) -> None:
                     if proc.returncode != 0
                     else "render ok but mp4 not found"
                 ),
-                detail=f"job_id={job_id} | prompt={payload.prompt} | model={payload.model} | base_url={payload.base_url}\n{_tail(stderr, 2000)}"
+                detail=f"job_id={job_id} | prompt={payload.prompt} | model={VIDEO_MODEL} | base_url={VIDEO_BASE_URL}\n{_tail(stderr, 2000)}"
             )
 
+
 @router.post("/generate-video")
-def generate_video(payload: VideoRequest):
+def generate_video(
+    payload: VideoRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     prompt = (payload.prompt or "").strip()
     if not prompt:
         return JSONResponse({"error": "prompt is empty"}, status_code=400)
+
+    if not VIDEO_API_KEY:
+        raise HTTPException(status_code=500, detail="服务端未配置 VIDEO_API_KEY")
+
+    _check_user_quota(current_user)
 
     job_id = uuid.uuid4().hex
     with jobs_lock:
@@ -147,20 +199,28 @@ def generate_video(payload: VideoRequest):
             "status": "queued",
             "prompt": prompt,
             "video_url": None,
+            "username": current_user.username,
         }
 
-    t = threading.Thread(target=_run_job, args=(job_id, payload), daemon=True)
+    t = threading.Thread(target=_run_job, args=(job_id, current_user.username, payload), daemon=True)
     t.start()
 
     return {"job_id": job_id, "status": "queued"}
 
+
 @router.get("/video-status/{job_id}")
-def video_status(job_id: str):
+def video_status(
+    job_id: str,
+    current_user: User = Depends(get_current_user),
+):
     with jobs_lock:
         job = jobs.get(job_id)
 
     if not job:
         return JSONResponse({"error": "job not found"}, status_code=404)
+
+    if job.get("username") != current_user.username and not current_user.is_root:
+        return JSONResponse({"error": "无权查看该任务"}, status_code=403)
 
     return {
         "job_id": job_id,
@@ -171,14 +231,11 @@ def video_status(job_id: str):
         "cmd": job.get("cmd"),
     }
 
+
 @router.get("/video-errors")
-def video_errors():
-    """
-    返回最近的视频生成错误日志
-    """
+def video_errors(current_user: User = Depends(get_current_user)):
     return {"items": VIDEO_ERROR_LOGS}
 
-# --------------- helper to mount runs ---------------
+
 def mount_runs(app):
-    # expose generated mp4 under /video/runs/...
     app.mount("/video/runs", StaticFiles(directory=str(RUNS_DIR)), name="video_runs")
