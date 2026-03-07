@@ -77,13 +77,20 @@ async function loadMe(){
 
     const userInfoText = $("userInfoText");
     const quotaText = $("quotaText");
-
+    const usernameText = $("usernameText");
+    
     if(userInfoText){
       userInfoText.textContent = data.is_root
         ? `当前用户：${data.username}（root）`
         : `当前用户：${data.username}`;
     }
-
+    
+    if(usernameText){
+      usernameText.textContent = data.is_root
+        ? `${data.username}（管理员）`
+        : data.username;
+    }
+    
     if(quotaText){
       quotaText.textContent = data.is_root
         ? "当前账号为 root，使用次数无限制"
