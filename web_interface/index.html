@@ -17,15 +17,15 @@
       <nav class="nav">
         <a href="#console">控制台</a>
         <a href="#video">视频</a>
-        <a href="#embed">交互式网页预览</a>
+        <a href="#embed">网页预览</a>
       </nav>
 
-      <div class="topbar-actions" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div class="topbar-actions">
         <span id="userInfoText" class="muted">未登录</span>
-        <button class="btn ghost" id="btnFillDemo" type="button">填充示例</button>
-        <button class="btn ghost" id="logoutBtn" type="button">退出登录</button>
+        <button class="btn ghost" id="btnFillDemo" type="button">示例</button>
+        <button class="btn ghost" id="logoutBtn" type="button">登出</button>
         <button class="btn primary" type="button" onclick="document.querySelector('#console').scrollIntoView({behavior:'smooth'})">
-          开始生成 →
+          生成 →
         </button>
       </div>
     </div>
@@ -51,7 +51,7 @@
   <section class="section" id="console">
     <div class="container">
       <div class="section-head">
-        <h2 class="section-title">Web 控制台</h2>
+        <h2 class="section-title">控制台</h2>
         <p class="section-sub">输入 Prompt → 生成 HTML / Manim 视频 → 预览。</p>
       </div>
 
@@ -153,7 +153,7 @@
   <section class="section alt" id="video">
     <div class="container">
       <div class="section-head">
-        <h2 class="section-title">Manim 动画视频</h2>
+        <h2 class="section-title">视频</h2>
         <p class="section-sub"></p>
       </div>
 
@@ -184,6 +184,7 @@
     <div class="container">
       <div class="card">
         <div class="card-head">
+          <h2 class="section-title">控制台</h2>
           <div class="card-title">交互式网页</div>
           <div class="tag" id="embedPill">等待生成…</div>
         </div>
@@ -356,7 +357,7 @@
           <div class="user-info">
             <img src="/static/avatars/heguanxian.jpg" alt="何冠贤的头像" class="avatar" />
             <div>
-              <div class="t-name">何冠贤</div>
+              <div class="t-name">何冠賢</div>
               <div class="t-role">前端开发</div>
             </div>
           </div>

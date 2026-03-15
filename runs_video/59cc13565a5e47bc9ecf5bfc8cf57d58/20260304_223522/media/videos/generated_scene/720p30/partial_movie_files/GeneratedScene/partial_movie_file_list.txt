@@ -1,8 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/1292736442_3504325806_1492271306.mp4'
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/2827983349_2679489872_172932080.mp4'
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/2827983349_930367589_2499648838.mp4'
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/2827983349_213322906_3071682958.mp4'
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/2827983349_3877072181_2522634625.mp4'
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/2827983349_940508338_2414673806.mp4'
-file 'file:/root/hui-yan-wan-xiang/runs_video/59cc13565a5e47bc9ecf5bfc8cf57d58/20260304_223522/media/videos/generated_scene/720p30/partial_movie_files/GeneratedScene/2827983349_4071516364_1254482835.mp4'

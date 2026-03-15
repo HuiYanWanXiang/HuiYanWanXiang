@@ -464,4 +464,23 @@ details[open] .details-chev{ transform: rotate(180deg); }
   #console .grid{ align-items: start; }
   #console .grid > .card{ height: auto; }
   #console #userPrompt{ min-height: 180px; }
+}/* ===== 手机端顶部栏最终修复 ===== */
+
+/* 桌面端保持正常 */
+.topbar-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+/* ===== 手机端隐藏顶部栏 ===== */
+@media (max-width: 768px){
+  .topbar{
+    display: none !important;
+  }
+
+  /* 顶栏没了，首屏上边距顺手收一点 */
+  .hero{
+    padding-top: 36px !important;
+  }
 }

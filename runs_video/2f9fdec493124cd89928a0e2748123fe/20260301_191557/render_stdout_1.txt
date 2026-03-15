@@ -1,2 +1,0 @@
-Manim Community v0.19.1
-
