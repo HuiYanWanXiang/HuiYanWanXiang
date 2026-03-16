@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>相似三角形</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Microsoft YaHei',sans-serif}
+    body{background:#0f0f13;color:#e0e0e0;overflow-y:auto;padding:20px;line-height:1.6}
+    .container{max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+    .main-content{display:flex;flex-wrap:wrap;gap:24px}
+    .panel{background:linear-gradient(145deg,#1a1a23,#15151c);border:1px solid #2a2a35;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.45)}
+    header.panel{padding:24px}
+    #pageTitle{text-align:center;color:#90caf9;font-size:2.4rem;margin-bottom:8px}
+    #pageSubtitle{text-align:center;color:#aaa}
+    .sim-panel{flex:1.35;min-width:320px;padding:24px}
+    .ctrl-panel{flex:1;min-width:300px;padding:24px}
+    .panel-title{color:#90caf9;font-size:1.45rem;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #2a2a35}
+    .visual-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
+    .visual-card{background:#111119;border:1px solid #2f2f3c;border-radius:12px;padding:12px}
+    .visual-title{color:#90caf9;font-weight:700;text-align:center;margin-bottom:8px}
+    .canvas-box{width:100%;height:250px;background:#090910;border:1px solid #333;border-radius:10px;overflow:hidden}
+    canvas{display:block;width:100%;height:100%}
+    .visual-desc{margin-top:8px;font-size:.9rem;color:#9e9e9e}
+    .control-group{margin-bottom:10px}
+    .control-label{display:flex;justify-content:space-between;color:#bbb;margin-bottom:6px}
+    .control-value{color:#90caf9;font-weight:700}
+    input[type=range]{width:100%;height:10px;-webkit-appearance:none;appearance:none;background:linear-gradient(to right,#0a0a0f,#2a2a35);border-radius:5px}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#90caf9;box-shadow:0 0 8px rgba(144,202,249,.8);cursor:pointer}
+    .btn-group{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    button{background:linear-gradient(to right,#1565c0,#90caf9);color:#0f0f13;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700}
+    .reset-btn{background:linear-gradient(to right,#c62828,#ef5350);color:#fff}
+    .status-display{background:#15151c;border-left:4px solid #ff9800;border-radius:10px;padding:12px}
+    .status-title{color:#ff9800;font-weight:700;margin-bottom:6px}
+    .status-value{color:#ddd;font-size:.94rem;margin-bottom:4px}
+    .knowledge-card,.quiz-section{padding:24px}
+    .knowledge-grid{display:flex;flex-wrap:wrap;gap:24px}
+    .knowledge-card{flex:1;min-width:300px}
+    .formula{background:#0a0a0f;border:1px solid #333;border-radius:8px;padding:12px;text-align:center;color:#ffcc80;margin:12px 0;font-family:'Cambria Math',serif}
+    .quiz-options{display:flex;flex-direction:column;gap:10px;margin:12px 0 16px}
+    .quiz-option{padding:10px 12px;background:#252530;border-radius:8px;border:1px solid transparent;cursor:pointer}
+    .quiz-option:hover{border-color:#90caf9}
+    .quiz-option.selected{background:#0d2b4e;border-color:#90caf9}
+    .quiz-feedback{display:none;background:#15151c;border-left:4px solid #90caf9;border-radius:8px;padding:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="panel">
+      <h1 id="pageTitle"></h1>
+      <p id="pageSubtitle"></p>
+    </header>
+
+    <div class="main-content">
+      <section class="panel sim-panel">
+        <h2 class="panel-title">深度交互可视化</h2>
+        <div class="visual-grid">
+          <div class="visual-card">
+            <div class="visual-title">主图像</div>
+            <div class="canvas-box"><canvas id="canvas1"></canvas></div>
+            <div class="visual-desc">核心几何/物理对象的动态可视化</div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-title">关系图</div>
+            <div class="canvas-box"><canvas id="canvas2"></canvas></div>
+            <div class="visual-desc">参数关系与定量变化辅助图</div>
+          </div>
+          <div class="visual-card">
+            <div class="visual-title">状态/指标图</div>
+            <div class="canvas-box"><canvas id="canvas3"></canvas></div>
+            <div class="visual-desc">关键指标、方向或误差的实时呈现</div>
+          </div>
+        </div>
+        <div class="status-display">
+          <div class="status-title">当前状态</div>
+          <div class="status-value" id="status1">-</div>
+          <div class="status-value" id="status2">-</div>
+          <div class="status-value" id="status3">-</div>
+        </div>
+      </section>
+
+      <aside class="panel ctrl-panel">
+        <h2 class="panel-title">参数控制</h2>
+        <div id="controls"></div>
+        <div class="btn-group">
+          <button id="toggleBtn">暂停</button>
+          <button id="resetBtn" class="reset-btn">重置</button>
+        </div>
+      </aside>
+    </div>
+
+    <div class="knowledge-grid">
+      <section class="panel knowledge-card">
+        <h2 class="panel-title">知识点讲解</h2>
+        <p id="knowledgeText"></p>
+        <div class="formula" id="formulaText"></div>
+      </section>
+      <section class="panel knowledge-card">
+        <h2 class="panel-title">学习提示</h2>
+        <p>1. 先固定两个参数，只调一个参数，观察单变量影响。</p>
+        <p>2. 再联动调参，比较主图像与关系图是否同步变化。</p>
+        <p>3. 用状态栏中的数值验证你的图像直觉。</p>
+      </section>
+    </div>
+
+    <section class="panel quiz-section">
+      <h2 class="panel-title">知识小测验</h2>
+      <p id="quizQuestion"></p>
+      <div class="quiz-options" id="quizOptions"></div>
+      <button id="submitQuiz">提交答案</button>
+      <div class="quiz-feedback" id="quizFeedback"><strong>反馈：</strong> <span id="feedbackText"></span></div>
+    </section>
+  </div>
+
+  <script>
+    window.PRESET_CONFIG = {
+      topic: "similar_triangles",
+      title: "相似三角形",
+      subtitle: "对应角相等、对应边成比例的几何本质",
+      knowledgeText: "通过相似比 r 的变化直观观察面积比 r² 与边比 r 的关系。",
+      formulaText: "对应边比 = r, 面积比 = r²"
+    };
+  </script>
+  <script src="/static/js/deep_preset_engine.js"></script>
+
+  <footer style="margin-top:18px;padding:14px 10px;text-align:center;font-size:12px;color:rgba(255,255,255,.55);border-top:1px solid rgba(255,255,255,.08)">@ 绘演万象 版权所有</footer>
+</body>
+</html>

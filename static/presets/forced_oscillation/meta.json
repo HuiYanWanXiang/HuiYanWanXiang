@@ -1,0 +1,22 @@
+{
+  "id": "forced_oscillation",
+  "title": "受迫振动",
+  "aliases": [
+    "受迫振动",
+    "forced oscillation",
+    "受迫振动演示",
+    "受迫振动网页",
+    "受迫振动视频"
+  ],
+  "keywords": [
+    "受迫",
+    "振动",
+    "驱动力",
+    "共振"
+  ],
+  "description": "展示受迫振动中的参数调节、位移曲线、相图与共振现象。",
+  "html_url": "/static/presets/forced_oscillation/index.html",
+  "video_url": "/static/presets/forced_oscillation/video.mp4",
+  "cover_url": "/static/presets/forced_oscillation/cover.png",
+  "enabled": true
+}

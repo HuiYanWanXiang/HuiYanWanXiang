@@ -1,0 +1,11 @@
+{
+  "id": "magnetic_field",
+  "title": "磁场",
+  "aliases": ["磁场","磁感线","magnetic field"],
+  "keywords": ["磁场","磁感线","右手定则","磁感应强度"],
+  "description": "展示磁感线、磁场方向与强弱分布。",
+  "html_url": "/static/presets/magnetic_field/index.html",
+  "video_url": "/static/presets/magnetic_field/video.mp4",
+  "cover_url": "/static/presets/magnetic_field/cover.png",
+  "enabled": true
+}

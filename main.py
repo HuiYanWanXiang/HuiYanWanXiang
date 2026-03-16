@@ -42,6 +42,7 @@ from auth import (
     get_current_user,
 )
 from manim_engine.router import router as manim_router, mount_runs
+from preset_matcher import match_preset, reload_presets
 
 # ==============================================================================
 # 1. 系统初始化与配置
@@ -103,6 +104,10 @@ class LoginRequest(BaseModel):
 
 
 class GenRequest(BaseModel):
+    prompt: str
+
+
+class PresetMatchRequest(BaseModel):
     prompt: str
 
 
@@ -388,7 +393,36 @@ async def app_page():
 
 
 # ==============================================================================
-# 6. HTML 生成相关路由
+# 6. 预设匹配路由
+# ==============================================================================
+
+@app.post("/api/preset-match")
+async def api_preset_match(
+    payload: PresetMatchRequest,
+    current_user: User = Depends(get_current_user),
+):
+    prompt = (payload.prompt or "").strip()
+    if not prompt:
+        return {"matched": False}
+
+    result = match_preset(prompt)
+    logger.info(
+        f"[PRESET_MATCH] username={current_user.username} | prompt='{prompt}' | matched={result.get('matched', False)}"
+    )
+    return result
+
+
+@app.post("/api/preset-reload")
+async def api_preset_reload(current_user: User = Depends(get_current_user)):
+    if not current_user.is_root:
+        raise HTTPException(status_code=403, detail="只有管理员可以刷新预设")
+    reload_presets()
+    logger.info(f"[PRESET_RELOAD] username={current_user.username}")
+    return {"ok": True, "message": "presets reloaded"}
+
+
+# ==============================================================================
+# 7. HTML 生成相关路由
 # ==============================================================================
 
 @app.post("/api/generate-html")
@@ -493,7 +527,7 @@ async def get_errors(current_user: User = Depends(get_current_user)):
 
 
 # ==============================================================================
-# 7. 入口
+# 8. 入口
 # ==============================================================================
 
 if __name__ == "__main__":

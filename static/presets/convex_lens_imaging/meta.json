@@ -1,0 +1,11 @@
+{
+  "id": "convex_lens_imaging",
+  "title": "凸透镜成像",
+  "aliases": ["凸透镜成像","透镜成像","convex lens imaging"],
+  "keywords": ["凸透镜","成像","焦距","物距","像距"],
+  "description": "展示物距、像距、放大率与成像性质。",
+  "html_url": "/static/presets/convex_lens_imaging/index.html",
+  "video_url": "/static/presets/convex_lens_imaging/video.mp4",
+  "cover_url": "/static/presets/convex_lens_imaging/cover.png",
+  "enabled": true
+}

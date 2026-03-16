@@ -1,0 +1,11 @@
+{
+  "id": "similar_triangles",
+  "title": "相似三角形",
+  "aliases": ["相似三角形","三角形相似","similar triangles"],
+  "keywords": ["相似","三角形","比例","对应角","对应边"],
+  "description": "展示边对应成比例与角相等条件。",
+  "html_url": "/static/presets/similar_triangles/index.html",
+  "video_url": "/static/presets/similar_triangles/video.mp4",
+  "cover_url": "/static/presets/similar_triangles/cover.png",
+  "enabled": true
+}

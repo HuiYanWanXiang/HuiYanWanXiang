@@ -1,0 +1,24 @@
+{
+  "id": "sine_cosine_graphs",
+  "title": "正弦函数与余弦函数图像",
+  "aliases": [
+    "正弦函数图像",
+    "余弦函数图像",
+    "正弦函数/余弦函数图像",
+    "三角函数图像",
+    "sine cosine graphs"
+  ],
+  "keywords": [
+    "正弦",
+    "余弦",
+    "三角函数",
+    "振幅",
+    "周期",
+    "相位"
+  ],
+  "description": "展示正弦与余弦函数图像、单位圆投影和相位关系。",
+  "html_url": "/static/presets/sine_cosine_graphs/index.html",
+  "video_url": "/static/presets/sine_cosine_graphs/video.mp4",
+  "cover_url": "/static/presets/sine_cosine_graphs/cover.png",
+  "enabled": true
+}

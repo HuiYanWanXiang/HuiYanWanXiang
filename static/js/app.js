@@ -5,6 +5,7 @@
  * - 使用登录 token 访问后端
  * - 自动获取当前用户信息与剩余次数
  * - HTML / Video 生成统一走鉴权
+ * - 新增：预设场景优先匹配，命中则秒开
  */
 
 let currentCode = "";
@@ -145,7 +146,10 @@ function updateOutputs(html){
   if(editor) editor.value = currentCode;
 
   const embed = $("embeddedFrame");
-  if(embed) embed.srcdoc = currentCode;
+  if(embed){
+    embed.removeAttribute("src");
+    embed.srcdoc = currentCode;
+  }
 
   setTag("editorPill", "已更新");
   setTag("embedPill", "已嵌入");
@@ -159,6 +163,85 @@ function applyEditor(){
   showStatus("开发者模式：已手动运行编辑器内容（已刷新嵌入预览）。");
 }
 
+/* ---------------- Preset Match ---------------- */
+async function checkPresetMatch(prompt){
+  const resp = await fetch("/api/preset-match", {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await resp.json().catch(() => ({}));
+
+  if(!resp.ok){
+    throw new Error(data.detail || `预设匹配失败 HTTP ${resp.status}`);
+  }
+
+  return data;
+}
+
+async function loadPresetResult(preset){
+  const embed = $("embeddedFrame");
+  const player = $("videoPlayer");
+  const link = $("videoOpenLink");
+  const editor = $("codeEditor");
+  const dlBtn = $("downloadHtmlBtn");
+
+  currentCode = "";
+
+  if(embed){
+    embed.removeAttribute("srcdoc");
+    if(preset.html_url){
+      embed.src = `${preset.html_url}?t=${Date.now()}`;
+    }
+  }
+
+  if(player){
+    if(preset.video_url){
+      player.src = `${preset.video_url}?t=${Date.now()}`;
+      player.load();
+    }else{
+      player.removeAttribute("src");
+      player.load();
+    }
+  }
+
+  if(link){
+    if(preset.video_url){
+      link.href = `${preset.video_url}?t=${Date.now()}`;
+      link.style.display = "inline-block";
+    }else{
+      link.style.display = "none";
+      link.href = "#";
+    }
+  }
+
+  if(editor){
+    editor.value =
+`// 当前命中预设场景：${preset.title}
+// 匹配方式：${preset.match_type || "preset"}
+// 置信分数：${preset.score ?? ""}
+// HTML: ${preset.html_url || ""}
+// Video: ${preset.video_url || ""}
+
+// 当前为预设模式，右侧 iframe 已直接加载静态页面。
+// 若要查看源码，请直接打开对应的 /static/presets/.../index.html 文件。`;
+  }
+
+  if(dlBtn){
+    dlBtn.disabled = true;
+  }
+
+  window.__last_html_job_id = null;
+  window.__last_html_download_url = null;
+
+  setTag("editorPill", "预设模式");
+  setTag("embedPill", "预设已加载");
+  setTag("videoPill", preset.video_url ? "预设已加载" : "无预设视频");
+
+  showStatus(`已匹配预设场景：${preset.title}，正在秒级加载交互网页与视频…`);
+}
+
 /* ---------------- Download HTML ---------------- */
 function downloadHtml(){
   const url = window.__last_html_download_url
@@ -169,9 +252,6 @@ function downloadHtml(){
     return;
   }
 
-  // 这里直接跳转下载，浏览器会自动带上 Cookie；
-  // 如果后端纯 JWT Header 鉴权，这种方式仍然可能被拦。
-  // 当前你的后端下载接口也走 Bearer token，因此最稳做法是 fetch blob 下载。
   downloadHtmlWithToken(url);
 }
 
@@ -222,14 +302,25 @@ async function generateHtml(){
   if(genBtn) genBtn.disabled = true;
   if(dlBtn) dlBtn.disabled = true;
 
-  window.__last_html_job_id = null;
-  window.__last_html_download_url = null;
-
-  setTag("editorPill","生成中…");
-  setTag("embedPill","生成中…");
-  showStatus("已提交任务：等待队列…");
-
   try{
+    showStatus("正在识别是否命中预设场景…");
+
+    // 1) 先查预设
+    const preset = await checkPresetMatch(prompt);
+
+    if(preset.matched){
+      await loadPresetResult(preset);
+      return;
+    }
+
+    // 2) 没命中预设，走原有生成逻辑
+    window.__last_html_job_id = null;
+    window.__last_html_download_url = null;
+
+    setTag("editorPill","生成中…");
+    setTag("embedPill","生成中…");
+    showStatus("未命中预设，已提交任务：等待队列…");
+
     const resp = await fetch("/api/generate-html", {
       method:"POST",
       headers: authHeaders(),
@@ -326,21 +417,42 @@ async function generateVideo(){
   const link = $("videoOpenLink");
 
   if(btn) btn.disabled = true;
-  if(pill) pill.textContent = "提交中…";
-
-  if(player){
-    player.removeAttribute("src");
-    player.load();
-  }
-
-  if(link){
-    link.style.display = "none";
-    link.href = "#";
-  }
-
-  showStatus("视频任务已提交，等待渲染…");
+  if(pill) pill.textContent = "识别中…";
 
   try{
+    showStatus("正在识别是否命中预设视频…");
+
+    const preset = await checkPresetMatch(prompt);
+
+    if(preset.matched && preset.video_url){
+      if(player){
+        player.src = `${preset.video_url}?t=${Date.now()}`;
+        player.load();
+      }
+
+      if(link){
+        link.href = `${preset.video_url}?t=${Date.now()}`;
+        link.style.display = "inline-block";
+      }
+
+      if(pill) pill.textContent = "预设已加载";
+      showStatus(`已匹配预设场景：${preset.title}，已秒级加载视频。`);
+      return;
+    }
+
+    // 没命中预设，走原有视频生成逻辑
+    if(player){
+      player.removeAttribute("src");
+      player.load();
+    }
+
+    if(link){
+      link.style.display = "none";
+      link.href = "#";
+    }
+
+    showStatus("视频任务已提交，等待渲染…");
+
     const resp = await fetch("/api/generate-video", {
       method:"POST",
       headers: authHeaders(),

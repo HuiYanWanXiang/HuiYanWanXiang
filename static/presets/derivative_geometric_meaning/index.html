@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导数的几何意义</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background-color: #0f0f13; color: #e0e0e0; overflow-y: auto; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+        header h1 { text-align: center; color: #a5d6a7; margin-bottom: 10px; font-size: 2.5rem; text-shadow: 0 0 8px rgba(165,214,167,0.5); }
+        header p { text-align: center; color: #aaa; font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+        .main-content { display: flex; flex-wrap: wrap; gap: 25px; }
+        .simulation-panel { flex: 1.3; min-width: 320px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; }
+        .control-panel { flex: 1; min-width: 300px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; display: flex; flex-direction: column; gap: 20px; }
+        .panel-title { color: #a5d6a7; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #2a2a35; }
+        .visual-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 18px; }
+        .visual-card { background: #111119; border: 1px solid #2f2f3c; border-radius: 14px; padding: 14px; }
+        .visual-title { color: #a5d6a7; font-size: 1rem; font-weight: bold; margin-bottom: 10px; text-align: center; }
+        .canvas-box { width: 100%; height: 260px; background: #0a0a0f; border-radius: 10px; border: 1px solid #333; overflow: hidden; }
+        canvas { display: block; width: 100%; height: 100%; }
+        .visual-desc { margin-top: 10px; font-size: 0.9rem; color: #9e9e9e; min-height: 44px; }
+        .control-group { margin-bottom: 15px; }
+        .control-label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #bbbbbb; }
+        .control-value { color: #a5d6a7; font-weight: bold; }
+        input[type="range"] { width: 100%; height: 10px; -webkit-appearance: none; background: linear-gradient(to right,#0a0a0f,#2a2a35); border-radius: 5px; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #a5d6a7; cursor: pointer; box-shadow: 0 0 10px rgba(165,214,167,0.8); }
+        select { width: 100%; padding: 10px; background: #1a1a23; color: #e0e0e0; border: 1px solid #3a3a45; border-radius: 8px; font-size: 1rem; outline: none; cursor: pointer; }
+        .status-display { background-color: #15151c; padding: 15px; border-radius: 10px; border-left: 4px solid #ff8a65; margin-top: 10px; }
+        .status-title { color: #ff8a65; font-weight: bold; margin-bottom: 8px; }
+        .status-value { color: #e0e0e0; font-size: 0.95rem; margin-bottom: 4px; }
+        .knowledge-section { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 10px; }
+        .knowledge-card { flex: 1; min-width: 300px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; }
+        .knowledge-card h3 { color: #a5d6a7; margin-bottom: 15px; font-size: 1.4rem; }
+        .knowledge-card p, .knowledge-card li { margin-bottom: 12px; color: #cccccc; }
+        .knowledge-card ul { padding-left: 20px; }
+        .formula { background-color: #0a0a0f; padding: 15px; border-radius: 8px; font-family: 'Cambria Math', serif; text-align: center; margin: 15px 0; border: 1px solid #333; color: #ffcc80; font-size: 1.1rem; }
+        .quiz-section { background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; margin-top: 10px; }
+        .quiz-question { margin-bottom: 20px; color: #e0e0e0; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .quiz-option { padding: 12px 15px; background-color: #252530; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent; }
+        .quiz-option:hover { background-color: #2d2d3a; border-color: #a5d6a7; }
+        .quiz-option.selected { background-color: #1b5e20; border-color: #a5d6a7; }
+        .quiz-feedback { padding: 15px; border-radius: 8px; background-color: #15151c; display: none; border-left: 4px solid #a5d6a7; }
+        .quiz-feedback.correct { border-left-color: #81c784; }
+        .quiz-feedback.incorrect { border-left-color: #f44336; }
+        button { background: linear-gradient(to right,#2e7d32,#a5d6a7); color: #0f0f13; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: all 0.3s ease; margin-top: 10px; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(165,214,167,0.4); }
+        .reset-btn { background: linear-gradient(to right,#c62828,#ef5350); color: white; }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>导数的几何意义</h1>
+        <p>通过直观的图形交互，深入理解导数等价于曲线在某点切线的斜率，探索极限思想的几何内涵。</p>
+    </header>
+
+    <div class="main-content">
+        <div class="simulation-panel">
+            <h2 class="panel-title">动态可视化</h2>
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <div class="visual-title">函数图像与切线</div>
+                    <div class="canvas-box"><canvas id="functionCanvas"></canvas></div>
+                    <div class="visual-desc">绿色曲线为函数 f(x)，红色点为当前切点，蓝色直线为该点处的切线，切线斜率即为导数值。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">导函数图像</div>
+                    <div class="canvas-box"><canvas id="derivativeCanvas"></canvas></div>
+                    <div class="visual-desc">绿色曲线为导函数 f′(x)，橙色点标记当前 x₀ 处的导数值，对应切线斜率。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">极限逼近（割线 → 切线）</div>
+                    <div class="canvas-box"><canvas id="limitCanvas"></canvas></div>
+                    <div class="visual-desc">紫色为割线，随 Δx 减小趋近蓝色切线，演示导数的极限定义过程。点击"动画演示"观察 Δx→0 过程。</div>
+                </div>
+            </div>
+            <div class="status-display">
+                <div class="status-title">当前计算结果</div>
+                <div class="status-value" id="currentFunc">函数：f(x) = x²</div>
+                <div class="status-value" id="currentDerivative">导数值：f′(1.00) = 2.0000</div>
+                <div class="status-value" id="slopeInfo">切线方程：y = 2.000(x − 1.00) + 1.000</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2 class="panel-title">参数控制</h2>
+            <div class="control-group">
+                <div class="control-label"><span>选择函数</span></div>
+                <select id="funcSelect">
+                    <option value="x2">f(x) = x²</option>
+                    <option value="x3">f(x) = x³</option>
+                    <option value="sinx">f(x) = sin(x)</option>
+                    <option value="cosx">f(x) = cos(x)</option>
+                    <option value="ex">f(x) = eˣ / 5（缩放）</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>切点位置 x₀</span>
+                    <span class="control-value" id="x0Value">1.00</span>
+                </div>
+                <input type="range" id="x0Slider" min="-3" max="3" step="0.05" value="1.0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">拖动滑块改变切点位置，观察切线斜率的变化。</p>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>Δx（割线步长）</span>
+                    <span class="control-value" id="dxValue">1.00</span>
+                </div>
+                <input type="range" id="dxSlider" min="0.05" max="2.0" step="0.05" value="1.0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">减小 Δx，割线逐渐趋近切线，体验极限逼近过程。</p>
+            </div>
+            <div class="btn-group">
+                <button id="animateBtn">动画演示 Δx→0</button>
+                <button id="resetBtn" class="reset-btn">重置</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="knowledge-section">
+        <div class="knowledge-card">
+            <h3>导数的定义</h3>
+            <p>导数描述函数值随自变量的<strong>瞬时变化率</strong>。函数 f(x) 在点 x₀ 处的导数定义为：</p>
+            <div class="formula">f′(x₀) = lim<sub style="font-size:0.75em">Δx→0</sub> [f(x₀+Δx) − f(x₀)] / Δx</div>
+            <p>其中 [f(x₀+Δx)−f(x₀)]/Δx 是函数在区间 [x₀, x₀+Δx] 上的<strong>平均变化率</strong>（即割线斜率）。</p>
+            <p>当 Δx 趋向 0 时，割线的极限位置就是切线，斜率极限值即为导数。</p>
+        </div>
+        <div class="knowledge-card">
+            <h3>几何意义与常用公式</h3>
+            <p><strong>几何意义：</strong>f′(x₀) 等于曲线 y=f(x) 在点 (x₀, f(x₀)) 处<strong>切线的斜率</strong>。</p>
+            <p>过切点的切线方程为：</p>
+            <div class="formula">y − f(x₀) = f′(x₀) · (x − x₀)</div>
+            <p><strong>常用导数公式：</strong></p>
+            <ul>
+                <li>(xⁿ)′ = nxⁿ⁻¹</li>
+                <li>(sin x)′ = cos x</li>
+                <li>(cos x)′ = −sin x</li>
+                <li>(eˣ)′ = eˣ</li>
+                <li>(ln x)′ = 1/x</li>
+            </ul>
+            <p><strong>物理应用：</strong>位移对时间求导得速度，速度对时间求导得加速度。</p>
+        </div>
+    </div>
+
+    <div class="quiz-section">
+        <h2 class="panel-title">知识小测验</h2>
+        <div class="quiz-question">1. 函数 f(x) = x³ 在 x = 2 处的导数值（切线斜率）是多少？</div>
+        <div class="quiz-options" id="quizOptions">
+            <div class="quiz-option" data-answer="A">A. 6</div>
+            <div class="quiz-option" data-answer="B">B. 8</div>
+            <div class="quiz-option" data-answer="C">C. 12</div>
+            <div class="quiz-option" data-answer="D">D. 3</div>
+        </div>
+        <button id="submitQuiz">提交答案</button>
+        <div class="quiz-feedback" id="quizFeedback">
+            <strong>反馈：</strong><span id="feedbackText"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const funcDefs = {
+        x2:   { f: x => x*x,          df: x => 2*x,          name: 'f(x) = x²',         dfName: "f′(x) = 2x",       yRange: [-1, 8] },
+        x3:   { f: x => x*x*x,        df: x => 3*x*x,        name: 'f(x) = x³',         dfName: "f′(x) = 3x²",      yRange: [-8, 8] },
+        sinx: { f: x => Math.sin(x),  df: x => Math.cos(x),  name: 'f(x) = sin(x)',     dfName: "f′(x) = cos(x)",   yRange: [-1.6, 1.6] },
+        cosx: { f: x => Math.cos(x),  df: x => -Math.sin(x), name: 'f(x) = cos(x)',     dfName: "f′(x) = -sin(x)",  yRange: [-1.6, 1.6] },
+        ex:   { f: x => Math.exp(x)/5, df: x => Math.exp(x)/5, name: 'f(x) = eˣ/5',    dfName: "f′(x) = eˣ/5",     yRange: [-0.1, 3] },
+    };
+
+    let funcType = 'x2';
+    let x0 = 1.0, dx = 1.0;
+    let animating = false, animId = null;
+
+    let fCanvas, fCtx, dCanvas, dCtx, lCanvas, lCtx;
+
+    const XR = [-3.5, 3.5];
+
+    function getFd() { return funcDefs[funcType]; }
+
+    function resizeCanvas(c, ctx) {
+        const dpr = window.devicePixelRatio || 1;
+        const r = c.getBoundingClientRect();
+        c.width = r.width * dpr;
+        c.height = r.height * dpr;
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.scale(dpr, dpr);
+    }
+
+    function toPixX(xv, w, pad) {
+        return pad + (xv - XR[0]) / (XR[1] - XR[0]) * (w - 2*pad);
+    }
+    function toPixY(yv, h, yMin, yMax, pad) {
+        return h - pad - (yv - yMin) / (yMax - yMin) * (h - 2*pad);
+    }
+
+    function drawAxes(ctx, w, h, yMin, yMax, pad) {
+        ctx.clearRect(0, 0, w, h);
+        const ox = toPixX(0, w, pad);
+        const oy = toPixY(0, h, yMin, yMax, pad);
+
+        // Grid
+        ctx.strokeStyle = '#1a1a2e';
+        ctx.lineWidth = 1;
+        for (let xg = Math.ceil(XR[0]); xg <= Math.floor(XR[1]); xg++) {
+            const px = toPixX(xg, w, pad);
+            ctx.beginPath(); ctx.moveTo(px, pad); ctx.lineTo(px, h-pad); ctx.stroke();
+        }
+        for (let yg = Math.ceil(yMin); yg <= Math.floor(yMax); yg++) {
+            const py = toPixY(yg, h, yMin, yMax, pad);
+            ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(w-pad, py); ctx.stroke();
+        }
+
+        // Axes
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(Math.max(pad, ox), pad); ctx.lineTo(Math.max(pad, ox), h-pad); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(pad, Math.max(pad, oy)); ctx.lineTo(w-pad, Math.max(pad, oy)); ctx.stroke();
+
+        // Tick labels
+        ctx.fillStyle = '#666';
+        ctx.font = '11px Arial';
+        const oy_clamp = Math.min(Math.max(oy, pad+2), h-pad-2);
+        ctx.textAlign = 'center';
+        for (let xg = Math.ceil(XR[0]); xg <= Math.floor(XR[1]); xg++) {
+            if (xg === 0) continue;
+            ctx.fillText(xg, toPixX(xg, w, pad), oy_clamp + 14);
+        }
+        const ox_clamp = Math.min(Math.max(ox, pad+2), w-pad-2);
+        ctx.textAlign = 'right';
+        for (let yg = Math.ceil(yMin); yg <= Math.floor(yMax); yg++) {
+            if (yg === 0) continue;
+            ctx.fillText(yg, ox_clamp - 4, toPixY(yg, h, yMin, yMax, pad) + 4);
+        }
+        ctx.fillStyle = '#888';
+        ctx.textAlign = 'left';
+        ctx.fillText('x', w-pad+4, Math.max(pad+4, oy+4));
+        ctx.textAlign = 'center';
+        ctx.fillText('y', Math.max(pad+4, ox), pad-4);
+    }
+
+    function drawFunctionCanvas() {
+        const w = fCanvas.width / (window.devicePixelRatio||1);
+        const h = fCanvas.height / (window.devicePixelRatio||1);
+        const pad = 40;
+        const fd = getFd();
+        const [yMin, yMax] = fd.yRange;
+
+        drawAxes(fCtx, w, h, yMin, yMax, pad);
+
+        // Draw curve
+        fCtx.strokeStyle = '#a5d6a7';
+        fCtx.lineWidth = 2.5;
+        fCtx.beginPath();
+        let first = true;
+        for (let px = pad; px <= w-pad; px++) {
+            const xv = XR[0] + (px-pad)/(w-2*pad)*(XR[1]-XR[0]);
+            const yv = fd.f(xv);
+            const py = toPixY(yv, h, yMin, yMax, pad);
+            if (!isFinite(py) || py < pad-10 || py > h-pad+10) { first=true; continue; }
+            if (first) { fCtx.moveTo(px,py); first=false; } else fCtx.lineTo(px,py);
+        }
+        fCtx.stroke();
+
+        // Tangent line
+        const slope = fd.df(x0);
+        const y0v = fd.f(x0);
+        const ext = 1.8;
+        fCtx.strokeStyle = '#4fc3f7';
+        fCtx.lineWidth = 2.2;
+        fCtx.beginPath();
+        fCtx.moveTo(toPixX(x0-ext,w,pad), toPixY(y0v-slope*ext,h,yMin,yMax,pad));
+        fCtx.lineTo(toPixX(x0+ext,w,pad), toPixY(y0v+slope*ext,h,yMin,yMax,pad));
+        fCtx.stroke();
+
+        // Slope triangle: rise/run indicator
+        const runLen = 0.7;
+        const rx1 = x0, rx2 = x0+runLen;
+        const ry1 = y0v, ry2 = y0v+slope*runLen;
+        fCtx.strokeStyle = 'rgba(255,200,100,0.6)';
+        fCtx.lineWidth = 1.5;
+        fCtx.setLineDash([4,3]);
+        fCtx.beginPath();
+        fCtx.moveTo(toPixX(rx1,w,pad), toPixY(ry1,h,yMin,yMax,pad));
+        fCtx.lineTo(toPixX(rx2,w,pad), toPixY(ry1,h,yMin,yMax,pad));
+        fCtx.lineTo(toPixX(rx2,w,pad), toPixY(ry2,h,yMin,yMax,pad));
+        fCtx.stroke();
+        fCtx.setLineDash([]);
+
+        // Current point
+        fCtx.fillStyle = '#ff5252';
+        fCtx.beginPath();
+        fCtx.arc(toPixX(x0,w,pad), toPixY(y0v,h,yMin,yMax,pad), 6, 0, Math.PI*2);
+        fCtx.fill();
+
+        // Label
+        fCtx.fillStyle = '#eee';
+        fCtx.font = '12px Arial';
+        fCtx.textAlign = 'left';
+        const lx = toPixX(x0,w,pad)+10, ly = toPixY(y0v,h,yMin,yMax,pad)-10;
+        fCtx.fillText(`(${x0.toFixed(2)}, ${y0v.toFixed(2)})`, lx, ly);
+    }
+
+    function drawDerivativeCanvas() {
+        const w = dCanvas.width / (window.devicePixelRatio||1);
+        const h = dCanvas.height / (window.devicePixelRatio||1);
+        const pad = 40;
+        const fd = getFd();
+
+        // Compute df range
+        let dfMin = Infinity, dfMax = -Infinity;
+        for (let xv = XR[0]; xv <= XR[1]; xv += 0.05) {
+            const v = fd.df(xv);
+            if (isFinite(v)) { dfMin = Math.min(dfMin,v); dfMax = Math.max(dfMax,v); }
+        }
+        const margin = Math.max((dfMax-dfMin)*0.15, 0.5);
+        const yMin = dfMin - margin, yMax = dfMax + margin;
+
+        drawAxes(dCtx, w, h, yMin, yMax, pad);
+
+        // Derivative curve
+        dCtx.strokeStyle = '#a5d6a7';
+        dCtx.lineWidth = 2.5;
+        dCtx.beginPath();
+        let first = true;
+        for (let px = pad; px <= w-pad; px++) {
+            const xv = XR[0] + (px-pad)/(w-2*pad)*(XR[1]-XR[0]);
+            const yv = fd.df(xv);
+            const py = toPixY(yv, h, yMin, yMax, pad);
+            if (!isFinite(py) || py < pad-10 || py > h-pad+10) { first=true; continue; }
+            if (first) { dCtx.moveTo(px,py); first=false; } else dCtx.lineTo(px,py);
+        }
+        dCtx.stroke();
+
+        // Vertical dashed line at x0
+        dCtx.strokeStyle = 'rgba(255,82,82,0.4)';
+        dCtx.lineWidth = 1;
+        dCtx.setLineDash([5,4]);
+        dCtx.beginPath();
+        dCtx.moveTo(toPixX(x0,w,pad), pad);
+        dCtx.lineTo(toPixX(x0,w,pad), h-pad);
+        dCtx.stroke();
+        dCtx.setLineDash([]);
+
+        // Current point on derivative
+        const dv = fd.df(x0);
+        const dpx = toPixX(x0,w,pad);
+        const dpy = toPixY(dv, h, yMin, yMax, pad);
+        if (isFinite(dpy)) {
+            dCtx.fillStyle = '#ff9800';
+            dCtx.beginPath();
+            dCtx.arc(dpx, dpy, 7, 0, Math.PI*2);
+            dCtx.fill();
+            dCtx.fillStyle = '#ffcc80';
+            dCtx.font = '12px Arial';
+            dCtx.textAlign = dpx > w*0.6 ? 'right' : 'left';
+            dCtx.fillText(`f′(${x0.toFixed(2)}) = ${dv.toFixed(3)}`, dpx + (dpx > w*0.6 ? -10 : 10), dpy - 10);
+        }
+
+        // Label derivative name
+        dCtx.fillStyle = '#a5d6a7';
+        dCtx.font = '13px Arial';
+        dCtx.textAlign = 'center';
+        dCtx.fillText(fd.dfName, w/2, pad-6);
+    }
+
+    function drawLimitCanvas() {
+        const w = lCanvas.width / (window.devicePixelRatio||1);
+        const h = lCanvas.height / (window.devicePixelRatio||1);
+        const pad = 40;
+        const fd = getFd();
+        const zoom = 1.4;
+        const xMin = x0 - zoom, xMax = x0 + zoom;
+        const centerY = fd.f(x0);
+        const slope = fd.df(x0);
+        const yRange = Math.max(Math.abs(slope)*zoom + 0.3, 0.5);
+        const yMin = centerY - yRange, yMax = centerY + yRange;
+
+        // Clear & grid
+        lCtx.clearRect(0, 0, w, h);
+        lCtx.strokeStyle = '#1a1a2e';
+        lCtx.lineWidth = 1;
+        for (let xg = Math.ceil(xMin-1); xg <= Math.floor(xMax+1); xg++) {
+            const px = pad + (xg-xMin)/(xMax-xMin)*(w-2*pad);
+            lCtx.beginPath(); lCtx.moveTo(px,pad); lCtx.lineTo(px,h-pad); lCtx.stroke();
+        }
+
+        // Function curve
+        lCtx.strokeStyle = '#a5d6a7';
+        lCtx.lineWidth = 2.5;
+        lCtx.beginPath();
+        let first = true;
+        for (let px = 0; px <= w; px++) {
+            const xv = xMin + (px)/(w)*(xMax-xMin);
+            const yv = fd.f(xv);
+            const py = pad + (yMax-yv)/(yMax-yMin)*(h-2*pad);
+            if (!isFinite(py) || py < -20 || py > h+20) { first=true; continue; }
+            if (first) { lCtx.moveTo(px,py); first=false; } else lCtx.lineTo(px,py);
+        }
+        lCtx.stroke();
+
+        const toX = xv => pad + (xv-xMin)/(xMax-xMin)*(w-2*pad);
+        const toY = yv => pad + (yMax-yv)/(yMax-yMin)*(h-2*pad);
+
+        // Tangent (true derivative line) — dashed blue
+        lCtx.strokeStyle = '#4fc3f7';
+        lCtx.lineWidth = 2.2;
+        lCtx.setLineDash([7,4]);
+        lCtx.beginPath();
+        lCtx.moveTo(toX(xMin), toY(centerY + slope*(xMin-x0)));
+        lCtx.lineTo(toX(xMax), toY(centerY + slope*(xMax-x0)));
+        lCtx.stroke();
+        lCtx.setLineDash([]);
+
+        // Secant line — solid purple
+        const x1 = x0 + dx;
+        const y0v = fd.f(x0), y1v = fd.f(x1);
+        const secSlope = (y1v - y0v) / (x1 - x0);
+        lCtx.strokeStyle = '#ce93d8';
+        lCtx.lineWidth = 2.2;
+        lCtx.beginPath();
+        lCtx.moveTo(toX(xMin), toY(y0v + secSlope*(xMin-x0)));
+        lCtx.lineTo(toX(xMax), toY(y0v + secSlope*(xMax-x0)));
+        lCtx.stroke();
+
+        // Base point (x0)
+        lCtx.fillStyle = '#ff5252';
+        lCtx.beginPath();
+        lCtx.arc(toX(x0), toY(y0v), 6, 0, Math.PI*2);
+        lCtx.fill();
+
+        // Second point (x0+dx) — clamp display
+        const px1 = toX(x1), py1 = toY(y1v);
+        if (px1 >= 0 && px1 <= w) {
+            lCtx.fillStyle = '#ce93d8';
+            lCtx.beginPath();
+            lCtx.arc(px1, py1, 5, 0, Math.PI*2);
+            lCtx.fill();
+        }
+
+        // Δx marker
+        lCtx.strokeStyle = '#ffcc80';
+        lCtx.lineWidth = 1.5;
+        lCtx.setLineDash([4,3]);
+        lCtx.beginPath();
+        lCtx.moveTo(toX(x0), toY(y0v));
+        lCtx.lineTo(toX(x1), toY(y0v));
+        lCtx.stroke();
+        lCtx.setLineDash([]);
+        lCtx.fillStyle = '#ffcc80';
+        lCtx.font = '11px Arial';
+        lCtx.textAlign = 'center';
+        lCtx.fillText(`Δx=${dx.toFixed(2)}`, toX((x0+x1)/2), toY(y0v) + 14);
+
+        // Bottom info
+        lCtx.font = '11px Arial';
+        lCtx.textAlign = 'center';
+        lCtx.fillStyle = '#ce93d8';
+        lCtx.fillText(`割线斜率: ${secSlope.toFixed(4)}`, w/2, h-18);
+        lCtx.fillStyle = '#4fc3f7';
+        lCtx.fillText(`切线斜率(导数): ${slope.toFixed(4)}`, w/2, h-4);
+    }
+
+    function updateStatus() {
+        const fd = getFd();
+        const slope = fd.df(x0);
+        const y0v = fd.f(x0);
+        document.getElementById('currentFunc').textContent = `函数：${fd.name}，${fd.dfName}`;
+        document.getElementById('currentDerivative').textContent = `导数值：f′(${x0.toFixed(2)}) = ${slope.toFixed(4)}`;
+        document.getElementById('slopeInfo').textContent = `切线方程：y = ${slope.toFixed(3)}(x − ${x0.toFixed(2)}) + ${y0v.toFixed(3)}`;
+    }
+
+    function drawAll() {
+        drawFunctionCanvas();
+        drawDerivativeCanvas();
+        drawLimitCanvas();
+        updateStatus();
+    }
+
+    function init() {
+        fCanvas = document.getElementById('functionCanvas');
+        fCtx = fCanvas.getContext('2d');
+        dCanvas = document.getElementById('derivativeCanvas');
+        dCtx = dCanvas.getContext('2d');
+        lCanvas = document.getElementById('limitCanvas');
+        lCtx = lCanvas.getContext('2d');
+
+        function resizeAll() {
+            resizeCanvas(fCanvas, fCtx);
+            resizeCanvas(dCanvas, dCtx);
+            resizeCanvas(lCanvas, lCtx);
+            drawAll();
+        }
+        window.addEventListener('resize', resizeAll);
+        resizeAll();
+
+        document.getElementById('funcSelect').addEventListener('change', e => {
+            funcType = e.target.value; drawAll();
+        });
+        document.getElementById('x0Slider').addEventListener('input', e => {
+            x0 = parseFloat(e.target.value);
+            document.getElementById('x0Value').textContent = x0.toFixed(2);
+            drawAll();
+        });
+        document.getElementById('dxSlider').addEventListener('input', e => {
+            dx = parseFloat(e.target.value);
+            document.getElementById('dxValue').textContent = dx.toFixed(2);
+            drawAll();
+        });
+        document.getElementById('animateBtn').addEventListener('click', () => {
+            if (animating) { animating = false; return; }
+            animating = true;
+            dx = 2.0;
+            document.getElementById('dxSlider').value = dx;
+            document.getElementById('dxValue').textContent = dx.toFixed(2);
+            function step() {
+                if (!animating || dx <= 0.07) { animating = false; return; }
+                dx = Math.max(0.05, dx * 0.97);
+                document.getElementById('dxSlider').value = dx;
+                document.getElementById('dxValue').textContent = dx.toFixed(2);
+                drawAll();
+                animId = requestAnimationFrame(step);
+            }
+            step();
+        });
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            x0 = 1.0; dx = 1.0; animating = false;
+            if (animId) cancelAnimationFrame(animId);
+            document.getElementById('x0Slider').value = x0;
+            document.getElementById('dxSlider').value = dx;
+            document.getElementById('x0Value').textContent = '1.00';
+            document.getElementById('dxValue').textContent = '1.00';
+            drawAll();
+        });
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        document.getElementById('submitQuiz').addEventListener('click', () => {
+            const sel = document.querySelector('.quiz-option.selected');
+            if (!sel) { alert('请先选择一个答案！'); return; }
+            const ans = sel.getAttribute('data-answer');
+            const correct = 'C';
+            const fb = document.getElementById('quizFeedback');
+            const ft = document.getElementById('feedbackText');
+            fb.style.display = 'block';
+            fb.className = 'quiz-feedback ' + (ans===correct ? 'correct' : 'incorrect');
+            if (ans===correct) {
+                ft.textContent = '正确！f(x)=x³ 的导数为 f′(x)=3x²，在 x=2 时，f′(2)=3×4=12，即切线斜率为 12。';
+                ft.style.color = '#81c784';
+            } else {
+                ft.textContent = '不正确。正确答案是 C：12。对 f(x)=x³ 求导得 f′(x)=3x²，代入 x=2 得 f′(2)=12。';
+                ft.style.color = '#f44336';
+            }
+            document.querySelectorAll('.quiz-option').forEach(o => {
+                o.style.pointerEvents = 'none';
+                if (o.getAttribute('data-answer')===correct) o.style.backgroundColor = '#2e7d32';
+            });
+            document.getElementById('submitQuiz').disabled = true;
+        });
+    }
+
+    window.addEventListener('load', init);
+</script>
+
+<footer style="margin-top:18px;padding:14px 10px;text-align:center;font-size:12px;color:rgba(255,255,255,0.55);border-top:1px solid rgba(255,255,255,0.08);">
+    @ 绘演万象 版权所有
+</footer>
+</body>
+</html>

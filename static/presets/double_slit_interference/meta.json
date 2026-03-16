@@ -1,0 +1,26 @@
+{
+  "id": "double_slit_interference",
+  "title": "双缝干涉",
+  "aliases": [
+    "双缝干涉",
+    "杨氏双缝干涉",
+    "double slit interference",
+    "young double slit",
+    "双缝干涉演示",
+    "双缝干涉网页",
+    "双缝干涉视频"
+  ],
+  "keywords": [
+    "双缝",
+    "干涉",
+    "条纹",
+    "波长",
+    "相位差",
+    "光程差"
+  ],
+  "description": "展示双缝干涉中条纹分布、光程差与波长之间的关系，体现波动光学特征。",
+  "html_url": "/static/presets/double_slit_interference/index.html",
+  "video_url": "/static/presets/double_slit_interference/video.mp4",
+  "cover_url": "/static/presets/double_slit_interference/cover.png",
+  "enabled": true
+}

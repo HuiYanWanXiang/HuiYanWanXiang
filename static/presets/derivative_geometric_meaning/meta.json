@@ -1,0 +1,27 @@
+{
+  "id": "derivative_geometric_meaning",
+  "title": "导数几何意义",
+  "aliases": [
+    "导数几何意义",
+    "导数的几何意义",
+    "导数几何解释",
+    "切线斜率",
+    "derivative geometric meaning",
+    "geometric meaning of derivative",
+    "导数几何意义演示",
+    "导数几何意义网页"
+  ],
+  "keywords": [
+    "导数",
+    "几何意义",
+    "切线",
+    "斜率",
+    "瞬时变化率",
+    "函数图像"
+  ],
+  "description": "展示导数与函数图像切线斜率之间的关系，帮助理解导数的直观含义。",
+  "html_url": "/static/presets/derivative_geometric_meaning/index.html",
+  "video_url": "/static/presets/derivative_geometric_meaning/video.mp4",
+  "cover_url": "/static/presets/derivative_geometric_meaning/cover.png",
+  "enabled": true
+}

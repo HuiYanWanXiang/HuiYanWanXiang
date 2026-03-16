@@ -1,0 +1,11 @@
+{
+  "id": "apollonius_circle",
+  "title": "阿氏圆",
+  "aliases": ["阿氏圆","阿波罗尼斯圆","阿波罗尼奥斯圆","apollonius circle"],
+  "keywords": ["阿氏圆","轨迹","距离比","几何"],
+  "description": "展示到两定点距离比为常数的点轨迹。",
+  "html_url": "/static/presets/apollonius_circle/index.html",
+  "video_url": "/static/presets/apollonius_circle/video.mp4",
+  "cover_url": "/static/presets/apollonius_circle/cover.png",
+  "enabled": true
+}
