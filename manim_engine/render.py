@@ -39,7 +39,18 @@ VERY IMPORTANT (Tex strings):
 - All Tex/MathTex strings MUST be raw strings: MathTex(r"...") / Tex(r"...").
   This avoids Python escapes like \\t turning into a TAB (which causes 'extmass' etc).
 
+Chinese text rendering rules (CRITICAL):
+- For Chinese on-screen labels/titles, DO NOT use Text(...).
+- Use Tex(r"中文...") / MathTex(r"...") instead, so xelatex+ctex can render reliably.
+- Text(...) may be used only for non-Chinese strings.
+
 Goal: produce a clean educational animation matching the user's request.
+
+Language rules (STRICT):
+- All human-readable on-screen narration/labels/titles must be Simplified Chinese.
+- Keep Python identifiers/API/class names in English.
+- Prefer Chinese text in Tex/MathTex raw strings, e.g. Tex(r"速度").
+- If Chinese is used in Text(...), set a CJK-safe font explicitly to avoid missing glyph issues.
 """
 
 # ============================================================
@@ -52,6 +63,7 @@ Task:
 - Include: concept breakdown, scene steps, key objects, equations, timing notes.
 - Keep it concise and actionable for a code generator.
 - Add strict layout constraints to keep all objects inside frame, avoid overlaps, and prevent drifting text/equations.
+- Write all narration/content in Simplified Chinese.
 
 Output rules:
 - Output plain text only.
@@ -68,6 +80,8 @@ BANNED_PATTERNS = [
     r"\bimport\s+requests\b", r"\burllib\b",
     r"\bopen\(", r"\beval\(", r"\bexec\(",
 ]
+
+CJK_SAFE_FONT = "Noto Sans CJK SC"
 
 def strip_code_fences(text: str) -> str:
     """去掉 LLM 可能返回的 ``` ``` 围栏"""
@@ -113,6 +127,10 @@ def patch_common_manim_api_issues(code: str) -> str:
     → 替换为 .plot(
     """
     code = re.sub(r"\.get_graph\s*\(", ".plot(", code)
+    # 对残留的中文 Text 自动补齐 CJK 字体，避免缺字乱码。
+    code = _ensure_cjk_font_for_chinese_text(code)
+    # 中文 Text 容易依赖系统字体导致乱码：优先转为 Tex
+    code = _convert_chinese_text_to_tex(code)
     # 处理中文 MathTex 在 pdfLaTeX 下报错：优先将纯中文 MathTex 改为 Tex
     code = _downgrade_chinese_mathtex(code)
     # 若出现中文 Tex/MathTex，则注入 xelatex + ctex 支持
@@ -120,7 +138,60 @@ def patch_common_manim_api_issues(code: str) -> str:
     return code
 
 def _has_chinese(text: str) -> bool:
-    return bool(re.search(r"[\u4e00-\u9fff]", text or ""))
+    if not text:
+        return False
+    if re.search(r"[\u4e00-\u9fff]", text):
+        return True
+    # 识别 unicode 转义形式，例如 "\u5149\u6e90"
+    return bool(re.search(r"\\u[0-9a-fA-F]{4}", text))
+
+
+def _convert_chinese_text_to_tex(code: str) -> str:
+    """
+    将 Text("中文...") 转换为 Tex(r"中文...")，避免 Pango 字体链导致乱码。
+    保留 color/font_size 等常见参数，移除 Tex 不支持的 font 参数。
+    """
+    def _replace_call(match: re.Match) -> str:
+        quote = match.group(1)
+        content = match.group(2)
+        tail = match.group(3) or ""
+
+        if not _has_chinese(content):
+            return match.group(0)
+
+        # 移除 Text 专属 font 参数，避免传给 Tex 报错
+        tail = re.sub(r",?\s*font\s*=\s*(['\"]).*?\1", "", tail)
+        tail = re.sub(r"^\s*,\s*", ", ", tail)
+
+        escaped = content.replace('"', '\\"')
+        return f'Tex(r"{escaped}"{tail})'
+
+    # 匹配形如 Text("...", ...)
+    pattern = r"\bText\(\s*([\"'])(.*?)\1\s*(,\s*[^\)]*)?\)"
+    return re.sub(pattern, _replace_call, code, flags=re.DOTALL)
+
+def _ensure_cjk_font_for_chinese_text(code: str) -> str:
+    """
+    为 Text("中文...") 自动补充 CJK 字体，避免系统默认字体缺字。
+    """
+    def _replace_call(match: re.Match) -> str:
+        quote = match.group(1)
+        content = match.group(2)
+        tail = match.group(3) or ""
+
+        if not _has_chinese(content):
+            return match.group(0)
+
+        if re.search(r"\bfont\s*=", tail):
+            return match.group(0)
+
+        clean_tail = tail.rstrip()
+        if clean_tail:
+            return f'Text({quote}{content}{quote}{clean_tail}, font="{CJK_SAFE_FONT}")'
+        return f'Text({quote}{content}{quote}, font="{CJK_SAFE_FONT}")'
+
+    pattern = r"\bText\(\s*([\"'])(.*?)\1\s*(,\s*[^\)]*)?\)"
+    return re.sub(pattern, _replace_call, code, flags=re.DOTALL)
 
 def _downgrade_chinese_mathtex(code: str) -> str:
     """
@@ -145,7 +216,8 @@ def _inject_xelatex_ctex(code: str) -> str:
     inject = (
         "config.tex_compiler = \"xelatex\"\n"
         "config.tex_template = TexTemplate()\n"
-        "config.tex_template.add_to_preamble(r\"\\\\usepackage{ctex}\")\n"
+        "config.tex_template.add_to_preamble(r\"\\usepackage{ctex}\")\n"
+        f"Text.set_default(font=\"{CJK_SAFE_FONT}\")\n"
     )
     if inject in code:
         return code
@@ -153,6 +225,36 @@ def _inject_xelatex_ctex(code: str) -> str:
     if lines and lines[0].startswith("from manim import *"):
         return "\n".join([lines[0], inject] + lines[1:])
     return code
+
+
+def _extract_render_text_literals(code: str) -> list[str]:
+    """
+    提取 Text/Tex/MathTex 的首个字符串参数，供语言一致性检查使用。
+    """
+    patterns = [
+        r"\bText\(\s*r?\"([^\"]*)\"",
+        r"\bText\(\s*r?'([^']*)'",
+        r"\bTex\(\s*r\"([^\"]*)\"",
+        r"\bTex\(\s*r'([^']*)'",
+        r"\bMathTex\(\s*r\"([^\"]*)\"",
+        r"\bMathTex\(\s*r'([^']*)'",
+    ]
+    out: list[str] = []
+    for pat in patterns:
+        out.extend(re.findall(pat, code))
+    return out
+
+
+def language_check(code: str) -> None:
+    """
+    轻量语言门槛：确保可见文案包含足量中文，避免生成全英文动画文案。
+    """
+    literals = _extract_render_text_literals(code)
+    visible_text = "\n".join(literals)
+    zh_count = len(re.findall(r"[\u4e00-\u9fff]", visible_text))
+    escaped_zh_count = len(re.findall(r"\\u[0-9a-fA-F]{4}", visible_text))
+    if zh_count + escaped_zh_count < 4:
+        raise ValueError("Language check failed: on-screen text is not sufficiently Chinese.")
 
 # ============================================================
 # 4) 质量门槛（重点）：把“看起来很烂/跑偏”的输出挡掉
@@ -176,6 +278,12 @@ def quality_check(code: str, original_request: str) -> None:
     # Tex/MathTex 必须 raw string
     if re.search(r"\b(MathTex|Tex)\(\s*(?!r['\"])\s*['\"]", code):
         raise ValueError("Quality check failed: Tex/MathTex must use raw strings: MathTex(r'...') / Tex(r'...').")
+
+    # 中文文案禁止走 Text，避免服务器字体链导致乱码
+    if re.search(r"\bText\(\s*(?:r)?[\"'][^\"']*(?:[\u4e00-\u9fff]|\\u[0-9a-fA-F]{4})[^\"']*[\"']", code):
+        # 允许中文 Text，但必须显式设置 CJK 安全字体。
+        if not re.search(r"\bText\([^\)]*\bfont\s*=\s*[\"'](?:Noto Sans CJK SC|Noto Serif CJK SC|Source Han Sans CN|WenQuanYi Zen Hei|SimHei|Microsoft YaHei)[\"']", code):
+            raise ValueError("Quality check failed: Chinese Text(...) must set an explicit CJK-safe font.")
 
     is_derivation = any(k in req for k in [x.lower() for x in DERIVE_KEYWORDS])
     if is_derivation:
@@ -240,6 +348,7 @@ def validate_and_patch(code: str, original_request: str, enable_quality: bool) -
         raise ValueError("LLM returned empty code.")
     code = patch_common_manim_api_issues(code)
     basic_safety_check(code)
+    language_check(code)
     if enable_quality:
         quality_check(code, original_request)
     return code
@@ -347,7 +456,7 @@ def main():
     (run_dir / "expanded_prompt.txt").write_text(expanded_prompt, encoding="utf-8")
 
     initial_user_prompt = (
-        "Generate a ManimCE educational animation.\n"
+        "Generate a ManimCE educational animation in Simplified Chinese.\n"
         f"Target total duration: about {args.duration:.1f} seconds.\n"
         "Style constraints:\n"
         "- Clear visuals, not cluttered.\n"
@@ -356,6 +465,7 @@ def main():
         "- Use aligned positioning (shift/next_to/arrange) and avoid absolute coords that push objects off-screen.\n"
         "- Use MathTex for equations and animate steps cleanly.\n"
         "- IMPORTANT: All Tex/MathTex strings must be RAW strings: MathTex(r\"...\").\n"
+        "- IMPORTANT: All on-screen narration/labels/titles must be Simplified Chinese.\n"
         "Expanded request:\n"
         f"{expanded_prompt}\n"
     )
@@ -396,6 +506,7 @@ def main():
             "- define class GeneratedScene(Scene) with construct(self)\n"
             "- no imports besides manim\n"
             "- all MathTex/Tex must be raw strings: MathTex(r\"...\")\n\n"
+            "- all on-screen narration/labels/titles must be Simplified Chinese\n\n"
             "ORIGINAL USER REQUEST:\n"
             f"{args.prompt}\n\n"
             "CURRENT CODE:\n"
