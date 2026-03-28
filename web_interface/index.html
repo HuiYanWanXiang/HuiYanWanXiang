@@ -18,10 +18,14 @@
         <a href="#console">控制台</a>
         <a href="#video">视频</a>
         <a href="#embed">网页预览</a>
+        <a id="rootOnlyNav" href="/static/learning_profile.html" target="_blank" rel="noopener noreferrer" style="display:none;">学习画像演示</a>
+        <a id="rootOnlyVideoWallNav" href="/static/presets_video_wall.html" target="_blank" rel="noopener noreferrer" style="display:none;">视频墙展示</a>
       </nav>
 
       <div class="topbar-actions">
         <span id="userInfoText" class="muted">未登录</span>
+        <a id="rootOnlyBtn" class="btn ghost" href="/static/learning_profile.html" target="_blank" rel="noopener noreferrer" style="display:none;">学习画像</a>
+        <a id="rootOnlyVideoWallBtn" class="btn ghost" href="/static/presets_video_wall.html" target="_blank" rel="noopener noreferrer" style="display:none;">视频墙展示</a>
         <button class="btn ghost" id="btnFillDemo" type="button">示例</button>
         <button class="btn ghost" id="logoutBtn" type="button">登出</button>
         <button class="btn primary" type="button" onclick="document.querySelector('#console').scrollIntoView({behavior:'smooth'})">
