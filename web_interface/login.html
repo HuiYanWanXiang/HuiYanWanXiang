@@ -93,11 +93,10 @@
   <div class="right-panel">
     <div class="form-container">
       <div class="header-text">
-        <h1>欢迎回来！</h1>
-        <p>请输入您的账号信息以继续</p>
+        <h1 id="formTitle">欢迎回来！</h1>
+        <p>普通人也能做的教学可视化！</p>
       </div>
 
-      <!-- ✅ 只做跳转，不做真实鉴权 -->
       <form id="loginForm">
         <div class="form-group">
           <label for="email">用户名</label>
@@ -114,7 +113,7 @@
           </label>
           <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 500;">忘记密码？</a>
         </div>
-        <button type="submit" class="btn-submit">登 录</button>
+        <button type="submit" class="btn-submit" id="submitBtn">登 录</button>
       </form>
 
       <div style="text-align: center; font-size: 0.875rem; color: var(--muted-foreground); margin-top: 2rem;">
@@ -129,6 +128,8 @@
     const togglePwdBtn = document.getElementById('togglePwd');
     const loginForm = document.getElementById('loginForm');
     const registerLink = document.getElementById('registerLink');
+    const formTitle = document.getElementById('formTitle');
+    const submitBtn = document.getElementById('submitBtn');
   
     const chars = {
       purple: document.getElementById('char-purple'),
@@ -150,9 +151,17 @@
     let isTyping = false;
     let showPassword = false;
     let passwordLength = 0;
+    let isRegisterMode = false;
   
     function showMsg(msg){
       alert(msg);
+    }
+
+    function setAuthMode(registerMode){
+      isRegisterMode = registerMode;
+      formTitle.textContent = registerMode ? '欢迎注册！' : '欢迎回来！';
+      submitBtn.textContent = registerMode ? '确 认' : '登 录';
+      registerLink.textContent = registerMode ? '返回登录' : '立即注册';
     }
   
     async function loginUser(){
@@ -202,9 +211,12 @@
         showMsg(data.detail || '注册失败');
         return;
       }
-  
-      localStorage.setItem('token', data.access_token);
-      window.location.href = '/app';
+
+      showMsg('注册成功，请登录');
+      pwdInput.value = '';
+      passwordLength = 0;
+      setAuthMode(false);
+      updateCharactersState();
     }
   
     togglePwdBtn.addEventListener('click', () => {
@@ -229,12 +241,16 @@
   
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      await loginUser();
+      if (isRegisterMode) {
+        await registerUser();
+      } else {
+        await loginUser();
+      }
     });
   
-    registerLink.addEventListener('click', async (e) => {
+    registerLink.addEventListener('click', (e) => {
       e.preventDefault();
-      await registerUser();
+      setAuthMode(!isRegisterMode);
     });
   
     function updateCharactersState() {

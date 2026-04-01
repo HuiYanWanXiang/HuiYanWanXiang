@@ -22,6 +22,19 @@ function setTag(id, text){
   if (el) el.textContent = text;
 }
 
+function toggleRootOnlyFeature(isRoot){
+  const nav = $("rootOnlyNav");
+  const btn = $("rootOnlyBtn");
+  const videoWallNav = $("rootOnlyVideoWallNav");
+  const videoWallBtn = $("rootOnlyVideoWallBtn");
+  const display = isRoot ? "" : "none";
+
+  if(nav) nav.style.display = display;
+  if(btn) btn.style.display = display;
+  if(videoWallNav) videoWallNav.style.display = display;
+  if(videoWallBtn) videoWallBtn.style.display = display;
+}
+
 function showStatus(text){
   const box = $("statusText");
   if(box) box.textContent = text;
@@ -97,6 +110,8 @@ async function loadMe(){
         ? "当前账号为 root，使用次数无限制"
         : `剩余次数：${data.remaining_count}/${data.free_quota}`;
     }
+
+    toggleRootOnlyFeature(!!data.is_root);
 
     return data;
   }catch(err){

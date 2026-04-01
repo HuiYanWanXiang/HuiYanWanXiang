@@ -392,6 +392,17 @@ async def app_page():
     return FileResponse(index_path)
 
 
+@app.get("/learning-profile")
+async def learning_profile_page():
+    """
+    学习画像演示页：/learning-profile -> web_interface/learning_profile.html
+    """
+    page_path = "web_interface/learning_profile.html"
+    if not os.path.exists(page_path):
+        return "System Error: learning_profile.html not found."
+    return FileResponse(page_path)
+
+
 # ==============================================================================
 # 6. 预设匹配路由
 # ==============================================================================

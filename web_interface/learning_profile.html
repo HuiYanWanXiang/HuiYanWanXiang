@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>绘演万象 · 学习画像分析中心</title>
+    <style>
+      :root {
+        --bg: #f6f8fc;
+        --panel: #ffffff;
+        --panel-soft: #f8faff;
+        --text: #121826;
+        --muted: #5f6b7a;
+        --line: #e7ebf3;
+        --primary: #2563eb;
+        --primary-soft: #dbe9ff;
+        --good: #16a34a;
+        --warn: #d97706;
+        --danger: #dc2626;
+        --shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top right, #eef4ff 0, #f6f8fc 45%);
+        color: var(--text);
+        font: 14px/1.5 "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+      }
+
+      .layout { min-height: 100vh; display: grid; grid-template-columns: 248px 1fr; }
+      .sidebar {
+        background: #0f172a;
+        color: #d8e2ff;
+        padding: 20px 16px;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: #fff;
+      }
+      .brand h1 { margin: 0; font-size: 15px; color: #fff; }
+      .brand p { margin: 0; font-size: 12px; color: #9fb2e8; }
+
+      .nav-title {
+        margin: 18px 8px 8px;
+        font-size: 11px;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: #89a0d8;
+      }
+      .nav { display: grid; gap: 6px; }
+      .nav-btn {
+        width: 100%;
+        border: 0;
+        text-align: left;
+        background: transparent;
+        color: #cad8ff;
+        border-radius: 10px;
+        padding: 10px 12px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .nav-btn:hover, .nav-btn.active { background: rgba(59, 130, 246, 0.22); color: #fff; }
+
+      .main { padding: 18px 22px 24px; }
+      .topbar {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px 16px;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .topbar h2 { margin: 0; font-size: 18px; }
+      .topbar p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+
+      .top-actions { display: flex; align-items: center; gap: 10px; }
+      .chip {
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+        padding: 6px 10px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .btn {
+        border: 0;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 10px;
+        padding: 9px 12px;
+        cursor: pointer;
+      }
+
+      .content { margin-top: 16px; display: grid; gap: 16px; }
+      .kpi { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+        box-shadow: var(--shadow);
+      }
+      .kpi .label { color: var(--muted); font-size: 12px; }
+      .kpi .value { margin-top: 4px; font-size: 25px; font-weight: 700; }
+      .trend { margin-top: 2px; font-size: 12px; }
+      .trend.up { color: var(--good); }
+      .trend.warn { color: var(--warn); }
+
+      .grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; }
+      .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+      .card-head h3 { margin: 0; }
+
+      .bars { display: grid; gap: 12px; }
+      .bar-row { display: grid; grid-template-columns: 85px 1fr 45px; align-items: center; gap: 10px; }
+      .bar-track { height: 10px; border-radius: 8px; background: #edf2fb; overflow: hidden; }
+      .bar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, #60a5fa, #2563eb); }
+
+      .risk { display: grid; gap: 10px; }
+      .risk-item {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .risk-meta { display: flex; flex-direction: column; gap: 2px; }
+      .tag { font-size: 11px; border-radius: 999px; padding: 3px 8px; font-weight: 600; }
+      .tag.high { background: #fee2e2; color: var(--danger); }
+      .tag.mid { background: #ffedd5; color: var(--warn); }
+      .tag.low { background: #dcfce7; color: var(--good); }
+
+      .timeline { display: grid; gap: 10px; }
+      .dot-item { display: grid; grid-template-columns: 75px 18px 1fr; align-items: center; gap: 10px; }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary);
+        box-shadow: 0 0 0 4px var(--primary-soft);
+        justify-self: center;
+      }
+      .hint { color: var(--muted); font-size: 12px; }
+      .empty {
+        margin-top: 6px;
+        border: 1px dashed #c7d2e9;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 12px;
+        color: #4f5f84;
+        background: #f5f8ff;
+      }
+
+      .demo-note {
+        margin-top: 10px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid #dbe4f5;
+        background: #f7faff;
+        color: #465772;
+        font-size: 12px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        margin-top: 14px;
+        color: #3158b5;
+        text-decoration: none;
+        font-size: 12px;
+      }
+
+      @media (max-width: 1120px) {
+        .layout { grid-template-columns: 1fr; }
+        .sidebar { display: none; }
+        .kpi { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-logo">绘</div>
+          <div>
+            <h1>学习评价后台</h1>
+            <p>绘演万象</p>
+          </div>
+        </div>
+
+        <div class="nav">
+          <button class="nav-btn active" type="button">总览看板</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div>
+            <h2>学生学习画像分析中心</h2>
+            <p>聚焦学生能力评估、学习过程追踪与薄弱点定位</p>
+          </div>
+          <div class="top-actions">
+            <span class="chip" id="time-chip">数据日期：--</span>
+          </div>
+        </div>
+
+        <div class="demo-note">
+          当前页面为路演演示版，使用样例数据模拟“多元反馈评价体系”可视化结果。
+        </div>
+
+        <a class="back-link" href="/app">返回主控制台</a>
+
+        <section class="content">
+          <div class="kpi" id="kpi-area"></div>
+
+          <div class="grid">
+            <article class="card">
+              <div class="card-head">
+                <h3>能力维度概览（班级均值）</h3>
+                <small>0-100 分</small>
+              </div>
+              <div class="bars" id="bars-area"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <h3>高关注学生</h3>
+                <small>风险预警名单</small>
+              </div>
+              <div class="risk" id="risk-area"></div>
+            </article>
+          </div>
+
+          <div class="grid">
+            <article class="card">
+              <div class="card-head">
+                <h3>学习过程时间线（今日）</h3>
+                <small>提问/视频/重试</small>
+              </div>
+              <div class="timeline" id="timeline-area"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <h3>教学策略建议</h3>
+                <small>基于画像结果生成</small>
+              </div>
+              <div class="hint">
+                1) 对“反思改错”低于 70 分的学生，安排针对性错题复盘；<br />
+                2) 对“视频完成率”连续下降学生，增加短时任务与过程督导；<br />
+                3) 对“重试率偏高”知识点，采用分层讲解与同类题强化训练。
+              </div>
+              <div class="empty">
+                本周重点建议：<br />
+                - 函数应用：增加“条件拆解 + 图像联动”专项练习<br />
+                - 几何推理：强化“步骤表达 + 关键结论提取”训练<br />
+                - 学习节奏：建立“提问-讲解-复盘”日闭环
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      (function guardRootAccess() {
+        const token = localStorage.getItem("token") || "";
+        if (!token) {
+          window.location.href = "/";
+          return;
+        }
+
+        fetch("/api/auth/me", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        })
+          .then(function(resp) {
+            if (!resp.ok) {
+              throw new Error("not-authenticated");
+            }
+            return resp.json();
+          })
+          .then(function(data) {
+            if (!data.is_root) {
+              alert("当前功能仅对管理员 root 账号开放。");
+              window.location.href = "/app";
+            }
+          })
+          .catch(function() {
+            window.location.href = "/";
+          });
+      })();
+
+      (function setDate() {
+        const el = document.getElementById("time-chip");
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        const d = String(now.getDate()).padStart(2, "0");
+        el.textContent = "数据日期：" + y + "-" + m + "-" + d;
+      })();
+
+      const demoData = {
+        kpis: [
+          { label: "覆盖学生数", value: 128, trend: "+6.7% 本周", tone: "up" },
+          { label: "平均掌握度", value: "74.3", trend: "+2.1 分", tone: "up" },
+          { label: "视频完成率", value: "81%", trend: "+4.0%", tone: "up" },
+          { label: "高风险占比", value: "14%", trend: "-1.8%", tone: "warn" }
+        ],
+        dimensions: [
+          { name: "知识掌握", score: 76 },
+          { name: "解题稳定", score: 69 },
+          { name: "提问质量", score: 72 },
+          { name: "学习活跃", score: 81 },
+          { name: "反思改错", score: 65 }
+        ],
+        risks: [
+          { name: "张伟", issue: "函数应用薄弱", level: "high" },
+          { name: "王芳", issue: "几何题重试率高", level: "mid" },
+          { name: "李娜", issue: "视频完成率偏低", level: "mid" },
+          { name: "刘洋", issue: "提问频次下降", level: "low" }
+        ],
+        timeline: [
+          { time: "09:15", event: "张伟发起「一次函数」提问，已生成视频讲解" },
+          { time: "10:40", event: "王芳对同一知识点二次提问，触发重试标记" },
+          { time: "13:20", event: "李娜观看完成率 45%，低于阈值" },
+          { time: "16:30", event: "系统生成今日薄弱点建议清单" }
+        ]
+      };
+
+      const toneMap = { high: "高风险", mid: "中风险", low: "低风险" };
+
+      function renderDashboard(data) {
+        const kpiArea = document.getElementById("kpi-area");
+        const barsArea = document.getElementById("bars-area");
+        const riskArea = document.getElementById("risk-area");
+        const timelineArea = document.getElementById("timeline-area");
+
+        kpiArea.innerHTML = data.kpis.map(function(item) {
+          return "<article class=\"card\">" +
+            "<div class=\"label\">" + item.label + "</div>" +
+            "<div class=\"value\">" + item.value + "</div>" +
+            "<div class=\"trend " + item.tone + "\">" + item.trend + "</div>" +
+          "</article>";
+        }).join("");
+
+        barsArea.innerHTML = data.dimensions.map(function(item) {
+          return "<div class=\"bar-row\">" +
+            "<span>" + item.name + "</span>" +
+            "<div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:" + item.score + "%\"></div></div>" +
+            "<strong>" + item.score + "</strong>" +
+          "</div>";
+        }).join("");
+
+        riskArea.innerHTML = data.risks.map(function(item) {
+          return "<div class=\"risk-item\">" +
+            "<div class=\"risk-meta\">" +
+              "<strong>" + item.name + "</strong>" +
+              "<span class=\"hint\">" + item.issue + "</span>" +
+            "</div>" +
+            "<span class=\"tag " + item.level + "\">" + toneMap[item.level] + "</span>" +
+          "</div>";
+        }).join("");
+
+        timelineArea.innerHTML = data.timeline.map(function(item) {
+          return "<div class=\"dot-item\">" +
+            "<span class=\"hint\">" + item.time + "</span>" +
+            "<span class=\"dot\"></span>" +
+            "<span>" + item.event + "</span>" +
+          "</div>";
+        }).join("");
+      }
+
+      function randomizeData() {
+        const next = JSON.parse(JSON.stringify(demoData));
+        next.kpis = next.kpis.map(function(item, idx) {
+          if (idx === 0) return Object.assign({}, item, { value: 120 + Math.floor(Math.random() * 16) });
+          if (idx === 1) return Object.assign({}, item, { value: (72 + Math.random() * 6).toFixed(1) });
+          if (idx === 2) return Object.assign({}, item, { value: (76 + Math.floor(Math.random() * 10)) + "%" });
+          return Object.assign({}, item, { value: (10 + Math.floor(Math.random() * 10)) + "%" });
+        });
+
+        next.dimensions = next.dimensions.map(function(item) {
+          const score = item.score + Math.floor(Math.random() * 11) - 5;
+          return Object.assign({}, item, { score: Math.max(55, Math.min(92, score)) });
+        });
+
+        return next;
+      }
+
+      document.querySelectorAll(".nav-btn").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".nav-btn").forEach(function(it) {
+            it.classList.remove("active");
+          });
+          btn.classList.add("active");
+        });
+      });
+
+      renderDashboard(demoData);
+    </script>
+  </body>
+</html>
