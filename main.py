@@ -3,11 +3,11 @@
 
 """
 ================================================================================
-项目名称: 绘演万象:Web端交互式物理仿真实验平台
-Project Name: HuiyanWanxiang Web Interactive Physics Simulation Platform
+项目名称: 易演课堂:Web端交互式物理仿真实验平台
+Project Name: YiYanKeTang Web Interactive Physics Simulation Platform
 文件名称: main.py
 创建日期: 2026-02-06
-作者: 大连理工大学数学科学学院绘演万象开发团队
+作者: 大连理工大学数学科学学院易演课堂开发团队
 版本: V1.0.0
 ================================================================================
 """
@@ -54,7 +54,7 @@ load_dotenv()
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="绘演万象后端引擎",
+    title="易演课堂后端引擎",
     description="基于 LLM 的物理仿真网页生成服务",
     version="2.0.0"
 )
@@ -159,7 +159,7 @@ def _build_system_prompt(user_prompt: str) -> str:
 
 def _normalize_html_footer(html: str) -> str:
     """
-    统一把生成网页的页脚替换为：@ 绘演万象 版权所有
+    统一把生成网页的页脚替换为：@ 易演课堂 版权所有
     """
     if not html:
         return html
@@ -178,7 +178,7 @@ def _normalize_html_footer(html: str) -> str:
   color: rgba(255,255,255,0.55);
   border-top: 1px solid rgba(255,255,255,0.08);
 ">
-  @ 绘演万象 版权所有
+  @ 易演课堂 版权所有
 </footer>
 """.strip()
 
@@ -528,7 +528,7 @@ async def html_download(
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="文件不存在")
 
-    download_name = "huiyanwanxiang_generated.html"
+    download_name = "yiyanketang_generated.html"
     return FileResponse(file_path, media_type="text/html", filename=download_name)
 
 
@@ -543,7 +543,7 @@ async def get_errors(current_user: User = Depends(get_current_user)):
 
 if __name__ == "__main__":
     logger.info("========================================")
-    logger.info("   绘演万象 (Huiyan) 引擎正在启动...   ")
+    logger.info("   易演课堂 (YiYan) 引擎正在启动...   ")
     logger.info("   Port: 8000 | Env: Production         ")
     logger.info("========================================")
 

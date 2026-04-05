@@ -1,6 +1,6 @@
-# 绘演万象：HTML + Manim 合并说明（已内置）
+# 易演课堂：HTML + Manim 合并说明（已内置）
 
-本项目已在 `HuiYanWanXiang` 基础上合并 Manim 渲染服务：
+本项目已在 `易演课堂` 基础上合并 Manim 渲染服务：
 
 - HTML 生成接口：`POST /api/generate-html`
 - 视频生成接口：`POST /api/generate-video`

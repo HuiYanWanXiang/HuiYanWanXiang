@@ -1,5 +1,5 @@
 /**
- * HuiyanWanxiang Console Frontend
+ * YiYanKeTang Console Frontend
  * 已改为：
  * - 前端不再输入 API Key
  * - 使用登录 token 访问后端
@@ -289,7 +289,7 @@ async function downloadHtmlWithToken(url){
 
     const a = document.createElement("a");
     a.href = objectUrl;
-    a.download = "huiyanwanxiang_generated.html";
+    a.download = "yiyanketang_generated.html";
     document.body.appendChild(a);
     a.click();
     a.remove();
