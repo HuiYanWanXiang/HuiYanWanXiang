@@ -1,0 +1,11 @@
+{
+  "id": "lorentz_force",
+  "title": "洛伦兹力",
+  "aliases": ["洛伦兹力","洛伦兹力演示","lorentz force"],
+  "keywords": ["洛伦兹力","带电粒子","磁场","电场","圆周运动"],
+  "description": "展示带电粒子在电磁场中的受力与轨迹。",
+  "html_url": "/static/presets/lorentz_force/index.html",
+  "video_url": "/static/presets/lorentz_force/video.mp4",
+  "cover_url": "/static/presets/lorentz_force/cover.png",
+  "enabled": true
+}

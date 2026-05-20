@@ -1,0 +1,36 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# --- 系统垃圾 ---
+.DS_Store
+
+# --- 项目私有数据 (软著申请时不需要上传这些) ---
+logs/
+saved_projects/
+
+# --- IDE 配置 ---
+.vscode/
+.idea/
+
+# generated outputs
+runs_video/
+
+
+# ===== generated / cache =====
+runs_video/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.tmp
+.DS_Store
+.ipynb_checkpoints/
+.cache/
+dist/
+build/
+
+
+.env

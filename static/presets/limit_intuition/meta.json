@@ -1,0 +1,23 @@
+{
+  "id": "limit_intuition",
+  "title": "极限的直观理解",
+  "aliases": [
+    "极限的直观理解",
+    "极限直观理解",
+    "函数极限",
+    "limit intuition"
+  ],
+  "keywords": [
+    "极限",
+    "逼近",
+    "epsilon",
+    "delta",
+    "间断",
+    "趋近"
+  ],
+  "description": "通过图像、数值表和 epsilon-delta 区域可视化理解函数极限。",
+  "html_url": "/static/presets/limit_intuition/index.html",
+  "video_url": "/static/presets/limit_intuition/video.mp4",
+  "cover_url": "/static/presets/limit_intuition/cover.png",
+  "enabled": true
+}

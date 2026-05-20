@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>易演课堂 | Web 控制台</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        易演课堂<span class="brand-dot">.</span>
+      </a>
+
+      <nav class="nav">
+        <a href="#console">控制台</a>
+        <a href="#video">视频</a>
+        <a href="#embed">网页预览</a>
+        <a id="rootOnlyNav" href="/static/learning_profile.html" target="_blank" rel="noopener noreferrer" style="display:none;">学习画像演示</a>
+        <a id="rootOnlyVideoWallNav" href="/static/presets_video_wall.html" target="_blank" rel="noopener noreferrer" style="display:none;">视频墙展示</a>
+      </nav>
+
+      <div class="topbar-actions">
+        <span id="userInfoText" class="muted">未登录</span>
+        <a id="rootOnlyBtn" class="btn ghost" href="/static/learning_profile.html" target="_blank" rel="noopener noreferrer" style="display:none;">学习画像</a>
+        <a id="rootOnlyVideoWallBtn" class="btn ghost" href="/static/presets_video_wall.html" target="_blank" rel="noopener noreferrer" style="display:none;">视频墙展示</a>
+        <button class="btn ghost" id="btnFillDemo" type="button">示例</button>
+        <button class="btn ghost" id="logoutBtn" type="button">登出</button>
+        <button class="btn primary" type="button" onclick="document.querySelector('#console').scrollIntoView({behavior:'smooth'})">
+          生成 →
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="pill">🚀 我们专注于辅助教育</div>
+
+      <h1 class="hero-title">
+        易演课堂<br/>
+        <span class="accent">AI辅助</span>
+      </h1>
+
+      <p class="hero-sub">
+        输入自然语言提示词，生成可交互教学网页，并生成讲解视频。
+      </p>
+    </div>
+  </section>
+
+  <!-- Console -->
+  <section class="section" id="console">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">控制台</h2>
+        <p class="section-sub">输入 Prompt → 生成 HTML / Manim 视频 → 预览。</p>
+      </div>
+
+      <div class="grid">
+        <!-- Left: console panel -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">提示词输入</div>
+            <div class="tag ok">已登录</div>
+          </div>
+
+          <div class="card-body">
+            <div class="field">
+              <div class="label">当前账户</div>
+              <div class="hint" id="usernameText">未登录</div>
+            </div>
+          
+            <div class="field">
+              <div class="label">剩余次数</div>
+              <div class="hint" id="quotaText">请先登录</div>
+            </div>
+
+            <div class="field" style="margin-top:12px;">
+              <div class="label">Prompt</div>
+              <textarea
+                class="textarea"
+                id="userPrompt"
+                placeholder="例如：生成一个受迫振动交互式演示页面，包含参数滑条、相图、位移-时间曲线，并有小测验。"
+              ></textarea>
+              <div class="hint">建议写清：知识点 / 目标 / 互动组件 / 输出风格。</div>
+            </div>
+
+            <!-- 折叠：提示词优化 -->
+            <details class="details" id="optimizerDetails">
+              <summary class="details-summary">
+                <span class="details-title">提示词优化（可选）</span>
+                <span class="details-chev">▾</span>
+              </summary>
+
+              <div class="details-body">
+                <div class="toggle-row">
+                  <div>
+                    <div class="toggle-main">启用提示词优化</div>
+                    <div class="toggle-sub">可选择是否进行结构化增强。</div>
+                  </div>
+                  <button class="switch" id="optSwitch" type="button" aria-checked="false">
+                    <span class="knob"></span>
+                  </button>
+                </div>
+
+                <div class="field" style="margin-top:10px;">
+                  <div class="label">优化偏好 / 约束（可选）</div>
+                  <textarea
+                    class="textarea small"
+                    id="optHint"
+                    placeholder="例如：输出必须包含：1) 概念解释 2) 公式推导 3) 互动控件 4) 例题 5) 小测验（答案折叠）；整体风格简洁、信息密度高。"
+                  ></textarea>
+                </div>
+              </div>
+            </details>
+
+            <div class="btn-row">
+              <button class="btn primary" id="generateBtn" type="button">生成 HTML 页面</button>
+              <button class="btn ghost" id="downloadHtmlBtn" type="button" disabled>下载 HTML</button>
+              <button class="btn ghost" id="applyBtn" type="button">手动运行（用编辑器）</button>
+            </div>
+
+            <div class="status" id="statusText">READY. 输入 Prompt 后点击「生成 HTML 页面」。</div>
+          </div>
+        </div>
+
+        <!-- Right: editor only -->
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">源码编辑器</div>
+            <div class="tag" id="editorPill">等待生成…</div>
+          </div>
+
+          <div class="card-body">
+            <div class="editor editor-right" style="margin-top:0;">
+              <div class="editor-head">
+                <div class="editor-title">源码编辑器</div>
+                <div class="editor-sub">生成后可手动修改并运行（不会影响后端保存的原始生成文件）。</div>
+              </div>
+              <textarea
+                id="codeEditor"
+                class="code"
+                spellcheck="false"
+                placeholder="// 等待生成..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section class="section alt" id="video">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">视频</h2>
+        <p class="section-sub"></p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">视频输出</div>
+          <div class="tag" id="videoPill">等待任务…</div>
+        </div>
+
+        <div class="card-body">
+          <div class="btn-row" style="align-items:center;">
+            <button class="btn primary" id="generateVideoBtn" type="button">生成 Manim 视频</button>
+            <a class="link" id="videoOpenLink" href="#" target="_blank" style="display:none;">打开视频文件</a>
+          </div>
+
+          <div class="video">
+            <div class="video-pane">
+              <video id="videoPlayer" controls class="video big"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded HTML -->
+  <section class="section" id="embed">
+    <div class="container">
+      <div class="card">
+        <div class="card-head">
+          <h2 class="section-title">控制台</h2>
+          <div class="card-title">交互式网页</div>
+          <div class="tag" id="embedPill">等待生成…</div>
+        </div>
+        <div class="card-body">
+          <div class="frame-box embed">
+            <iframe id="embeddedFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+          </div>
+          <div class="hint" style="margin-top:10px;">
+            点击「生成 HTML 页面」或「手动运行」后，这里会自动更新为交互式页面。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我们的优势 -->
+  <section class="section-padding text-center">
+    <div class="container">
+      <h2 class="mb-4" style="font-size: 2rem;">我们的优势</h2>
+      <p class="subtitle mb-4">对枯燥的课本知识说不，使用更生动的方式学习任何知识！</p>
+      <a href="#console" class="btn-primary mb-4">开始使用 →</a>
+
+      <div class="grid-3" style="text-align: left; margin-top: 60px;">
+        <div class="mini-card">
+          <h3>⚡ 调用最先进的模型</h3>
+          <p>我们提供强大的大语言模型与生成引擎支持，帮助用户高效完成教学网页与视频内容生成。</p>
+        </div>
+        <div class="mini-card">
+          <h3>🎓 使用内置知识库增强输出</h3>
+          <p>易演课堂内置知识库涵盖物理、数学等学科内容，可增强输出的专业性与教学适配性。</p>
+        </div>
+        <div class="mini-card">
+          <h3>💻 更生动地理解任何知识</h3>
+          <p>您不仅可以观看由 Manim 驱动的演示视频，还可以通过交互组件直观理解变量之间的关系。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 团队成员 -->
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="text-center mb-4" style="font-size: 2rem;">团队成员奉上</h2>
+      <p class="subtitle mb-4">具体排名不分先后</p>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p class="t-quote">"我们提出的使用大语言模型生成可操作性网页对学生非常友好,通过拖拽按钮即可直观感受各个变量之间的关系.无论是谁,现在都可以通过这项技术接触到复杂的数学问题."</p>
+          <div class="user-info">
+            <img src="/static/avatars/zhangyiyan.jpg" alt="张艺严的头像" class="avatar" />
+            <div>
+              <div class="t-name">张艺严</div>
+              <div class="t-role">项目总负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"我们在现有AI工具生成视频不准确的缺陷下,创新性地提出了使用manim生成数理视频的思路,解决了专业数理视频的生成问题,希望我们的产品可以帮助更多中小学生学习."</p>
+          <div class="user-info">
+            <img src="/static/avatars/xiangyuw.jpg" alt="王翔宇的头像" class="avatar" />
+            <div>
+              <div class="t-name">王翔宇</div>
+              <div class="t-role">技术总负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"易演课堂这款工具的整体表现十分出色,只需输入一段简洁的提示词,就能快速自动生成高质量视频与可直接交互操作的网页,功能直观且稳定,大幅降低了内容创作与知识展示的门槛."</p>
+          <div class="user-info">
+            <img src="/static/avatars/kanghanyu.jpg" alt="康涵禹的头像" class="avatar" />
+            <div>
+              <div class="t-name">康涵禹</div>
+              <div class="t-role">产品总经理</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"我们想让易演课堂成为更多学生的学习助手,帮助更多学生深刻理解各种原理和公式."</p>
+          <div class="user-info">
+            <img src="/static/avatars/lvboyang.jpg" alt="吕博洋的头像" class="avatar" />
+            <div>
+              <div class="t-name">吕博洋</div>
+              <div class="t-role">算法负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"希望我们的交互式平台可以帮助大家更好理解物理知识."</p>
+          <div class="user-info">
+            <img src="/static/avatars/zhangweijie.jpg" alt="张炜杰的头像" class="avatar" />
+            <div>
+              <div class="t-name">张炜杰</div>
+              <div class="t-role">算法工程师</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"知识库的存在使我们的输出减轻了幻觉现象,可以很好地辅助教学."</p>
+          <div class="user-info">
+            <img src="/static/avatars/jinyuxuan.jpg" alt="金雨轩的头像" class="avatar" />
+            <div>
+              <div class="t-name">金雨轩</div>
+              <div class="t-role">后端负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"将大模型生成能力与教学设计深度耦合,形成差异化竞争优势."</p>
+          <div class="user-info">
+            <img src="/static/avatars/sunhanning.jpg" alt="孙晗宁的头像" class="avatar" />
+            <div>
+              <div class="t-name">孙晗宁</div>
+              <div class="t-role">前端负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"不是炫技式生成,而是围绕'可讲、可练、可验证'的教学流程设计."</p>
+          <div class="user-info">
+            <img src="/static/avatars/zhengquan.jpg" alt="郑权的头像" class="avatar" />
+            <div>
+              <div class="t-name">郑权</div>
+              <div class="t-role">视频生成负责人</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"把'看懂'升级成'动手验证',交互式概念解读让知识点可操作、可探索."</p>
+          <div class="user-info">
+            <img src="/static/avatars/liujianpeng.jpg" alt="刘简鹏的头像" class="avatar" />
+            <div>
+              <div class="t-name">刘简鹏</div>
+              <div class="t-role">交互内容工程师</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"通过控制台参数化配置与即时预览,降低 AI 输出不可控的风险,适合教学场景稳定使用."</p>
+          <div class="user-info">
+            <img src="/static/avatars/lisiyu.jpg" alt="李思雨的头像" class="avatar" />
+            <div>
+              <div class="t-name">李思雨</div>
+              <div class="t-role">后端开发</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"能按学段、难度、题型组织输出,适配初高中与竞赛拓展教学的不同表达方式."</p>
+          <div class="user-info">
+            <img src="/static/avatars/lihanqing.jpg" alt="李瀚卿的头像" class="avatar" />
+            <div>
+              <div class="t-name">李瀚卿</div>
+              <div class="t-role">后端开发</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"把教师的备课劳动从'制作'转为'审核与微调',明显缩短内容生产周期."</p>
+          <div class="user-info">
+            <img src="/static/avatars/heguanxian.jpg" alt="何冠贤的头像" class="avatar" />
+            <div>
+              <div class="t-name">何冠賢</div>
+              <div class="t-role">前端开发</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"不仅有算法和模型,还具备可访问的线上系统与规范化运行方式,呈现产品级成果."</p>
+          <div class="user-info">
+            <img src="/static/avatars/lisiying.jpg" alt="李思莹的头像" class="avatar" />
+            <div>
+              <div class="t-name">李思莹</div>
+              <div class="t-role">前端开发</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"模块化的网页与视频生成机制,便于后续接入更多学科模板、题库与多媒体资源."</p>
+          <div class="user-info">
+            <img src="/static/avatars/shenyuxuan.jpg" alt="shenyuxuan的头像" class="avatar" />
+            <div>
+              <div class="t-name">沈宇轩</div>
+              <div class="t-role">测试</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="t-quote">"同一知识点可用文字、动画、交互多模态呈现,演示直观、冲击力足."</p>
+          <div class="user-info">
+            <img src="/static/avatars/shaosichen.jpg" alt="shaosichen的头像" class="avatar" />
+            <div>
+              <div class="t-name">邵嗣琛</div>
+              <div class="t-role">测试</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section-padding text-center" id="contact">
+    <div class="container">
+      <h2 class="mb-4" style="font-size: 2rem;">联系我们</h2>
+      <p class="subtitle mb-4">有任何问题、建议或合作意向？欢迎随时与我们取得联系。</p>
+      
+      <div style="margin-top: 36px;">
+        <a href="mailto:service@service.huiyanwanxiang.com" class="btn primary" style="font-size: 16px; padding: 14px 28px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8L12 13L20 8V18ZM12 11L4 6H20L12 11Z"/>
+          </svg>
+          发送邮件联系我们
+        </a>
+        
+        <p style="margin-top: 20px; color: var(--muted); font-size: 15px; font-family: var(--mono);">
+          service@service.huiyanwanxiang.com
+        </p>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="muted">© 易演课堂 · 一种定义教育的新方式</div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

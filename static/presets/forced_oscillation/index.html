@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阻尼振动与受迫振动</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            background-color: #0f0f13;
+            color: #e0e0e0;
+            overflow-y: auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        header h1 {
+            text-align: center;
+            color: #4fc3f7;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 0 8px rgba(79, 195, 247, 0.5);
+        }
+        header p {
+            text-align: center;
+            color: #aaa;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+        .simulation-panel {
+            flex: 1.3;
+            min-width: 320px;
+            background: linear-gradient(145deg, #1a1a23, #15151c);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a35;
+        }
+        .control-panel {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(145deg, #1a1a23, #15151c);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a35;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .panel-title {
+            color: #81c784;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a2a35;
+        }
+        .visual-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+        .visual-card {
+            background: #111119;
+            border: 1px solid #2f2f3c;
+            border-radius: 14px;
+            padding: 14px;
+            min-width: 0;
+        }
+        .visual-title {
+            color: #4fc3f7;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .canvas-box {
+            width: 100%;
+            height: 260px;
+            background: #0a0a0f;
+            border-radius: 10px;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .visual-desc {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #9e9e9e;
+            min-height: 44px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #bbbbbb;
+        }
+        .control-value {
+            color: #4fc3f7;
+            font-weight: bold;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #0a0a0f, #2a2a35);
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #4fc3f7;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(79, 195, 247, 0.8);
+        }
+        .status-display {
+            background-color: #15151c;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff9800;
+            margin-top: 10px;
+        }
+        .status-title {
+            color: #ff9800;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .status-value {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+        .knowledge-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        .knowledge-card {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(145deg, #1a1a23, #15151c);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a35;
+        }
+        .knowledge-card h3 {
+            color: #81c784;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .knowledge-card p, .knowledge-card li {
+            margin-bottom: 12px;
+            color: #cccccc;
+        }
+        .knowledge-card ul {
+            padding-left: 20px;
+        }
+        .formula {
+            background-color: #0a0a0f;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Cambria Math', serif;
+            text-align: center;
+            margin: 15px 0;
+            border: 1px solid #333;
+            color: #ffcc80;
+            font-size: 1.1rem;
+        }
+        .quiz-section {
+            background: linear-gradient(145deg, #1a1a23, #15151c);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2a2a35;
+            margin-top: 10px;
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quiz-option {
+            padding: 12px 15px;
+            background-color: #252530;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .quiz-option:hover {
+            background-color: #2d2d3a;
+            border-color: #4fc3f7;
+        }
+        .quiz-option.selected {
+            background-color: #1b5e20;
+            border-color: #81c784;
+        }
+        .quiz-feedback {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #15151c;
+            display: none;
+            border-left: 4px solid #4fc3f7;
+        }
+        .quiz-feedback.correct {
+            border-left-color: #81c784;
+        }
+        .quiz-feedback.incorrect {
+            border-left-color: #f44336;
+        }
+        button {
+            background: linear-gradient(to right, #1565c0, #4fc3f7);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 195, 247, 0.4);
+        }
+        .reset-btn {
+            background: linear-gradient(to right, #c62828, #ef5350);
+            margin-left: 15px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 1100px) {
+            .visual-grid {
+                grid-template-columns: 1fr;
+            }
+            .canvas-box {
+                height: 280px;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-content, .knowledge-section {
+                flex-direction: column;
+            }
+            .canvas-box {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>阻尼振动与受迫振动</h1>
+            <p>通过交互式模拟，探索阻尼如何影响振动，以及外力如何驱动系统产生共振。</p>
+        </header>
+
+        <div class="main-content">
+            <div class="simulation-panel">
+                <h2 class="panel-title">动态模拟</h2>
+
+                <div class="visual-grid">
+                    <div class="visual-card">
+                        <div class="visual-title">弹簧振子示意图</div>
+                        <div class="canvas-box">
+                            <canvas id="oscillatorCanvas"></canvas>
+                        </div>
+                        <div class="visual-desc">展示当前振子的位移位置、平衡位置和弹簧形变。</div>
+                    </div>
+
+                    <div class="visual-card">
+                        <div class="visual-title">位移-时间图像</div>
+                        <div class="canvas-box">
+                            <canvas id="plotCanvas"></canvas>
+                        </div>
+                        <div class="visual-desc">蓝色曲线展示位移随时间的变化过程。</div>
+                    </div>
+
+                    <div class="visual-card">
+                        <div class="visual-title">相图</div>
+                        <div class="canvas-box">
+                            <canvas id="phaseCanvas"></canvas>
+                        </div>
+                        <div class="visual-desc">橙色曲线展示速度与位移之间的相轨迹。</div>
+                    </div>
+                </div>
+
+                <div class="status-display">
+                    <div class="status-title">当前振动状态</div>
+                    <div class="status-value" id="vibrationState">状态：欠阻尼振动</div>
+                    <div class="status-value" id="energyInfo">总能量：计算中...</div>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <h2 class="panel-title">参数控制</h2>
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>阻尼系数 b (Ns/m)</span>
+                        <span class="control-value" id="bValue">1.0</span>
+                    </div>
+                    <input type="range" id="bSlider" min="0" max="5" step="0.1" value="1.0">
+                    <p style="font-size:0.9rem; color:#888; margin-top:5px;">控制能量耗散的速度。b=0为无阻尼简谐振动。</p>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>驱动力幅值 F₀ (N)</span>
+                        <span class="control-value" id="f0Value">0.0</span>
+                    </div>
+                    <input type="range" id="f0Slider" min="0" max="20" step="0.5" value="0.0">
+                    <p style="font-size:0.9rem; color:#888; margin-top:5px;">外部周期性力的最大强度。设为0则为自由振动。</p>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>驱动频率 ωₐ (rad/s)</span>
+                        <span class="control-value" id="waValue">5.0</span>
+                    </div>
+                    <input type="range" id="waSlider" min="0.1" max="15" step="0.1" value="5.0">
+                    <p style="font-size:0.9rem; color:#888; margin-top:5px;">外部力的角频率。接近系统固有频率时可能引发共振。</p>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>振子质量 m (kg)</span>
+                        <span class="control-value" id="mValue">1.0</span>
+                    </div>
+                    <input type="range" id="mSlider" min="0.5" max="3" step="0.1" value="1.0">
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>弹簧劲度系数 k (N/m)</span>
+                        <span class="control-value" id="kValue">25.0</span>
+                    </div>
+                    <input type="range" id="kSlider" min="5" max="50" step="1" value="25.0">
+                </div>
+                <div class="btn-group">
+                    <button id="startBtn">开始/暂停模拟</button>
+                    <button id="resetBtn" class="reset-btn">重置系统</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="knowledge-section">
+            <div class="knowledge-card">
+                <h3>阻尼振动</h3>
+                <p>在现实世界中，由于摩擦或阻力，振动系统的能量会逐渐耗散，振幅随时间衰减，这就是阻尼振动。</p>
+                <div class="formula">
+                    m d²x/dt² + b dx/dt + kx = 0
+                </div>
+                <p>其中：</p>
+                <ul>
+                    <li><strong>m</strong>：振子质量 (kg)</li>
+                    <li><strong>b</strong>：阻尼系数 (Ns/m)，决定能量耗散快慢</li>
+                    <li><strong>k</strong>：弹簧劲度系数 (N/m)</li>
+                    <li><strong>x</strong>：位移 (m)</li>
+                </ul>
+                <p><strong>三种阻尼状态：</strong></p>
+                <ul>
+                    <li><span style="color:#4fc3f7">欠阻尼 (b² &lt; 4mk)</span>：系统围绕平衡位置进行振幅衰减的振动。</li>
+                    <li><span style="color:#ff9800">临界阻尼 (b² = 4mk)</span>：系统以最快速度回到平衡位置且不超调。</li>
+                    <li><span style="color:#f44336">过阻尼 (b² &gt; 4mk)</span>：系统不发生振荡，缓慢回到平衡位置。</li>
+                </ul>
+            </div>
+            <div class="knowledge-card">
+                <h3>受迫振动与共振</h3>
+                <p>当振动系统受到周期性外力驱动时，称为受迫振动。其运动方程变为：</p>
+                <div class="formula">
+                    m d²x/dt² + b dx/dt + kx = F₀ cos(ωₐ t)
+                </div>
+                <p>其中：</p>
+                <ul>
+                    <li><strong>F₀</strong>：驱动力幅值</li>
+                    <li><strong>ωₐ</strong>：驱动力的角频率</li>
+                </ul>
+                <p>系统最终会以驱动频率 ωₐ 振动，其稳态振幅为：</p>
+                <div class="formula">
+                    A = F₀ / √((k - mωₐ²)² + (b ωₐ)²)
+                </div>
+                <p><strong>共振现象：</strong>当驱动频率 ωₐ 接近系统的固有频率 ω₀ = √(k/m) 时，振幅 A 达到最大值。阻尼系数 b 越小，共振峰越尖锐。</p>
+                <p>共振在工程和生活中广泛存在，如桥梁设计、收音机调台、MRI设备等。</p>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h2 class="panel-title">知识小测验</h2>
+            <div class="quiz-question" id="quizQuestion">1. 对于一个阻尼振动系统，当阻尼系数 b 满足什么条件时，系统会以最快的速度回到平衡位置且不发生振荡？</div>
+            <div class="quiz-options" id="quizOptions">
+                <div class="quiz-option" data-answer="A">A. b² &lt; 4mk (欠阻尼)</div>
+                <div class="quiz-option" data-answer="B">B. b² = 4mk (临界阻尼)</div>
+                <div class="quiz-option" data-answer="C">C. b² &gt; 4mk (过阻尼)</div>
+                <div class="quiz-option" data-answer="D">D. b = 0 (无阻尼)</div>
+            </div>
+            <button id="submitQuiz">提交答案</button>
+            <div class="quiz-feedback" id="quizFeedback">
+                <strong>反馈：</strong> <span id="feedbackText"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let oscillatorCanvas, oscillatorCtx;
+        let plotCanvas, plotCtx;
+        let phaseCanvas, phaseCtx;
+
+        let animationId = null;
+        let isRunning = false;
+        let time = 0;
+        const dt = 0.016;
+        const history = [];
+        const maxHistory = 400;
+
+        let params = {
+            m: 1.0,
+            b: 1.0,
+            k: 25.0,
+            f0: 0.0,
+            wa: 5.0
+        };
+
+        let state = {
+            x: 2.0,
+            v: 0.0
+        };
+
+        const bSlider = document.getElementById('bSlider');
+        const f0Slider = document.getElementById('f0Slider');
+        const waSlider = document.getElementById('waSlider');
+        const mSlider = document.getElementById('mSlider');
+        const kSlider = document.getElementById('kSlider');
+        const bValue = document.getElementById('bValue');
+        const f0Value = document.getElementById('f0Value');
+        const waValue = document.getElementById('waValue');
+        const mValue = document.getElementById('mValue');
+        const kValue = document.getElementById('kValue');
+        const vibrationState = document.getElementById('vibrationState');
+        const energyInfo = document.getElementById('energyInfo');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        const submitQuizBtn = document.getElementById('submitQuiz');
+        const quizFeedback = document.getElementById('quizFeedback');
+        const feedbackText = document.getElementById('feedbackText');
+
+        function init() {
+            oscillatorCanvas = document.getElementById('oscillatorCanvas');
+            oscillatorCtx = oscillatorCanvas.getContext('2d');
+
+            plotCanvas = document.getElementById('plotCanvas');
+            plotCtx = plotCanvas.getContext('2d');
+
+            phaseCanvas = document.getElementById('phaseCanvas');
+            phaseCtx = phaseCanvas.getContext('2d');
+
+            function resizeCanvas(canvas, ctx) {
+                const dpr = window.devicePixelRatio || 1;
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(dpr, dpr);
+            }
+
+            function resizeAll() {
+                resizeCanvas(oscillatorCanvas, oscillatorCtx);
+                resizeCanvas(plotCanvas, plotCtx);
+                resizeCanvas(phaseCanvas, phaseCtx);
+                drawAll();
+            }
+
+            window.addEventListener('resize', resizeAll);
+            resizeAll();
+
+            bindEvents();
+            updateParamDisplays();
+            drawAll();
+            updateStatus();
+        }
+
+        function bindEvents() {
+            bSlider.addEventListener('input', (e) => {
+                params.b = parseFloat(e.target.value);
+                bValue.textContent = params.b.toFixed(1);
+                updateStatus();
+                drawAll();
+            });
+
+            f0Slider.addEventListener('input', (e) => {
+                params.f0 = parseFloat(e.target.value);
+                f0Value.textContent = params.f0.toFixed(1);
+                updateStatus();
+                drawAll();
+            });
+
+            waSlider.addEventListener('input', (e) => {
+                params.wa = parseFloat(e.target.value);
+                waValue.textContent = params.wa.toFixed(1);
+                updateStatus();
+                drawAll();
+            });
+
+            mSlider.addEventListener('input', (e) => {
+                params.m = parseFloat(e.target.value);
+                mValue.textContent = params.m.toFixed(1);
+                updateStatus();
+                drawAll();
+            });
+
+            kSlider.addEventListener('input', (e) => {
+                params.k = parseFloat(e.target.value);
+                kValue.textContent = params.k.toFixed(1);
+                updateStatus();
+                drawAll();
+            });
+
+            startBtn.addEventListener('click', toggleAnimation);
+            resetBtn.addEventListener('click', resetSystem);
+
+            quizOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    quizOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            submitQuizBtn.addEventListener('click', checkQuizAnswer);
+        }
+
+        function simulate() {
+            const forcing = params.f0 * Math.cos(params.wa * time);
+            const a = (-params.b * state.v - params.k * state.x + forcing) / params.m;
+
+            state.v += a * dt;
+            state.x += state.v * dt;
+            time += dt;
+
+            history.push({
+                t: time,
+                x: state.x,
+                v: state.v
+            });
+
+            if (history.length > maxHistory) {
+                history.shift();
+            }
+        }
+
+        function drawOscillator() {
+            const width = oscillatorCanvas.width / (window.devicePixelRatio || 1);
+            const height = oscillatorCanvas.height / (window.devicePixelRatio || 1);
+            const centerY = height / 2;
+
+            oscillatorCtx.clearRect(0, 0, width, height);
+
+            oscillatorCtx.fillStyle = '#555';
+            oscillatorCtx.fillRect(20, centerY - 55, 16, 110);
+
+            const equilibriumX = width * 0.55;
+            const springBaseLength = equilibriumX - 36;
+            const springLength = springBaseLength + state.x * 28;
+            const springEndX = Math.max(90, Math.min(width - 70, 36 + springLength));
+
+            const springCoils = 9;
+            const usableLen = springEndX - 36;
+            const coilWidth = usableLen / springCoils;
+
+            oscillatorCtx.beginPath();
+            oscillatorCtx.moveTo(36, centerY);
+            for (let i = 0; i < springCoils; i++) {
+                const x1 = 36 + i * coilWidth;
+                const x2 = x1 + coilWidth / 2;
+                const x3 = x1 + coilWidth;
+                oscillatorCtx.bezierCurveTo(x1, centerY - 16, x2, centerY - 16, x3, centerY);
+                oscillatorCtx.bezierCurveTo(x3, centerY + 16, x2, centerY + 16, x1, centerY);
+            }
+            oscillatorCtx.strokeStyle = '#4fc3f7';
+            oscillatorCtx.lineWidth = 2.5;
+            oscillatorCtx.stroke();
+
+            oscillatorCtx.setLineDash([6, 6]);
+            oscillatorCtx.strokeStyle = '#81c784';
+            oscillatorCtx.lineWidth = 1.2;
+            oscillatorCtx.beginPath();
+            oscillatorCtx.moveTo(equilibriumX, 24);
+            oscillatorCtx.lineTo(equilibriumX, height - 24);
+            oscillatorCtx.stroke();
+            oscillatorCtx.setLineDash([]);
+
+            oscillatorCtx.fillStyle = '#ff9800';
+            oscillatorCtx.fillRect(springEndX - 20, centerY - 24, 40, 48);
+            oscillatorCtx.strokeStyle = '#ffcc80';
+            oscillatorCtx.lineWidth = 2;
+            oscillatorCtx.strokeRect(springEndX - 20, centerY - 24, 40, 48);
+
+            oscillatorCtx.fillStyle = '#fff';
+            oscillatorCtx.font = '14px Arial';
+            oscillatorCtx.textAlign = 'center';
+            oscillatorCtx.fillText(`m=${params.m.toFixed(1)}kg`, springEndX, centerY + 5);
+
+            oscillatorCtx.fillStyle = '#aaa';
+            oscillatorCtx.font = '12px Arial';
+            oscillatorCtx.fillText('平衡位置', equilibriumX, 18);
+
+            oscillatorCtx.fillStyle = '#4fc3f7';
+            oscillatorCtx.fillText(`x = ${state.x.toFixed(2)} m`, width / 2, height - 12);
+        }
+
+        function drawDisplacementPlot() {
+            const width = plotCanvas.width / (window.devicePixelRatio || 1);
+            const height = plotCanvas.height / (window.devicePixelRatio || 1);
+            const centerY = height / 2;
+            const leftPad = 42;
+            const rightPad = 16;
+            const topPad = 20;
+            const bottomPad = 28;
+
+            plotCtx.clearRect(0, 0, width, height);
+
+            plotCtx.strokeStyle = '#666';
+            plotCtx.lineWidth = 1;
+            plotCtx.beginPath();
+            plotCtx.moveTo(leftPad, topPad);
+            plotCtx.lineTo(leftPad, height - bottomPad);
+            plotCtx.lineTo(width - rightPad, height - bottomPad);
+            plotCtx.stroke();
+
+            plotCtx.strokeStyle = '#333';
+            plotCtx.lineWidth = 1;
+            plotCtx.beginPath();
+            plotCtx.moveTo(leftPad, centerY);
+            plotCtx.lineTo(width - rightPad, centerY);
+            plotCtx.stroke();
+
+            if (history.length > 1) {
+                const tMin = history[0].t;
+                const tMax = history[history.length - 1].t;
+                const tRange = tMax - tMin || 1;
+                const plotWidth = width - leftPad - rightPad;
+                const plotHeight = height - topPad - bottomPad;
+
+                plotCtx.strokeStyle = '#4fc3f7';
+                plotCtx.lineWidth = 2.2;
+                plotCtx.beginPath();
+
+                for (let i = 0; i < history.length; i++) {
+                    const point = history[i];
+                    const x = leftPad + plotWidth * (point.t - tMin) / tRange;
+                    const y = topPad + plotHeight / 2 - (point.x / 3) * (plotHeight / 2 - 10);
+
+                    if (i === 0) plotCtx.moveTo(x, y);
+                    else plotCtx.lineTo(x, y);
+                }
+                plotCtx.stroke();
+            }
+
+            plotCtx.fillStyle = '#aaa';
+            plotCtx.font = '12px Arial';
+            plotCtx.textAlign = 'left';
+            plotCtx.fillText('x', 10, 18);
+            plotCtx.fillText('t', width - 10, height - 10);
+            plotCtx.fillText('0', 24, centerY + 4);
+        }
+
+        function drawPhasePlot() {
+            const width = phaseCanvas.width / (window.devicePixelRatio || 1);
+            const height = phaseCanvas.height / (window.devicePixelRatio || 1);
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            phaseCtx.clearRect(0, 0, width, height);
+
+            phaseCtx.strokeStyle = '#666';
+            phaseCtx.lineWidth = 1;
+            phaseCtx.beginPath();
+            phaseCtx.moveTo(centerX, 20);
+            phaseCtx.lineTo(centerX, height - 20);
+            phaseCtx.moveTo(20, centerY);
+            phaseCtx.lineTo(width - 20, centerY);
+            phaseCtx.stroke();
+
+            if (history.length > 1) {
+                phaseCtx.strokeStyle = '#ff9800';
+                phaseCtx.lineWidth = 2.2;
+                phaseCtx.beginPath();
+
+                for (let i = 0; i < history.length; i++) {
+                    const point = history[i];
+                    const x = centerX + (point.x / 3) * (centerX - 24);
+                    const y = centerY - (point.v / 10) * (centerY - 24);
+
+                    if (i === 0) phaseCtx.moveTo(x, y);
+                    else phaseCtx.lineTo(x, y);
+                }
+                phaseCtx.stroke();
+            }
+
+            phaseCtx.fillStyle = '#aaa';
+            phaseCtx.font = '12px Arial';
+            phaseCtx.textAlign = 'left';
+            phaseCtx.fillText('x', width - 14, centerY - 8);
+            phaseCtx.fillText('0', centerX + 6, centerY + 14);
+
+            phaseCtx.save();
+            phaseCtx.translate(16, 18);
+            phaseCtx.rotate(-Math.PI / 2);
+            phaseCtx.fillText('v', 0, 0);
+            phaseCtx.restore();
+        }
+
+        function drawAll() {
+            drawOscillator();
+            drawDisplacementPlot();
+            drawPhasePlot();
+        }
+
+        function loop() {
+            if (isRunning) {
+                simulate();
+                drawAll();
+                updateStatus();
+            }
+            animationId = requestAnimationFrame(loop);
+        }
+
+        function updateStatus() {
+            const discriminant = params.b * params.b - 4 * params.m * params.k;
+            let stateText = '';
+
+            if (params.f0 > 0.1) {
+                stateText = `受迫振动 (驱动频率: ${params.wa.toFixed(1)} rad/s)`;
+            } else {
+                if (discriminant < 0) stateText = '欠阻尼振动';
+                else if (Math.abs(discriminant) < 0.1) stateText = '临界阻尼振动';
+                else stateText = '过阻尼振动';
+            }
+
+            vibrationState.textContent = `状态：${stateText}`;
+
+            const ek = 0.5 * params.m * state.v * state.v;
+            const ep = 0.5 * params.k * state.x * state.x;
+            const total = ek + ep;
+            energyInfo.textContent = `动能: ${ek.toFixed(2)} J, 势能: ${ep.toFixed(2)} J, 总能量: ${total.toFixed(2)} J`;
+        }
+
+        function toggleAnimation() {
+            isRunning = !isRunning;
+            startBtn.textContent = isRunning ? '暂停模拟' : '开始模拟';
+            if (isRunning && !animationId) {
+                loop();
+            }
+        }
+
+        function resetSystem() {
+            state.x = 2.0;
+            state.v = 0.0;
+            time = 0;
+            history.length = 0;
+            isRunning = false;
+            startBtn.textContent = '开始/暂停模拟';
+            drawAll();
+            updateStatus();
+        }
+
+        function updateParamDisplays() {
+            bValue.textContent = params.b.toFixed(1);
+            f0Value.textContent = params.f0.toFixed(1);
+            waValue.textContent = params.wa.toFixed(1);
+            mValue.textContent = params.m.toFixed(1);
+            kValue.textContent = params.k.toFixed(1);
+        }
+
+        function checkQuizAnswer() {
+            const selected = document.querySelector('.quiz-option.selected');
+            if (!selected) {
+                alert('请先选择一个答案！');
+                return;
+            }
+
+            const answer = selected.getAttribute('data-answer');
+            const correctAnswer = 'B';
+            const isCorrect = answer === correctAnswer;
+
+            quizFeedback.style.display = 'block';
+            quizFeedback.className = 'quiz-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+
+            if (isCorrect) {
+                feedbackText.textContent = '正确！临界阻尼状态能使系统最快地回到平衡位置且不产生振荡。';
+                feedbackText.style.color = '#81c784';
+            } else {
+                feedbackText.textContent = '不正确。正确答案是 B：临界阻尼 (b² = 4mk)。在这种条件下，系统回到平衡位置最快且无超调。';
+                feedbackText.style.color = '#f44336';
+            }
+
+            quizOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+                if (opt.getAttribute('data-answer') === correctAnswer) {
+                    opt.style.backgroundColor = '#2e7d32';
+                }
+            });
+            submitQuizBtn.disabled = true;
+        }
+
+        window.addEventListener('load', init);
+    </script>
+
+    <footer style="
+      margin-top: 18px;
+      padding: 14px 10px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    ">
+      @ 易演课堂 版权所有
+    </footer>
+</body>
+</html>

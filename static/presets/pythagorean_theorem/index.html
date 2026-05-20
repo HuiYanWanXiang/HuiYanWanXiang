@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勾股定理</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background-color: #0f0f13; color: #e0e0e0; overflow-y: auto; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+        header h1 { text-align: center; color: #fff176; margin-bottom: 10px; font-size: 2.5rem; text-shadow: 0 0 8px rgba(255,241,118,0.5); }
+        header p { text-align: center; color: #aaa; font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+        .main-content { display: flex; flex-wrap: wrap; gap: 25px; }
+        .simulation-panel { flex: 1.3; min-width: 320px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; }
+        .control-panel { flex: 1; min-width: 300px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; display: flex; flex-direction: column; gap: 20px; }
+        .panel-title { color: #fff176; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #2a2a35; }
+        .visual-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 18px; }
+        .visual-card { background: #111119; border: 1px solid #2f2f3c; border-radius: 14px; padding: 14px; }
+        .visual-title { color: #fff176; font-size: 1rem; font-weight: bold; margin-bottom: 10px; text-align: center; }
+        .canvas-box { width: 100%; height: 300px; background: #0a0a0f; border-radius: 10px; border: 1px solid #333; overflow: hidden; }
+        canvas { display: block; width: 100%; height: 100%; }
+        .visual-desc { margin-top: 10px; font-size: 0.9rem; color: #9e9e9e; min-height: 44px; }
+        .control-group { margin-bottom: 15px; }
+        .control-label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #bbbbbb; }
+        .control-value { color: #fff176; font-weight: bold; }
+        input[type="range"] { width: 100%; height: 10px; -webkit-appearance: none; appearance: none; background: linear-gradient(to right,#0a0a0f,#2a2a35); border-radius: 5px; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff176; cursor: pointer; box-shadow: 0 0 10px rgba(255,241,118,0.8); }
+        .status-display { background-color: #15151c; padding: 15px; border-radius: 10px; border-left: 4px solid #ff9800; margin-top: 10px; }
+        .status-title { color: #ff9800; font-weight: bold; margin-bottom: 8px; }
+        .status-value { color: #e0e0e0; font-size: 0.95rem; margin-bottom: 4px; }
+        .knowledge-section { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 10px; }
+        .knowledge-card { flex: 1; min-width: 300px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; }
+        .knowledge-card h3 { color: #fff176; margin-bottom: 15px; font-size: 1.4rem; }
+        .knowledge-card p, .knowledge-card li { margin-bottom: 12px; color: #cccccc; }
+        .knowledge-card ul { padding-left: 20px; }
+        .formula { background-color: #0a0a0f; padding: 15px; border-radius: 8px; font-family: 'Cambria Math', serif; text-align: center; margin: 15px 0; border: 1px solid #333; color: #ffcc80; font-size: 1.2rem; }
+        .quiz-section { background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; margin-top: 10px; }
+        .quiz-question { margin-bottom: 20px; color: #e0e0e0; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .quiz-option { padding: 12px 15px; background-color: #252530; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent; }
+        .quiz-option:hover { background-color: #2d2d3a; border-color: #fff176; }
+        .quiz-option.selected { background-color: #33290a; border-color: #fff176; }
+        .quiz-feedback { padding: 15px; border-radius: 8px; background-color: #15151c; display: none; border-left: 4px solid #fff176; }
+        .quiz-feedback.correct { border-left-color: #81c784; }
+        .quiz-feedback.incorrect { border-left-color: #f44336; }
+        button { background: linear-gradient(to right,#856400,#fff176); color: #0f0f13; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: all 0.3s ease; margin-top: 10px; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,241,118,0.4); }
+        .reset-btn { background: linear-gradient(to right,#c62828,#ef5350); color: white; }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>勾股定理</h1>
+        <p>通过可交互图形，直观理解 a² + b² = c²，探索直角三角形斜边与直角边的奥秘。</p>
+    </header>
+
+    <div class="main-content">
+        <div class="simulation-panel">
+            <h2 class="panel-title">动态可视化</h2>
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <div class="visual-title">直角三角形与三边正方形</div>
+                    <div class="canvas-box"><canvas id="triangleCanvas"></canvas></div>
+                    <div class="visual-desc">蓝色正方形面积 = a²，绿色正方形面积 = b²，红色正方形面积 = c²。三者关系即为勾股定理。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">勾股数可视化</div>
+                    <div class="canvas-box"><canvas id="triplesCanvas"></canvas></div>
+                    <div class="visual-desc">坐标轴上的点代表常用勾股数组 (a, b, c)，黄色高亮当前 (a, b, c) 的近似位置。</div>
+                </div>
+            </div>
+            <div class="status-display">
+                <div class="status-title">当前计算结果</div>
+                <div class="status-value" id="sideInfo">a = 3.0，b = 4.0，c = √(a²+b²) = 5.000</div>
+                <div class="status-value" id="areaInfo">a² = 9.00，b² = 16.00，c² = 25.00，验证：a²+b² = c² ✓</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2 class="panel-title">参数控制</h2>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>直角边 a</span>
+                    <span class="control-value" id="aValue">3.0</span>
+                </div>
+                <input type="range" id="aSlider" min="0.5" max="6" step="0.1" value="3.0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">拖动改变直角边 a 的长度。</p>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>直角边 b</span>
+                    <span class="control-value" id="bValue">4.0</span>
+                </div>
+                <input type="range" id="bSlider" min="0.5" max="6" step="0.1" value="4.0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">拖动改变直角边 b 的长度。</p>
+            </div>
+            <div class="control-group">
+                <div class="control-label"><span>常用勾股数快速设置</span></div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+                    <button class="preset-btn" data-a="3" data-b="4" style="margin:0;padding:7px 14px;font-size:0.9rem;">3-4-5</button>
+                    <button class="preset-btn" data-a="5" data-b="12" style="margin:0;padding:7px 14px;font-size:0.9rem;">5-12-13</button>
+                    <button class="preset-btn" data-a="8" data-b="6" style="margin:0;padding:7px 14px;font-size:0.9rem;">6-8-10</button>
+                    <button class="preset-btn" data-a="1" data-b="1" style="margin:0;padding:7px 14px;font-size:0.9rem;">1-1-√2</button>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button id="resetBtn" class="reset-btn">重置</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="knowledge-section">
+        <div class="knowledge-card">
+            <h3>勾股定理</h3>
+            <p>在任意直角三角形中，两直角边的平方和等于斜边的平方：</p>
+            <div class="formula">a² + b² = c²</div>
+            <p>其中 a、b 为两条直角边，c 为斜边（最长边）。</p>
+            <p><strong>逆定理：</strong>若三角形三边满足 a²+b²=c²，则该三角形是直角三角形。</p>
+            <p><strong>常用勾股数：</strong></p>
+            <ul>
+                <li>3, 4, 5（及其整倍数 6-8-10, 9-12-15…）</li>
+                <li>5, 12, 13</li>
+                <li>8, 15, 17</li>
+                <li>7, 24, 25</li>
+            </ul>
+        </div>
+        <div class="knowledge-card">
+            <h3>证明方法与应用</h3>
+            <p><strong>面积法（弦图）：</strong>由四个相同直角三角形拼成一个大正方形，大正方形面积 = (a+b)² = 4×(ab/2) + c²，化简得 a²+b²=c²。</p>
+            <p><strong>历史：</strong>中国古代《周髀算经》中以"勾三股四弦五"记载；西方称为"毕达哥拉斯定理"（约公元前 6 世纪）。</p>
+            <p><strong>应用：</strong></p>
+            <ul>
+                <li>计算两点距离：d = √((x₂-x₁)²+(y₂-y₁)²)</li>
+                <li>建筑测量、导航、工程计算</li>
+                <li>三维空间距离：d = √(Δx²+Δy²+Δz²)</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="quiz-section">
+        <h2 class="panel-title">知识小测验</h2>
+        <div class="quiz-question">1. 已知直角三角形两直角边分别为 5 cm 和 12 cm，则斜边长为多少？</div>
+        <div class="quiz-options" id="quizOptions">
+            <div class="quiz-option" data-answer="A">A. 13 cm</div>
+            <div class="quiz-option" data-answer="B">B. 17 cm</div>
+            <div class="quiz-option" data-answer="C">C. 11 cm</div>
+            <div class="quiz-option" data-answer="D">D. √119 cm</div>
+        </div>
+        <button id="submitQuiz">提交答案</button>
+        <div class="quiz-feedback" id="quizFeedback">
+            <strong>反馈：</strong><span id="feedbackText"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let a = 3.0, b = 4.0;
+    let triCanvas, triCtx, tripCanvas, tripCtx;
+
+    function resizeC(c, ctx) {
+        const dpr = window.devicePixelRatio || 1;
+        const r = c.getBoundingClientRect();
+        c.width = r.width * dpr;
+        c.height = r.height * dpr;
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.scale(dpr, dpr);
+    }
+
+    function drawTriangle() {
+        const dpr = window.devicePixelRatio || 1;
+        const W = triCanvas.width / dpr;
+        const H = triCanvas.height / dpr;
+        triCtx.clearRect(0, 0, W, H);
+
+        // Scale: fit largest element (a or b squares) into canvas
+        const maxSide = Math.max(a, b);
+        const unit = Math.min((W - 80) / (2 * maxSide + 2), (H - 60) / (a + b + 2));
+        const scale = unit;
+
+        // Right angle vertex at center-ish
+        const ox = W / 2 - scale * b * 0.3;
+        const oy = H / 2 + scale * a * 0.3;
+
+        // Triangle vertices (right angle at O)
+        const A = { x: ox, y: oy };            // right angle
+        const B = { x: ox + scale * b, y: oy }; // along x (b side)
+        const C = { x: ox, y: oy - scale * a }; // along y (a side)
+        const hyp = Math.sqrt(a * a + b * b);
+
+        // Draw squares on sides
+        // Square on a (height side): vertices A, C, C+perp, A+perp
+        // Perpendicular to AC (going left from the left side)
+        const aPerp = { x: -scale, y: 0 }; // left direction
+        drawSquareFill(triCtx, A, C, aPerp, scale, 'rgba(79,195,247,0.25)', '#4fc3f7', `a²=${(a*a).toFixed(1)}`);
+
+        // Square on b (base side): below the base
+        const bPerp = { x: 0, y: scale }; // downward
+        drawSquareFill(triCtx, A, B, bPerp, scale, 'rgba(129,199,132,0.25)', '#81c784', `b²=${(b*b).toFixed(1)}`);
+
+        // Square on c (hypotenuse)
+        // Direction perpendicular to hypotenuse (outward)
+        const dx = B.x - C.x, dy = B.y - C.y;
+        const len = Math.sqrt(dx*dx+dy*dy);
+        const perpC = { x: dy/len * scale * hyp / hyp, y: -dx/len * scale * hyp / hyp };
+        drawSquareFillHyp(triCtx, C, B, perpC, scale, 'rgba(239,83,80,0.3)', '#ef5350', `c²=${(hyp*hyp).toFixed(1)}`);
+
+        // Draw right angle marker
+        const rLen = scale * 0.18;
+        triCtx.strokeStyle = '#fff';
+        triCtx.lineWidth = 2;
+        triCtx.beginPath();
+        triCtx.moveTo(A.x + rLen, A.y);
+        triCtx.lineTo(A.x + rLen, A.y - rLen);
+        triCtx.lineTo(A.x, A.y - rLen);
+        triCtx.stroke();
+
+        // Draw triangle
+        triCtx.strokeStyle = '#fff176';
+        triCtx.lineWidth = 3;
+        triCtx.beginPath();
+        triCtx.moveTo(A.x, A.y);
+        triCtx.lineTo(B.x, B.y);
+        triCtx.lineTo(C.x, C.y);
+        triCtx.closePath();
+        triCtx.stroke();
+        triCtx.fillStyle = 'rgba(255,241,118,0.1)';
+        triCtx.fill();
+
+        // Labels on sides
+        triCtx.fillStyle = '#fff';
+        triCtx.font = 'bold 14px Arial';
+        triCtx.textAlign = 'center';
+        triCtx.fillText(`a=${a.toFixed(1)}`, (A.x + C.x) / 2 - 18, (A.y + C.y) / 2);
+        triCtx.fillText(`b=${b.toFixed(1)}`, (A.x + B.x) / 2, A.y + 18);
+        triCtx.fillText(`c=${hyp.toFixed(2)}`, (B.x + C.x) / 2 + 18, (B.y + C.y) / 2);
+    }
+
+    function drawSquareFill(ctx, p1, p2, perpDir, scale, fillColor, strokeColor, label) {
+        // Square along side p1->p2, with perpendicular pointing outward
+        const dx = p2.x - p1.x, dy = p2.y - p1.y;
+        const len = Math.sqrt(dx*dx+dy*dy);
+        const ux = dx/len, uy = dy/len;
+        const nx = perpDir.x/scale, ny = perpDir.y/scale;
+
+        const p3 = { x: p1.x + nx*len, y: p1.y + ny*len };
+        const p4 = { x: p2.x + nx*len, y: p2.y + ny*len };
+
+        ctx.beginPath();
+        ctx.moveTo(p1.x,p1.y); ctx.lineTo(p2.x,p2.y);
+        ctx.lineTo(p4.x,p4.y); ctx.lineTo(p3.x,p3.y);
+        ctx.closePath();
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Label at center
+        const cx = (p1.x+p2.x+p3.x+p4.x)/4;
+        const cy = (p1.y+p2.y+p3.y+p4.y)/4;
+        ctx.fillStyle = strokeColor;
+        ctx.font = 'bold 13px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, cx, cy + 5);
+    }
+
+    function drawSquareFillHyp(ctx, p1, p2, perpDir, scale, fillColor, strokeColor, label) {
+        const dx = p2.x - p1.x, dy = p2.y - p1.y;
+        const len = Math.sqrt(dx*dx+dy*dy);
+        const nx = perpDir.x, ny = perpDir.y;
+        const perpLen = Math.sqrt(nx*nx+ny*ny);
+        const scaledNx = nx/perpLen, scaledNy = ny/perpLen;
+
+        const p3 = { x: p1.x + scaledNx*len, y: p1.y + scaledNy*len };
+        const p4 = { x: p2.x + scaledNx*len, y: p2.y + scaledNy*len };
+
+        ctx.beginPath();
+        ctx.moveTo(p1.x,p1.y); ctx.lineTo(p2.x,p2.y);
+        ctx.lineTo(p4.x,p4.y); ctx.lineTo(p3.x,p3.y);
+        ctx.closePath();
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        const cx = (p1.x+p2.x+p3.x+p4.x)/4;
+        const cy = (p1.y+p2.y+p3.y+p4.y)/4;
+        ctx.fillStyle = strokeColor;
+        ctx.font = 'bold 13px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, cx, cy + 5);
+    }
+
+    function drawTriples() {
+        const dpr = window.devicePixelRatio || 1;
+        const W = tripCanvas.width / dpr;
+        const H = tripCanvas.height / dpr;
+        tripCtx.clearRect(0, 0, W, H);
+
+        const triples = [
+            [3,4,5],[5,12,13],[8,15,17],[7,24,25],[20,21,29],
+            [9,40,41],[6,8,10],[10,24,26],[12,16,20],[15,20,25]
+        ];
+
+        const pad = 50;
+        const maxC = 50, maxAB = 30;
+        const plotW = W - 2*pad, plotH = H - 2*pad;
+
+        // Axes
+        tripCtx.strokeStyle = '#555';
+        tripCtx.lineWidth = 1.5;
+        tripCtx.beginPath();
+        tripCtx.moveTo(pad, pad); tripCtx.lineTo(pad, H-pad);
+        tripCtx.moveTo(pad, H-pad); tripCtx.lineTo(W-pad, H-pad);
+        tripCtx.stroke();
+
+        // Axis labels
+        tripCtx.fillStyle = '#888';
+        tripCtx.font = '12px Arial';
+        tripCtx.textAlign = 'center';
+        tripCtx.fillText('直角边 a', pad + plotW/2, H-12);
+        tripCtx.save();
+        tripCtx.translate(16, pad + plotH/2);
+        tripCtx.rotate(-Math.PI/2);
+        tripCtx.fillText('直角边 b', 0, 0);
+        tripCtx.restore();
+
+        // Grid lines
+        tripCtx.strokeStyle = '#1e1e2e';
+        tripCtx.lineWidth = 1;
+        for (let v = 5; v <= maxAB; v += 5) {
+            const px = pad + (v/maxAB)*plotW;
+            const py = H - pad - (v/maxAB)*plotH;
+            tripCtx.beginPath(); tripCtx.moveTo(px, pad); tripCtx.lineTo(px, H-pad); tripCtx.stroke();
+            tripCtx.beginPath(); tripCtx.moveTo(pad, py); tripCtx.lineTo(W-pad, py); tripCtx.stroke();
+            tripCtx.fillStyle = '#555';
+            tripCtx.font = '10px Arial';
+            tripCtx.textAlign = 'center';
+            tripCtx.fillText(v, px, H-pad+14);
+            tripCtx.textAlign = 'right';
+            tripCtx.fillText(v, pad-5, py+4);
+        }
+
+        // Draw curve a²+b²=c² (for reference c levels)
+        for (const cc of [5, 10, 15, 20, 26]) {
+            tripCtx.strokeStyle = 'rgba(255,241,118,0.08)';
+            tripCtx.lineWidth = 1;
+            tripCtx.beginPath();
+            let first = true;
+            for (let av = 0.1; av <= maxAB; av += 0.2) {
+                const bv = Math.sqrt(cc*cc - av*av);
+                if (isNaN(bv) || bv > maxAB || bv < 0) { first=true; continue; }
+                const px = pad + (av/maxAB)*plotW;
+                const py = H - pad - (bv/maxAB)*plotH;
+                if (first) { tripCtx.moveTo(px,py); first=false; } else tripCtx.lineTo(px,py);
+            }
+            tripCtx.stroke();
+        }
+
+        // Draw all triples
+        triples.forEach(([ta, tb, tc]) => {
+            if (ta > maxAB || tb > maxAB) return;
+            const px = pad + (ta/maxAB)*plotW;
+            const py = H - pad - (tb/maxAB)*plotH;
+            tripCtx.fillStyle = '#80deea';
+            tripCtx.beginPath();
+            tripCtx.arc(px, py, 5, 0, Math.PI*2);
+            tripCtx.fill();
+            tripCtx.fillStyle = '#aaa';
+            tripCtx.font = '10px Arial';
+            tripCtx.textAlign = 'left';
+            tripCtx.fillText(`(${ta},${tb},${tc})`, px+7, py+4);
+        });
+
+        // Highlight current (a, b, c)
+        const hyp = Math.sqrt(a*a+b*b);
+        if (a <= maxAB && b <= maxAB) {
+            const px = pad + (a/maxAB)*plotW;
+            const py = H - pad - (b/maxAB)*plotH;
+            tripCtx.strokeStyle = '#fff176';
+            tripCtx.lineWidth = 2.5;
+            tripCtx.beginPath();
+            tripCtx.arc(px, py, 9, 0, Math.PI*2);
+            tripCtx.stroke();
+            tripCtx.fillStyle = '#fff176';
+            tripCtx.font = 'bold 11px Arial';
+            tripCtx.textAlign = 'center';
+            tripCtx.fillText(`当前: (${a.toFixed(1)},${b.toFixed(1)},${hyp.toFixed(2)})`, px, py-14);
+        }
+    }
+
+    function updateStatus() {
+        const c = Math.sqrt(a*a+b*b);
+        document.getElementById('sideInfo').textContent =
+            `a = ${a.toFixed(1)}，b = ${b.toFixed(1)}，c = √(a²+b²) = ${c.toFixed(4)}`;
+        document.getElementById('areaInfo').textContent =
+            `a² = ${(a*a).toFixed(2)}，b² = ${(b*b).toFixed(2)}，c² = ${(c*c).toFixed(2)}，验证：a²+b² = ${(a*a+b*b).toFixed(2)} = c² ✓`;
+    }
+
+    function drawAll() {
+        drawTriangle();
+        drawTriples();
+        updateStatus();
+    }
+
+    function init() {
+        triCanvas = document.getElementById('triangleCanvas');
+        triCtx = triCanvas.getContext('2d');
+        tripCanvas = document.getElementById('triplesCanvas');
+        tripCtx = tripCanvas.getContext('2d');
+
+        function resizeAll() {
+            resizeC(triCanvas, triCtx);
+            resizeC(tripCanvas, tripCtx);
+            drawAll();
+        }
+        window.addEventListener('resize', resizeAll);
+        resizeAll();
+
+        document.getElementById('aSlider').addEventListener('input', e => {
+            a = parseFloat(e.target.value);
+            document.getElementById('aValue').textContent = a.toFixed(1);
+            drawAll();
+        });
+        document.getElementById('bSlider').addEventListener('input', e => {
+            b = parseFloat(e.target.value);
+            document.getElementById('bValue').textContent = b.toFixed(1);
+            drawAll();
+        });
+        document.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                a = parseFloat(btn.dataset.a);
+                b = parseFloat(btn.dataset.b);
+                document.getElementById('aSlider').value = a;
+                document.getElementById('bSlider').value = b;
+                document.getElementById('aValue').textContent = a.toFixed(1);
+                document.getElementById('bValue').textContent = b.toFixed(1);
+                drawAll();
+            });
+        });
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            a = 3.0; b = 4.0;
+            document.getElementById('aSlider').value = a;
+            document.getElementById('bSlider').value = b;
+            document.getElementById('aValue').textContent = a.toFixed(1);
+            document.getElementById('bValue').textContent = b.toFixed(1);
+            drawAll();
+        });
+
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        document.getElementById('submitQuiz').addEventListener('click', () => {
+            const sel = document.querySelector('.quiz-option.selected');
+            if (!sel) { alert('请先选择一个答案！'); return; }
+            const ans = sel.getAttribute('data-answer');
+            const correct = 'A';
+            const fb = document.getElementById('quizFeedback');
+            const ft = document.getElementById('feedbackText');
+            fb.style.display = 'block';
+            fb.className = 'quiz-feedback ' + (ans===correct ? 'correct' : 'incorrect');
+            if (ans===correct) {
+                ft.textContent = '正确！c = √(5²+12²) = √(25+144) = √169 = 13 cm。(5, 12, 13) 是经典勾股数。';
+                ft.style.color = '#81c784';
+            } else {
+                ft.textContent = '不正确。正确答案是 A：13 cm。c = √(5²+12²) = √169 = 13。';
+                ft.style.color = '#f44336';
+            }
+            document.querySelectorAll('.quiz-option').forEach(o => {
+                o.style.pointerEvents = 'none';
+                if (o.getAttribute('data-answer')===correct) o.style.backgroundColor = '#33290a';
+            });
+            document.getElementById('submitQuiz').disabled = true;
+        });
+    }
+
+    window.addEventListener('load', init);
+</script>
+
+<footer style="margin-top:18px;padding:14px 10px;text-align:center;font-size:12px;color:rgba(255,255,255,0.55);border-top:1px solid rgba(255,255,255,0.08);">
+    @ 易演课堂 版权所有
+</footer>
+</body>
+</html>

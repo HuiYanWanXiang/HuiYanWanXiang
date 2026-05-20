@@ -1,0 +1,11 @@
+{
+  "id": "vectors",
+  "title": "向量",
+  "aliases": ["向量","平面向量","vectors"],
+  "keywords": ["向量","点积","夹角","投影","坐标"],
+  "description": "展示向量加法、数乘、投影和夹角。",
+  "html_url": "/static/presets/vectors/index.html",
+  "video_url": "/static/presets/vectors/video.mp4",
+  "cover_url": "/static/presets/vectors/cover.png",
+  "enabled": true
+}

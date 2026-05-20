@@ -1,0 +1,11 @@
+{
+  "id": "electric_field_lines",
+  "title": "电场和电场线",
+  "aliases": ["电场和电场线","电场线","electric field lines"],
+  "keywords": ["电场","电场线","点电荷","库仑定律"],
+  "description": "展示点电荷电场方向与场线分布。",
+  "html_url": "/static/presets/electric_field_lines/index.html",
+  "video_url": "/static/presets/electric_field_lines/video.mp4",
+  "cover_url": "/static/presets/electric_field_lines/cover.png",
+  "enabled": true
+}

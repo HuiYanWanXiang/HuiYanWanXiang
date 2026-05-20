@@ -1,0 +1,27 @@
+{
+  "id": "simple_harmonic_motion",
+  "title": "简谐振动",
+  "aliases": [
+    "简谐振动",
+    "简谐振荡",
+    "简谐运动",
+    "shm",
+    "简谐振动演示",
+    "简谐振动网页",
+    "简谐振动视频"
+  ],
+  "keywords": [
+    "简谐",
+    "振动",
+    "振荡",
+    "回复力",
+    "周期",
+    "振幅",
+    "位移"
+  ],
+  "description": "展示简谐振动中的位移、速度、加速度关系，以及周期、振幅等核心概念。",
+  "html_url": "/static/presets/simple_harmonic_motion/index.html",
+  "video_url": "/static/presets/simple_harmonic_motion/video.mp4",
+  "cover_url": "/static/presets/simple_harmonic_motion/cover.png",
+  "enabled": true
+}

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简谐振动</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background-color: #0f0f13; color: #e0e0e0; overflow-y: auto; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+        header h1 { text-align: center; color: #90caf9; margin-bottom: 10px; font-size: 2.5rem; text-shadow: 0 0 8px rgba(144,202,249,0.5); }
+        header p { text-align: center; color: #aaa; font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+        .main-content { display: flex; flex-wrap: wrap; gap: 25px; }
+        .simulation-panel { flex: 1.3; min-width: 320px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; }
+        .control-panel { flex: 1; min-width: 300px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; display: flex; flex-direction: column; gap: 20px; }
+        .panel-title { color: #90caf9; font-size: 1.5rem; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #2a2a35; }
+        .visual-grid { display: grid; grid-template-columns: 1fr; gap: 18px; margin-bottom: 18px; }
+        .visual-card { background: #111119; border: 1px solid #2f2f3c; border-radius: 14px; padding: 14px; }
+        .visual-title { color: #90caf9; font-size: 1rem; font-weight: bold; margin-bottom: 10px; text-align: center; }
+        .canvas-box { width: 100%; height: 260px; background: #0a0a0f; border-radius: 10px; border: 1px solid #333; overflow: hidden; }
+        canvas { display: block; width: 100%; height: 100%; }
+        .visual-desc { margin-top: 10px; font-size: 0.9rem; color: #9e9e9e; min-height: 44px; }
+        .control-group { margin-bottom: 15px; }
+        .control-label { display: flex; justify-content: space-between; margin-bottom: 8px; color: #bbbbbb; }
+        .control-value { color: #90caf9; font-weight: bold; }
+        input[type="range"] { width: 100%; height: 10px; -webkit-appearance: none; background: linear-gradient(to right,#0a0a0f,#2a2a35); border-radius: 5px; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #90caf9; cursor: pointer; box-shadow: 0 0 10px rgba(144,202,249,0.8); }
+        .status-display { background-color: #15151c; padding: 15px; border-radius: 10px; border-left: 4px solid #ff9800; margin-top: 10px; }
+        .status-title { color: #ff9800; font-weight: bold; margin-bottom: 8px; }
+        .status-value { color: #e0e0e0; font-size: 0.95rem; margin-bottom: 4px; }
+        .knowledge-section { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 10px; }
+        .knowledge-card { flex: 1; min-width: 300px; background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; }
+        .knowledge-card h3 { color: #90caf9; margin-bottom: 15px; font-size: 1.4rem; }
+        .knowledge-card p, .knowledge-card li { margin-bottom: 12px; color: #cccccc; }
+        .knowledge-card ul { padding-left: 20px; }
+        .formula { background-color: #0a0a0f; padding: 15px; border-radius: 8px; font-family: 'Cambria Math', serif; text-align: center; margin: 15px 0; border: 1px solid #333; color: #ffcc80; font-size: 1.1rem; }
+        .quiz-section { background: linear-gradient(145deg,#1a1a23,#15151c); border-radius: 16px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #2a2a35; margin-top: 10px; }
+        .quiz-question { margin-bottom: 20px; color: #e0e0e0; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .quiz-option { padding: 12px 15px; background-color: #252530; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent; }
+        .quiz-option:hover { background-color: #2d2d3a; border-color: #90caf9; }
+        .quiz-option.selected { background-color: #0d2b4e; border-color: #90caf9; }
+        .quiz-feedback { padding: 15px; border-radius: 8px; background-color: #15151c; display: none; border-left: 4px solid #90caf9; }
+        .quiz-feedback.correct { border-left-color: #81c784; }
+        .quiz-feedback.incorrect { border-left-color: #f44336; }
+        button { background: linear-gradient(to right,#1565c0,#90caf9); color: #0f0f13; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: all 0.3s ease; margin-top: 10px; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(144,202,249,0.4); }
+        .reset-btn { background: linear-gradient(to right,#c62828,#ef5350); color: white; }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>简谐运动</h1>
+        <p>通过弹簧振子的动态模拟，探索简谐运动的位移、速度、加速度随时间的变化规律与能量守恒。</p>
+    </header>
+
+    <div class="main-content">
+        <div class="simulation-panel">
+            <h2 class="panel-title">动态模拟</h2>
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <div class="visual-title">弹簧振子运动动画</div>
+                    <div class="canvas-box"><canvas id="oscillatorCanvas"></canvas></div>
+                    <div class="visual-desc">橙色滑块为振子，绿色虚线为平衡位置。弹簧压缩/拉伸形变直观展示回复力方向。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">位移 x(t)、速度 v(t)、加速度 a(t) 图像</div>
+                    <div class="canvas-box"><canvas id="plotCanvas"></canvas></div>
+                    <div class="visual-desc">蓝色：位移 x(t)；绿色：速度 v(t)；橙色：加速度 a(t)。三者相位依次超前 π/2。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">相图（x-v 相空间）</div>
+                    <div class="canvas-box"><canvas id="phaseCanvas"></canvas></div>
+                    <div class="visual-desc">无阻尼简谐运动相轨迹为椭圆，振幅越大椭圆越大，代表能量越高。</div>
+                </div>
+            </div>
+            <div class="status-display">
+                <div class="status-title">当前运动状态</div>
+                <div class="status-value" id="kinematic">位移 x = 0.00 m，速度 v = 0.00 m/s，加速度 a = 0.00 m/s²</div>
+                <div class="status-value" id="energyInfo">动能 = 0.00 J，势能 = 0.00 J，总机械能 = 0.00 J</div>
+                <div class="status-value" id="periodInfo">周期 T = 2π/ω = 0.00 s，频率 f = 0.00 Hz</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2 class="panel-title">参数控制</h2>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>振幅 A (m)</span>
+                    <span class="control-value" id="ampValue">2.0</span>
+                </div>
+                <input type="range" id="ampSlider" min="0.3" max="3.0" step="0.1" value="2.0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">振幅决定振子偏离平衡位置的最大距离。</p>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>角频率 ω (rad/s)</span>
+                    <span class="control-value" id="omegaValue">3.0</span>
+                </div>
+                <input type="range" id="omegaSlider" min="0.5" max="8.0" step="0.1" value="3.0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">ω = √(k/m)，决定振动快慢，ω 越大振动越快。</p>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>初相位 φ (×π rad)</span>
+                    <span class="control-value" id="phiValue">0.00</span>
+                </div>
+                <input type="range" id="phiSlider" min="0" max="2" step="0.05" value="0">
+                <p style="font-size:0.9rem;color:#888;margin-top:5px;">初始时刻 t=0 时振子的相位，影响初始位置与速度。</p>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <span>质量 m (kg)</span>
+                    <span class="control-value" id="massValue">1.0</span>
+                </div>
+                <input type="range" id="massSlider" min="0.2" max="3.0" step="0.1" value="1.0">
+            </div>
+            <div class="btn-group">
+                <button id="startBtn">开始 / 暂停</button>
+                <button id="resetBtn" class="reset-btn">重置系统</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="knowledge-section">
+        <div class="knowledge-card">
+            <h3>简谐运动方程</h3>
+            <p>简谐运动是最基本的周期性运动，物体受到与位移成正比且方向相反的<strong>回复力</strong>：</p>
+            <div class="formula">F = −kx &nbsp; → &nbsp; d²x/dt² = −ω²x</div>
+            <p>其解析解为：</p>
+            <div class="formula">x(t) = A cos(ωt + φ)</div>
+            <p>对时间求导得速度和加速度：</p>
+            <ul>
+                <li><strong>速度：</strong>v(t) = −Aω sin(ωt + φ)</li>
+                <li><strong>加速度：</strong>a(t) = −Aω² cos(ωt + φ) = −ω²x</li>
+            </ul>
+            <p>其中 A 为振幅，ω = √(k/m) 为角频率，φ 为初相位。</p>
+        </div>
+        <div class="knowledge-card">
+            <h3>特征量与能量守恒</h3>
+            <ul>
+                <li><strong>周期：</strong>T = 2π/ω = 2π√(m/k)</li>
+                <li><strong>频率：</strong>f = 1/T = ω/(2π)</li>
+                <li><strong>最大速度：</strong>v_max = Aω（在平衡位置）</li>
+                <li><strong>最大加速度：</strong>a_max = Aω²（在最大位移处）</li>
+            </ul>
+            <p><strong>能量守恒：</strong></p>
+            <div class="formula">E = ½mv² + ½kx² = ½kA² = 常数</div>
+            <p>动能与势能之间相互转化，总机械能守恒；相图轨迹为椭圆，正是能量守恒的体现。</p>
+            <p><strong>相位关系：</strong>速度相位超前位移 π/2，加速度与位移反相（相差 π）。</p>
+        </div>
+    </div>
+
+    <div class="quiz-section">
+        <h2 class="panel-title">知识小测验</h2>
+        <div class="quiz-question">1. 一个弹簧振子做简谐运动，振幅为 A，角频率为 ω。当振子经过平衡位置时，其速度大小为多少？</div>
+        <div class="quiz-options" id="quizOptions">
+            <div class="quiz-option" data-answer="A">A. 0</div>
+            <div class="quiz-option" data-answer="B">B. Aω / 2</div>
+            <div class="quiz-option" data-answer="C">C. Aω</div>
+            <div class="quiz-option" data-answer="D">D. Aω²</div>
+        </div>
+        <button id="submitQuiz">提交答案</button>
+        <div class="quiz-feedback" id="quizFeedback">
+            <strong>反馈：</strong><span id="feedbackText"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let A = 2.0, omega = 3.0, phi = 0.0, m = 1.0;
+    let t = 0, dt = 0.016;
+    let isRunning = false, animId = null;
+    const history = [], maxHistory = 500;
+
+    let oscCanvas, oscCtx, plotCanvas, plotCtx, phaseCanvas, phaseCtx;
+
+    function x(t) { return A * Math.cos(omega * t + phi); }
+    function v(t) { return -A * omega * Math.sin(omega * t + phi); }
+    function a(t) { return -A * omega * omega * Math.cos(omega * t + phi); }
+
+    function resizeC(c, ctx) {
+        const dpr = window.devicePixelRatio || 1;
+        const r = c.getBoundingClientRect();
+        c.width = r.width * dpr;
+        c.height = r.height * dpr;
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.scale(dpr, dpr);
+    }
+
+    function drawOscillator() {
+        const dpr = window.devicePixelRatio || 1;
+        const W = oscCanvas.width / dpr;
+        const H = oscCanvas.height / dpr;
+        const cy = H / 2;
+
+        oscCtx.clearRect(0, 0, W, H);
+
+        const xt = x(t);
+        const equilibriumX = W * 0.55;
+        const scale = Math.min(28, (W * 0.5 - 60) / Math.max(A, 0.5));
+        const baseX = 36;
+        const blockX = Math.max(baseX + 50, Math.min(W - 70, equilibriumX + xt * scale));
+
+        // Wall
+        oscCtx.fillStyle = '#555';
+        oscCtx.fillRect(18, cy - 60, 18, 120);
+        // Wall hatch
+        oscCtx.strokeStyle = '#444';
+        oscCtx.lineWidth = 1;
+        for (let i = 0; i < 8; i++) {
+            oscCtx.beginPath();
+            oscCtx.moveTo(18, cy - 60 + i*16);
+            oscCtx.lineTo(4, cy - 60 + i*16 + 10);
+            oscCtx.stroke();
+        }
+
+        // Spring (zigzag)
+        const springStart = 36;
+        const springEnd = blockX - 20;
+        const numCoils = 9;
+        const coilW = (springEnd - springStart) / numCoils;
+        oscCtx.beginPath();
+        oscCtx.moveTo(springStart, cy);
+        for (let i = 0; i < numCoils; i++) {
+            const x0 = springStart + i * coilW;
+            const x1 = x0 + coilW / 2;
+            const x2 = x0 + coilW;
+            oscCtx.bezierCurveTo(x0, cy - 16, x1, cy - 16, x2, cy);
+            oscCtx.bezierCurveTo(x2, cy + 16, x1, cy + 16, x0, cy);
+        }
+        oscCtx.strokeStyle = '#90caf9';
+        oscCtx.lineWidth = 2.5;
+        oscCtx.stroke();
+
+        // Equilibrium line
+        oscCtx.setLineDash([6, 5]);
+        oscCtx.strokeStyle = '#81c784';
+        oscCtx.lineWidth = 1.5;
+        oscCtx.beginPath();
+        oscCtx.moveTo(equilibriumX, cy - 50);
+        oscCtx.lineTo(equilibriumX, cy + 50);
+        oscCtx.stroke();
+        oscCtx.setLineDash([]);
+        oscCtx.fillStyle = '#81c784';
+        oscCtx.font = '11px Arial';
+        oscCtx.textAlign = 'center';
+        oscCtx.fillText('平衡位置', equilibriumX, cy - 56);
+
+        // Block (mass)
+        oscCtx.fillStyle = '#ff9800';
+        oscCtx.fillRect(blockX - 22, cy - 26, 44, 52);
+        oscCtx.strokeStyle = '#ffcc80';
+        oscCtx.lineWidth = 2;
+        oscCtx.strokeRect(blockX - 22, cy - 26, 44, 52);
+        oscCtx.fillStyle = '#fff';
+        oscCtx.font = '13px Arial';
+        oscCtx.textAlign = 'center';
+        oscCtx.fillText(`m`, blockX, cy - 8);
+        oscCtx.font = '11px Arial';
+        oscCtx.fillText(`${m.toFixed(1)}kg`, blockX, cy + 8);
+
+        // Velocity arrow
+        const vt = v(t);
+        if (Math.abs(vt) > 0.05) {
+            const arrowLen = Math.min(50, Math.abs(vt) * scale / omega);
+            const dir = vt > 0 ? 1 : -1;
+            const ax = blockX + dir * 22;
+            const ax2 = ax + dir * arrowLen;
+            oscCtx.strokeStyle = '#f48fb1';
+            oscCtx.lineWidth = 2.5;
+            oscCtx.beginPath();
+            oscCtx.moveTo(ax, cy);
+            oscCtx.lineTo(ax2, cy);
+            oscCtx.stroke();
+            oscCtx.beginPath();
+            oscCtx.moveTo(ax2, cy - 6);
+            oscCtx.lineTo(ax2 + dir * 8, cy);
+            oscCtx.lineTo(ax2, cy + 6);
+            oscCtx.stroke();
+        }
+
+        // Displacement label
+        oscCtx.fillStyle = '#90caf9';
+        oscCtx.font = '13px Arial';
+        oscCtx.textAlign = 'center';
+        oscCtx.fillText(`x = ${xt.toFixed(3)} m`, W / 2, H - 10);
+
+        // x=0 label
+        oscCtx.fillStyle = '#555';
+        oscCtx.font = '11px Arial';
+        oscCtx.fillText('x=0', equilibriumX, cy + 64);
+    }
+
+    function drawPlots() {
+        const dpr = window.devicePixelRatio || 1;
+        const W = plotCanvas.width / dpr;
+        const H = plotCanvas.height / dpr;
+        const pad = { l: 42, r: 16, t: 18, b: 28 };
+        const plotW = W - pad.l - pad.r;
+        const plotH = H - pad.t - pad.b;
+
+        plotCtx.clearRect(0, 0, W, H);
+
+        // Axes
+        plotCtx.strokeStyle = '#555';
+        plotCtx.lineWidth = 1.5;
+        plotCtx.beginPath();
+        plotCtx.moveTo(pad.l, pad.t); plotCtx.lineTo(pad.l, H-pad.b);
+        plotCtx.moveTo(pad.l, H-pad.b); plotCtx.lineTo(W-pad.r, H-pad.b);
+        plotCtx.stroke();
+
+        // Center zero line
+        const cy = pad.t + plotH / 2;
+        plotCtx.strokeStyle = '#333';
+        plotCtx.lineWidth = 1;
+        plotCtx.beginPath();
+        plotCtx.moveTo(pad.l, cy); plotCtx.lineTo(W-pad.r, cy);
+        plotCtx.stroke();
+
+        if (history.length < 2) return;
+
+        const tMin = history[0].t;
+        const tMax = history[history.length - 1].t;
+        const tRange = Math.max(tMax - tMin, 0.1);
+
+        // Max values for scaling
+        const maxX = Math.max(A, 0.1);
+        const maxV = Math.max(A * omega, 0.1);
+        const maxA = Math.max(A * omega * omega, 0.1);
+        const globalMax = Math.max(maxX, maxV * 0.5, maxA * 0.2);
+
+        function plotLine(key, color, normMax) {
+            plotCtx.strokeStyle = color;
+            plotCtx.lineWidth = 2;
+            plotCtx.beginPath();
+            for (let i = 0; i < history.length; i++) {
+                const p = history[i];
+                const px = pad.l + (p.t - tMin) / tRange * plotW;
+                const val = p[key] / normMax;
+                const py = cy - val * (plotH / 2 - 8);
+                if (i === 0) plotCtx.moveTo(px, py);
+                else plotCtx.lineTo(px, py);
+            }
+            plotCtx.stroke();
+        }
+
+        plotLine('x', '#4fc3f7', maxX);
+        plotLine('v', '#81c784', maxV);
+        plotLine('a', '#ff9800', maxA);
+
+        // Current dots
+        const lastP = history[history.length - 1];
+        const lastPx = pad.l + plotW;
+
+        [[lastP.x / maxX, '#4fc3f7'], [lastP.v / maxV, '#81c784'], [lastP.a / maxA, '#ff9800']].forEach(([norm, color]) => {
+            const py = cy - norm * (plotH / 2 - 8);
+            plotCtx.fillStyle = color;
+            plotCtx.beginPath();
+            plotCtx.arc(lastPx, py, 4, 0, Math.PI * 2);
+            plotCtx.fill();
+        });
+
+        // Legend
+        const lx = pad.l + 8;
+        [['x(t)', '#4fc3f7'], ['v(t)', '#81c784'], ['a(t)', '#ff9800']].forEach(([label, color], i) => {
+            plotCtx.fillStyle = color;
+            plotCtx.font = '11px Arial';
+            plotCtx.textAlign = 'left';
+            plotCtx.fillText(label, lx + i * 42, pad.t + 14);
+        });
+
+        // Axis labels
+        plotCtx.fillStyle = '#888';
+        plotCtx.font = '11px Arial';
+        plotCtx.textAlign = 'left';
+        plotCtx.fillText('t', W - pad.r + 2, H - pad.b + 4);
+        plotCtx.textAlign = 'right';
+        plotCtx.fillText('0', pad.l - 4, cy + 4);
+    }
+
+    function drawPhase() {
+        const dpr = window.devicePixelRatio || 1;
+        const W = phaseCanvas.width / dpr;
+        const H = phaseCanvas.height / dpr;
+        const cx = W / 2, cy = H / 2;
+        const pad = 30;
+
+        phaseCtx.clearRect(0, 0, W, H);
+
+        // Axes
+        phaseCtx.strokeStyle = '#555';
+        phaseCtx.lineWidth = 1.5;
+        phaseCtx.beginPath();
+        phaseCtx.moveTo(cx, pad); phaseCtx.lineTo(cx, H - pad);
+        phaseCtx.moveTo(pad, cy); phaseCtx.lineTo(W - pad, cy);
+        phaseCtx.stroke();
+
+        // Full analytical ellipse (for reference)
+        const maxX = A;
+        const maxV = A * omega;
+        const scaleX = (cx - pad - 10) / maxX;
+        const scaleV = (cy - pad - 10) / maxV;
+        phaseCtx.strokeStyle = 'rgba(144,202,249,0.2)';
+        phaseCtx.lineWidth = 1.5;
+        phaseCtx.beginPath();
+        for (let angle = 0; angle <= Math.PI * 2; angle += 0.02) {
+            const xv = A * Math.cos(angle + phi);
+            const vv = -A * omega * Math.sin(angle + phi);
+            const px = cx + xv * scaleX;
+            const py = cy - vv * scaleV;
+            if (angle === 0) phaseCtx.moveTo(px, py);
+            else phaseCtx.lineTo(px, py);
+        }
+        phaseCtx.closePath();
+        phaseCtx.stroke();
+
+        // Trajectory from history
+        if (history.length > 1) {
+            phaseCtx.strokeStyle = '#f48fb1';
+            phaseCtx.lineWidth = 2;
+            phaseCtx.beginPath();
+            for (let i = 0; i < history.length; i++) {
+                const p = history[i];
+                const px = cx + p.x * scaleX;
+                const py = cy - p.v * scaleV;
+                if (i === 0) phaseCtx.moveTo(px, py);
+                else phaseCtx.lineTo(px, py);
+            }
+            phaseCtx.stroke();
+        }
+
+        // Current point
+        const xt = x(t), vt = v(t);
+        phaseCtx.fillStyle = '#90caf9';
+        phaseCtx.beginPath();
+        phaseCtx.arc(cx + xt * scaleX, cy - vt * scaleV, 6, 0, Math.PI * 2);
+        phaseCtx.fill();
+
+        // Labels
+        phaseCtx.fillStyle = '#888';
+        phaseCtx.font = '12px Arial';
+        phaseCtx.textAlign = 'center';
+        phaseCtx.fillText('x (m)', W - pad + 2, cy + 4);
+        phaseCtx.textAlign = 'left';
+        phaseCtx.fillText('v', cx + 4, pad + 2);
+        phaseCtx.fillText('(m/s)', cx + 4, pad + 14);
+    }
+
+    function updateStatus() {
+        const xt = x(t), vt = v(t), at = a(t);
+        const k = m * omega * omega;
+        const ek = 0.5 * m * vt * vt;
+        const ep = 0.5 * k * xt * xt;
+        const T = 2 * Math.PI / omega;
+
+        document.getElementById('kinematic').textContent =
+            `位移 x = ${xt.toFixed(3)} m，速度 v = ${vt.toFixed(3)} m/s，加速度 a = ${at.toFixed(3)} m/s²`;
+        document.getElementById('energyInfo').textContent =
+            `动能 = ${ek.toFixed(3)} J，势能 = ${ep.toFixed(3)} J，总能量 = ${(ek+ep).toFixed(3)} J`;
+        document.getElementById('periodInfo').textContent =
+            `周期 T = 2π/ω = ${T.toFixed(3)} s，频率 f = ${(1/T).toFixed(3)} Hz，ω = ${omega.toFixed(1)} rad/s`;
+    }
+
+    function drawAll() {
+        drawOscillator();
+        drawPlots();
+        drawPhase();
+        updateStatus();
+    }
+
+    function simulate() {
+        t += dt;
+        const xt = x(t), vt = v(t);
+        history.push({ t, x: xt, v: vt, a: a(t) });
+        if (history.length > maxHistory) history.shift();
+    }
+
+    function loop() {
+        if (isRunning) {
+            simulate();
+            drawAll();
+        }
+        animId = requestAnimationFrame(loop);
+    }
+
+    function toggleRun() {
+        isRunning = !isRunning;
+        document.getElementById('startBtn').textContent = isRunning ? '暂停' : '开始 / 暂停';
+        if (isRunning && !animId) loop();
+    }
+
+    function reset() {
+        t = 0;
+        history.length = 0;
+        isRunning = false;
+        document.getElementById('startBtn').textContent = '开始 / 暂停';
+        drawAll();
+    }
+
+    function init() {
+        oscCanvas = document.getElementById('oscillatorCanvas');
+        oscCtx = oscCanvas.getContext('2d');
+        plotCanvas = document.getElementById('plotCanvas');
+        plotCtx = plotCanvas.getContext('2d');
+        phaseCanvas = document.getElementById('phaseCanvas');
+        phaseCtx = phaseCanvas.getContext('2d');
+
+        function resizeAll() {
+            resizeC(oscCanvas, oscCtx);
+            resizeC(plotCanvas, plotCtx);
+            resizeC(phaseCanvas, phaseCtx);
+            drawAll();
+        }
+        window.addEventListener('resize', resizeAll);
+        resizeAll();
+
+        document.getElementById('ampSlider').addEventListener('input', e => {
+            A = parseFloat(e.target.value);
+            document.getElementById('ampValue').textContent = A.toFixed(1);
+            history.length = 0; t = 0;
+            drawAll();
+        });
+        document.getElementById('omegaSlider').addEventListener('input', e => {
+            omega = parseFloat(e.target.value);
+            document.getElementById('omegaValue').textContent = omega.toFixed(1);
+            history.length = 0; t = 0;
+            drawAll();
+        });
+        document.getElementById('phiSlider').addEventListener('input', e => {
+            phi = parseFloat(e.target.value) * Math.PI;
+            document.getElementById('phiValue').textContent = parseFloat(e.target.value).toFixed(2);
+            history.length = 0; t = 0;
+            drawAll();
+        });
+        document.getElementById('massSlider').addEventListener('input', e => {
+            m = parseFloat(e.target.value);
+            document.getElementById('massValue').textContent = m.toFixed(1);
+            drawAll();
+        });
+
+        document.getElementById('startBtn').addEventListener('click', toggleRun);
+        document.getElementById('resetBtn').addEventListener('click', reset);
+
+        document.querySelectorAll('.quiz-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        document.getElementById('submitQuiz').addEventListener('click', () => {
+            const sel = document.querySelector('.quiz-option.selected');
+            if (!sel) { alert('请先选择一个答案！'); return; }
+            const ans = sel.getAttribute('data-answer');
+            const correct = 'C';
+            const fb = document.getElementById('quizFeedback');
+            const ft = document.getElementById('feedbackText');
+            fb.style.display = 'block';
+            fb.className = 'quiz-feedback ' + (ans===correct ? 'correct' : 'incorrect');
+            if (ans===correct) {
+                ft.textContent = '正确！在平衡位置 x=0 时，v(t) = −Aω sin(ωt+φ)，此时 |sin|=1，速度取最大值 |v|_max = Aω。';
+                ft.style.color = '#81c784';
+            } else {
+                ft.textContent = '不正确。正确答案是 C：Aω。平衡位置时动能最大，势能为零，此时速度最大，v_max = Aω。';
+                ft.style.color = '#f44336';
+            }
+            document.querySelectorAll('.quiz-option').forEach(o => {
+                o.style.pointerEvents = 'none';
+                if (o.getAttribute('data-answer')===correct) o.style.backgroundColor = '#0d2b4e';
+            });
+            document.getElementById('submitQuiz').disabled = true;
+        });
+
+        // Start animation loop (renders even when paused for initial draw)
+        loop();
+    }
+
+    window.addEventListener('load', init);
+</script>
+
+<footer style="margin-top:18px;padding:14px 10px;text-align:center;font-size:12px;color:rgba(255,255,255,0.55);border-top:1px solid rgba(255,255,255,0.08);">
+    @ 易演课堂 版权所有
+</footer>
+</body>
+</html>

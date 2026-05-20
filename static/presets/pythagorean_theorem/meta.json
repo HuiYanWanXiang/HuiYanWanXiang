@@ -1,0 +1,25 @@
+{
+  "id": "pythagorean_theorem",
+  "title": "勾股定理",
+  "aliases": [
+    "勾股定理",
+    "毕达哥拉斯定理",
+    "pythagorean theorem",
+    "勾股定理演示",
+    "勾股定理网页",
+    "勾股定理视频"
+  ],
+  "keywords": [
+    "勾股",
+    "定理",
+    "直角三角形",
+    "斜边",
+    "平方",
+    "毕达哥拉斯"
+  ],
+  "description": "展示勾股定理的几何含义、面积关系及直角三角形中的基本应用。",
+  "html_url": "/static/presets/pythagorean_theorem/index.html",
+  "video_url": "/static/presets/pythagorean_theorem/video.mp4",
+  "cover_url": "/static/presets/pythagorean_theorem/cover.png",
+  "enabled": true
+}

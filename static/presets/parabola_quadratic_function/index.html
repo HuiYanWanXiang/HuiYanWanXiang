@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抛物线与二次函数</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background-color: #0f0f13; color: #e0e0e0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+        header h1 { text-align: center; color: #ce93d8; margin-bottom: 8px; font-size: 2.4rem; text-shadow: 0 0 8px rgba(206,147,216,0.45); }
+        header p { text-align: center; color: #aaa; }
+        .main-content { display: flex; flex-wrap: wrap; gap: 24px; }
+        .simulation-panel, .control-panel, .knowledge-card, .quiz-section {
+            background: linear-gradient(145deg,#1a1a23,#15151c);
+            border: 1px solid #2a2a35;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+        }
+        .simulation-panel { flex: 1.35; min-width: 320px; padding: 24px; }
+        .control-panel { flex: 1; min-width: 300px; padding: 24px; }
+        .panel-title { color: #ce93d8; font-size: 1.4rem; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #2a2a35; }
+        .visual-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+        .visual-card { background: #111119; border: 1px solid #2f2f3c; border-radius: 12px; padding: 12px; }
+        .visual-title { text-align: center; color: #ce93d8; font-weight: 700; margin-bottom: 8px; }
+        .canvas-box { width: 100%; height: 250px; border-radius: 10px; border: 1px solid #333; background: #090910; overflow: hidden; }
+        canvas { width: 100%; height: 100%; display: block; }
+        .visual-desc { margin-top: 8px; color: #9e9e9e; font-size: 0.9rem; }
+        .control-group { margin-bottom: 12px; }
+        .control-label { display: flex; justify-content: space-between; margin-bottom: 6px; color: #bbb; }
+        .control-value { color: #ce93d8; font-weight: 700; }
+        input[type="range"] { width: 100%; height: 10px; -webkit-appearance: none; appearance: none; background: linear-gradient(to right,#0a0a0f,#2a2a35); border-radius: 5px; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #ce93d8; box-shadow: 0 0 8px rgba(206,147,216,0.8); }
+        .status-display { margin-top: 10px; background: #15151c; border-left: 4px solid #ff9800; border-radius: 10px; padding: 12px; }
+        .status-title { color: #ff9800; font-weight: 700; margin-bottom: 4px; }
+        .status-value { color: #ddd; font-size: 0.94rem; margin-bottom: 3px; }
+        .knowledge-section { display: flex; flex-wrap: wrap; gap: 24px; }
+        .knowledge-card { flex: 1; min-width: 300px; padding: 24px; }
+        .knowledge-card h3 { color: #ce93d8; margin-bottom: 10px; }
+        .knowledge-card p, .knowledge-card li { color: #ccc; margin-bottom: 9px; }
+        .knowledge-card ul { padding-left: 20px; }
+        .formula { background: #0a0a0f; border: 1px solid #333; border-radius: 8px; color: #ffcc80; text-align: center; padding: 12px; margin: 12px 0; font-family: 'Cambria Math', serif; }
+        .quiz-section { padding: 24px; }
+        .quiz-options { display: flex; flex-direction: column; gap: 10px; margin: 12px 0 16px; }
+        .quiz-option { padding: 10px 12px; border-radius: 8px; border: 1px solid transparent; background: #252530; cursor: pointer; }
+        .quiz-option:hover { border-color: #ce93d8; }
+        .quiz-option.selected { background: #4a148c; border-color: #ce93d8; }
+        .quiz-feedback { display: none; background: #15151c; border-left: 4px solid #ce93d8; border-radius: 8px; padding: 12px; }
+        button { border: none; border-radius: 8px; padding: 10px 18px; font-weight: 700; cursor: pointer; background: linear-gradient(to right,#8e24aa,#ce93d8); color: #0f0f13; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>抛物线与二次函数</h1>
+        <p>通过调节 a、b、c 参数，直观看到顶点、对称轴、开口方向和根的变化规律。</p>
+    </header>
+
+    <div class="main-content">
+        <div class="simulation-panel">
+            <h2 class="panel-title">动态可视化</h2>
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <div class="visual-title">二次函数图像</div>
+                    <div class="canvas-box"><canvas id="graphCanvas"></canvas></div>
+                    <div class="visual-desc">函数 y=ax²+bx+c，显示顶点与对称轴。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">参数影响对比</div>
+                    <div class="canvas-box"><canvas id="compareCanvas"></canvas></div>
+                    <div class="visual-desc">灰色是基准图像，紫色是当前图像，便于观察参数变化。</div>
+                </div>
+                <div class="visual-card">
+                    <div class="visual-title">判别式与根</div>
+                    <div class="canvas-box"><canvas id="rootCanvas"></canvas></div>
+                    <div class="visual-desc">根据 Δ=b²-4ac 判断根的个数与类型。</div>
+                </div>
+            </div>
+            <div class="status-display">
+                <div class="status-title">当前状态</div>
+                <div class="status-value" id="funcInfo">y = x²</div>
+                <div class="status-value" id="vertexInfo">顶点: (0, 0), 对称轴: x=0</div>
+                <div class="status-value" id="rootInfo">判别式 Δ=0, 一个重根</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2 class="panel-title">参数控制</h2>
+            <div class="control-group">
+                <div class="control-label"><span>a</span><span class="control-value" id="aVal">1.0</span></div>
+                <input type="range" id="a" min="-3" max="3" step="0.1" value="1.0">
+            </div>
+            <div class="control-group">
+                <div class="control-label"><span>b</span><span class="control-value" id="bVal">0.0</span></div>
+                <input type="range" id="b" min="-8" max="8" step="0.1" value="0.0">
+            </div>
+            <div class="control-group">
+                <div class="control-label"><span>c</span><span class="control-value" id="cVal">0.0</span></div>
+                <input type="range" id="c" min="-8" max="8" step="0.1" value="0.0">
+            </div>
+        </div>
+    </div>
+
+    <div class="knowledge-section">
+        <div class="knowledge-card">
+            <h3>标准形式</h3>
+            <div class="formula">y = ax² + bx + c (a≠0)</div>
+            <ul>
+                <li>a 决定开口方向和宽窄。</li>
+                <li>b 决定对称轴位置。</li>
+                <li>c 是 y 轴截距。</li>
+            </ul>
+        </div>
+        <div class="knowledge-card">
+            <h3>顶点与判别式</h3>
+            <div class="formula">x_v = -b/(2a), y_v = f(x_v)</div>
+            <div class="formula">Δ = b² - 4ac</div>
+            <ul>
+                <li>Δ &gt; 0: 两个实根</li>
+                <li>Δ = 0: 一个实根（重根）</li>
+                <li>Δ &lt; 0: 无实根</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="quiz-section">
+        <h2 class="panel-title">知识小测验</h2>
+        <p>函数 y = x² - 4x + 3 的顶点横坐标是多少？</p>
+        <div class="quiz-options" id="quizOptions">
+            <div class="quiz-option" data-a="A">A. 1</div>
+            <div class="quiz-option" data-a="B">B. 2</div>
+            <div class="quiz-option" data-a="C">C. -2</div>
+            <div class="quiz-option" data-a="D">D. 4</div>
+        </div>
+        <button id="submitQuiz">提交答案</button>
+        <div class="quiz-feedback" id="quizFeedback"><strong>反馈：</strong> <span id="feedbackText"></span></div>
+    </div>
+</div>
+
+<script>
+    let a = 1, b = 0, c = 0;
+    const base = { a: 1, b: 0, c: 0 };
+    let graphCanvas, graphCtx, compareCanvas, compareCtx, rootCanvas, rootCtx;
+
+    function resizeCanvas(canvas, ctx) {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.scale(dpr, dpr);
+    }
+
+    function drawAxes(ctx, w, h, pad) {
+        const cx = w / 2, cy = h / 2;
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(pad, cy); ctx.lineTo(w - pad, cy);
+        ctx.moveTo(cx, pad); ctx.lineTo(cx, h - pad);
+        ctx.stroke();
+    }
+
+    function drawParabola(ctx, w, h, coeff, color, lineWidth) {
+        const pad = 20;
+        const sx = (w - 2 * pad) / 12;
+        const sy = (h - 2 * pad) / 12;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = lineWidth;
+        ctx.beginPath();
+        let started = false;
+        for (let i = 0; i <= 700; i++) {
+            const x = -6 + i / 700 * 12;
+            const y = coeff.a * x * x + coeff.b * x + coeff.c;
+            const px = w / 2 + x * sx;
+            const py = h / 2 - y * sy;
+            if (!isFinite(py) || py < -40 || py > h + 40) { started = false; continue; }
+            if (!started) { ctx.moveTo(px, py); started = true; }
+            else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+    }
+
+    function drawMainGraph() {
+        const w = graphCanvas.width / (window.devicePixelRatio || 1);
+        const h = graphCanvas.height / (window.devicePixelRatio || 1);
+        graphCtx.clearRect(0, 0, w, h);
+        drawAxes(graphCtx, w, h, 20);
+        drawParabola(graphCtx, w, h, { a, b, c }, '#ce93d8', 2.5);
+
+        const xv = -b / (2 * a);
+        const yv = a * xv * xv + b * xv + c;
+        const sx = (w - 40) / 12;
+        const sy = (h - 40) / 12;
+        const px = w / 2 + xv * sx;
+        const py = h / 2 - yv * sy;
+
+        graphCtx.setLineDash([5, 4]);
+        graphCtx.strokeStyle = '#ff9800';
+        graphCtx.beginPath(); graphCtx.moveTo(px, 20); graphCtx.lineTo(px, h - 20); graphCtx.stroke();
+        graphCtx.setLineDash([]);
+
+        graphCtx.fillStyle = '#ff9800';
+        graphCtx.beginPath(); graphCtx.arc(px, py, 5, 0, Math.PI * 2); graphCtx.fill();
+    }
+
+    function drawCompare() {
+        const w = compareCanvas.width / (window.devicePixelRatio || 1);
+        const h = compareCanvas.height / (window.devicePixelRatio || 1);
+        compareCtx.clearRect(0, 0, w, h);
+        drawAxes(compareCtx, w, h, 20);
+        drawParabola(compareCtx, w, h, base, '#555', 2);
+        drawParabola(compareCtx, w, h, { a, b, c }, '#ce93d8', 2.5);
+
+        compareCtx.fillStyle = '#aaa';
+        compareCtx.font = '12px Arial';
+        compareCtx.fillText('灰色: y=x²', 18, 18);
+        compareCtx.fillStyle = '#ce93d8';
+        compareCtx.fillText('紫色: 当前函数', 18, 34);
+    }
+
+    function drawRootPanel() {
+        const w = rootCanvas.width / (window.devicePixelRatio || 1);
+        const h = rootCanvas.height / (window.devicePixelRatio || 1);
+        rootCtx.clearRect(0, 0, w, h);
+
+        const D = b * b - 4 * a * c;
+        const lineY = h * 0.6;
+        rootCtx.strokeStyle = '#777';
+        rootCtx.lineWidth = 2;
+        rootCtx.beginPath(); rootCtx.moveTo(30, lineY); rootCtx.lineTo(w - 30, lineY); rootCtx.stroke();
+
+        const mapX = x => 30 + ((x + 6) / 12) * (w - 60);
+        if (D > 0) {
+            const r1 = (-b - Math.sqrt(D)) / (2 * a);
+            const r2 = (-b + Math.sqrt(D)) / (2 * a);
+            rootCtx.fillStyle = '#81c784';
+            rootCtx.beginPath(); rootCtx.arc(mapX(r1), lineY, 6, 0, Math.PI * 2); rootCtx.fill();
+            rootCtx.beginPath(); rootCtx.arc(mapX(r2), lineY, 6, 0, Math.PI * 2); rootCtx.fill();
+            rootCtx.fillText(`x1=${r1.toFixed(3)}, x2=${r2.toFixed(3)}`, 30, 40);
+        } else if (Math.abs(D) < 1e-8) {
+            const r = -b / (2 * a);
+            rootCtx.fillStyle = '#ffb74d';
+            rootCtx.beginPath(); rootCtx.arc(mapX(r), lineY, 7, 0, Math.PI * 2); rootCtx.fill();
+            rootCtx.fillText(`重根 x=${r.toFixed(3)}`, 30, 40);
+        } else {
+            rootCtx.fillStyle = '#f44336';
+            rootCtx.fillText('无实根（与 x 轴无交点）', 30, 40);
+        }
+
+        rootCtx.fillStyle = '#aaa';
+        rootCtx.font = '12px Arial';
+        rootCtx.fillText(`Δ = ${D.toFixed(3)}`, 30, h - 20);
+    }
+
+    function updateStatus() {
+        const D = b * b - 4 * a * c;
+        const xv = -b / (2 * a);
+        const yv = a * xv * xv + b * xv + c;
+
+        document.getElementById('funcInfo').textContent = `y = ${a.toFixed(1)}x² ${b >= 0 ? '+' : '-'} ${Math.abs(b).toFixed(1)}x ${c >= 0 ? '+' : '-'} ${Math.abs(c).toFixed(1)}`;
+        document.getElementById('vertexInfo').textContent = `顶点: (${xv.toFixed(3)}, ${yv.toFixed(3)}), 对称轴: x=${xv.toFixed(3)}`;
+        document.getElementById('rootInfo').textContent = D > 0 ? `判别式 Δ=${D.toFixed(3)}, 两个实根` : (Math.abs(D) < 1e-8 ? `判别式 Δ≈0, 一个重根` : `判别式 Δ=${D.toFixed(3)}, 无实根`);
+    }
+
+    function drawAll() {
+        drawMainGraph();
+        drawCompare();
+        drawRootPanel();
+        updateStatus();
+    }
+
+    function init() {
+        graphCanvas = document.getElementById('graphCanvas');
+        graphCtx = graphCanvas.getContext('2d');
+        compareCanvas = document.getElementById('compareCanvas');
+        compareCtx = compareCanvas.getContext('2d');
+        rootCanvas = document.getElementById('rootCanvas');
+        rootCtx = rootCanvas.getContext('2d');
+
+        const resizeAll = () => {
+            resizeCanvas(graphCanvas, graphCtx);
+            resizeCanvas(compareCanvas, compareCtx);
+            resizeCanvas(rootCanvas, rootCtx);
+            drawAll();
+        };
+        window.addEventListener('resize', resizeAll);
+        resizeAll();
+
+        const bindSlider = (id, keyName) => {
+            document.getElementById(id).addEventListener('input', e => {
+                const v = parseFloat(e.target.value);
+                if (keyName === 'a') {
+                    a = Math.abs(v) < 0.1 ? (v >= 0 ? 0.1 : -0.1) : v;
+                    e.target.value = a.toFixed(1);
+                }
+                if (keyName === 'b') b = v;
+                if (keyName === 'c') c = v;
+                document.getElementById(keyName + 'Val').textContent = (keyName === 'a' ? a : keyName === 'b' ? b : c).toFixed(1);
+                drawAll();
+            });
+        };
+
+        bindSlider('a', 'a');
+        bindSlider('b', 'b');
+        bindSlider('c', 'c');
+
+        const opts = document.querySelectorAll('.quiz-option');
+        opts.forEach(opt => opt.addEventListener('click', function() {
+            opts.forEach(x => x.classList.remove('selected'));
+            this.classList.add('selected');
+        }));
+
+        document.getElementById('submitQuiz').addEventListener('click', () => {
+            const selected = document.querySelector('.quiz-option.selected');
+            if (!selected) { alert('请先选择答案'); return; }
+            const fb = document.getElementById('quizFeedback');
+            const txt = document.getElementById('feedbackText');
+            fb.style.display = 'block';
+            if (selected.getAttribute('data-a') === 'B') {
+                txt.textContent = '正确。x_v = -b/(2a) = -(-4)/(2*1)=2。';
+                txt.style.color = '#81c784';
+            } else {
+                txt.textContent = '不正确。顶点横坐标公式是 x_v = -b/(2a)，结果为 2。';
+                txt.style.color = '#f44336';
+            }
+        });
+    }
+
+    window.addEventListener('load', init);
+</script>
+
+<footer style="margin-top:18px;padding:14px 10px;text-align:center;font-size:12px;color:rgba(255,255,255,0.55);border-top:1px solid rgba(255,255,255,0.08);">@ 易演课堂 版权所有</footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "id": "parabola_quadratic_function",
+  "title": "抛物线与二次函数",
+  "aliases": [
+    "抛物线与二次函数",
+    "抛物线",
+    "二次函数",
+    "二次函数图像",
+    "parabola quadratic function"
+  ],
+  "keywords": [
+    "抛物线",
+    "二次函数",
+    "顶点",
+    "对称轴",
+    "判别式",
+    "根"
+  ],
+  "description": "展示二次函数图像与参数关系，理解顶点、对称轴和判别式。",
+  "html_url": "/static/presets/parabola_quadratic_function/index.html",
+  "video_url": "/static/presets/parabola_quadratic_function/video.mp4",
+  "cover_url": "/static/presets/parabola_quadratic_function/cover.png",
+  "enabled": true
+}
